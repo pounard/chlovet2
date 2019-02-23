@@ -74,7 +74,7 @@ final class PageRepository
             ->getQueryBuilder()
             ->select('public.page_revision', 'pr')
             ->columns(['pr.*', 'page_at' => 'p.created_at'])
-            ->join('public.page', 'p.id = pr.id', 'p')
+            ->join('public.page', 'p.id = pr.id and pr.revision = p.current_revision', 'p')
             ->condition('pr.id', $id)
             ->execute([], PageRevision::class)
             ->setTypeMap($this->getTypeMap())

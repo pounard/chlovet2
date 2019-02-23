@@ -9,19 +9,26 @@ use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 trait ControllerTrait
 {
+    private $debug = false;
     private $repository;
     private $serializer;
 
-    public function __construct(PageRepository $repository, SerializerInterface $serializer)
+    public function __construct(PageRepository $repository, SerializerInterface $serializer, bool $debug = false)
     {
+        $this->debug = $debug;
         $this->repository = $repository;
         $this->serializer = $serializer;
+    }
+
+    private function isDebug(): bool
+    {
+        return $this->debug;
     }
 
     private function serialize(Request $request, $data): Response

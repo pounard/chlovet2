@@ -75,11 +75,11 @@ final class PageAdminController extends Controller
 
     public function append(Request $request, string $id): Response
     {
-        if (!$page = $this->repository->info($this->uuid($id))) {
+        if (!$page = $this->repository->info($id = $this->uuid($id))) {
             throw new NotFoundHttpException();
         }
 
-        $revision = $this->repository->current($page->getId()) ?? PageRevision::create($page->getId());
+        $revision = $this->repository->current($id) ?? PageRevision::create($id);
 
         $form = $this
             ->createRevisionFormBuilder($revision)
@@ -89,6 +89,33 @@ final class PageAdminController extends Controller
             ->getForm()
             ->handleRequest($request)
         ;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $input = $form->getData();
+
+            $data = $revision->getData();
+            $data['teaser'] = [
+                'value' => $input['teaser'] ?? '',
+                'format' => 'full_html',
+            ];
+            $data['body'] = [
+                'value' => $input['body'] ?? '',
+                'format' => 'full_html',
+            ];
+
+            try {
+                $this->repository->append($id, $input['title'], $data);
+
+                return $this->redirectToRoute('page', ['id' => $id]);
+
+            } catch (\Throwable $e) {
+                if ($this->isDebug()) {
+                    throw $e;
+                }
+
+                $this->addFlash('error', "Une erreur est survenue");
+            }
+        }
 
         return $this->render('gestion/page/edit.html.twig', [
             'form' => $form->createView(),

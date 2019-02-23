@@ -6,4 +6,4 @@ page_admin_list:
 page_admin_append:
     path: /admin/page/{id}/edit
     controller: App\Controller\PageAdminController::append
-    methods: [GET, HEAD]
+    methods: [GET, HEAD, POST]

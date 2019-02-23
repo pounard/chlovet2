@@ -1,21 +1,36 @@
 {% extends calista_theme %}
 
 {%- block item -%}
+{% set revision = item.revision %}
 <tr>
   <td>
+    {% if revision %}
     {{ item.title }}
+    {% else %}
+    <em>Nouvelle page sans titre</em>
+    {% endif %}
     <br/>
-    <small><code>{{ item.pageId }}</code></small>
+    <small>
+      <code>{{ item.pageId }}</code>
+      {% if revision %}
+      - Révision #{{ revision }}
+      {% else %}
+      - <em>Pas de révision</em>
+      {% endif %}
+    </small>
   </td>
   <td>{{ item.pageCreationDate|date('d/m/Y H:i') }}</td>
   <td>{{ item.creationDate|date('d/m/Y H:i') }}</td>
-  <td>{{ item.revision }}</td>
   <td>
     <a href="{{ path('page', {id: item.pageId}) }}" class="btn btn-sm btn-primary">
       Voir
     </a>
     <a href="{{ path('page_admin_append', {id: item.pageId}) }}" class="btn btn-sm btn-warning">
+      {% if revision %}
       Modifier
+      {% else %}
+      Créer
+      {% endif %}
     </a>
   </td>
 </tr>
@@ -25,7 +40,6 @@
 <table class="table table-bordered table-hover table-sm">
   <thead>
     <tr>
-      <th>Id.</th>
       <th{% if query.sortField == 'pr.title' %} class="active"{% endif %}>
         {% with {label: "Titre", field: 'pr.title'} %}
         {{ block('sort_link') }}
@@ -41,7 +55,6 @@
         {{ block('sort_link') }}
         {% endwith %}
       </th>
-      <th>Rev.</th>
       <th title="Actions">
         <span class="sr-only">Actions</span>
       </th>

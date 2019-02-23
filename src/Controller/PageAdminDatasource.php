@@ -65,7 +65,8 @@ final class PageAdminDatasource extends AbstractDatasource
             ->getQueryBuilder()
             ->select('page', 'p')
             ->columns(['pr.*', 'page_at' => 'p.created_at'])
-            ->join('page_revision', 'p.id = pr.id and p.current_revision = pr.revision', 'pr')
+            ->column('p.id')
+            ->leftJoin('page_revision', 'p.id = pr.id and p.current_revision = pr.revision', 'pr')
         ;
 
         /*
