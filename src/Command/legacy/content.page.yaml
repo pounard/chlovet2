@@ -1,0 +1,70 @@
+# Editorial page node type
+field:
+
+  page_teaser: '@teaserfield'
+  page_body: '@textfield'
+
+  page_image:
+    label: Vignette
+    type: unoderef
+    widget:
+      type: unoderef
+      settings:
+        bundles: [image]
+        view_mode: default
+
+entity:
+  node:
+
+    page:
+      name: Page éditoriale
+      field:
+        body: ~
+        front_square_title: true
+        page_teaser: true
+        page_image: true
+        page_body: true
+        biblio: true
+        content_author: true
+        content_date: true
+        # labels: true
+        labels: ~
+        menu_hide_nav: true
+        menu_hide_bottom: true
+        menu_children_as_teasers: true
+        hide_breadcrumb: true
+
+view:
+  node:
+    page:
+
+      default:
+        page_image: '@media_view_small'
+        page_body: '@text_view_trimmed'
+        page_teaser: true
+
+      full:
+        page_image: '@media_view_default'
+        page_body: true
+        content_author: true
+        content_date: true
+        biblio: true
+
+      teaser:
+        page_image: '@media_view_square'
+        page_body: '@text_view_trimmed'
+        page_teaser: true
+
+      front_teaser:
+        page_image: '@media_view_63'
+        page_body: '@text_view_trimmed_smaller'
+        page_teaser: true
+
+      front:
+        page_image: '@media_view_default'
+
+      square:
+        front_square_title: true
+
+      favorite: {}
+      contentadmin: {}

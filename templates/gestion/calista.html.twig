@@ -1,0 +1,59 @@
+{% extends '@calista/page/page-bootstrap4.html.twig' %}
+
+{% block page_content %}
+  {% if input.isSearchEnabled %}
+    <div class="row">
+      <div class="col" data-page-block="search_form">
+        {{ block('search_form') }}
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col" data-page-block="item_list">
+      {{ block('item_list') }}
+    </div>
+  </div>
+  {% if pagerEnabled %}
+    <div class="row">
+      <div class="col" data-page-block="pager">
+        <div class="float-right">
+          {% if query.limit < items.totalCount %}
+            {{ block('pager') }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block page_layout %}
+  {% if 1 < displays|length or filters %}
+    <div class="row">
+      <div class="col">
+        {% if filters %}
+          <div data-page-block="filters">
+            {{ block('filters') }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col">
+      <span class="float-right">
+        <small>
+          {% set pageCount = items.pageCount %}
+          {% if 1 < pageCount %}
+            Affichage de {{ items.count }} éléments parmis <strong>{{ items.totalCount }}</strong>
+            − Page <strong>{{ query.pageNumber }}</strong>&nbsp;/&nbsp;<strong>{{ pageCount }}</strong>
+          {% else %}
+            Affichage de {{ items.totalCount }} éléments.
+          {% endif %}
+        </small>
+        {% block export_csv %}
+        {% endblock %}
+      </span>
+    </div>
+  </div>
+  {{ block('page_content') }}
+{% endblock %}

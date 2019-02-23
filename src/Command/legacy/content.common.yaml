@@ -1,0 +1,157 @@
+# Common elements to all content types
+macro:
+
+  teaserfield:
+    label: Teaser
+    type: text_long
+    instance:
+      required: false
+      settings:
+        text_processing: 0
+    widget:
+      type: text_textarea
+      settings:
+        rows: 3
+
+  textfield:
+    label: Corps
+    type: text_long
+    instance:
+      required: true
+      settings:
+        text_processing: 1
+    widget:
+      type: text_textarea
+      settings:
+        rows: 30
+
+  media_view_default:
+    type: unoderef
+    settings:
+      view_mode: default
+      viewport: 60
+
+  media_view_small:
+    type: unoderef
+    settings:
+      view_mode: default
+      viewport: 30
+
+  media_view_square:
+    type: unoderef
+    settings:
+      view_mode: default_square
+      viewport: 50
+
+  media_view_3:
+    type: unoderef
+    settings:
+      view_mode: image_4
+      viewport: 30
+
+  media_view_4:
+    type: unoderef
+    settings:
+      view_mode: image_4
+      viewport: 30
+
+  media_view_63:
+    type: unoderef
+    settings:
+      view_mode: image_63
+      viewport: 30
+
+  text_view_trimmed:
+    type: chlovet_text_summary
+    settings:
+      trim_length: 300
+
+  text_view_trimmed_smaller:
+    type: chlovet_text_summary
+    settings:
+      trim_length: 100
+
+field:
+
+  biblio:
+    label: Référence bibliographique
+    type: text_long
+    settings:
+      text_processing: 1
+    instance:
+      settings:
+        text_processing: 1
+
+  front_square_title:
+    label: Titre carré sur la page d'accueil
+    type: text
+
+  content_author:
+    label: Auteur (si différent)
+    type: text
+
+  content_date:
+    label: Date de création (si différent)
+    type: udate
+    instance:
+      settings:
+        collectTime: false
+        granularity: 5 # day
+
+  publication_period:
+    label: Période de publication
+    type: udate_range
+    instance:
+      settings:
+        collectTime: true
+        granularity: 1
+
+  menu_children_as_teasers:
+    label: Afficher les enfants sous forme de résumés
+    type: list_boolean
+    settings:
+      allowed_values:
+        0: Afficher les enfants sous forme de liens
+        1: Afficher les enfants sous forme de résumés
+    widget:
+      type: options_onoff
+
+  hide_breadcrumb:
+    label: Cacher le fil d'arianne
+    type: list_boolean
+    settings:
+      allowed_values:
+        0: Afficher le fil d'arianne
+        1: Cacher le fil d'arianne
+    widget:
+      type: options_onoff
+
+  menu_hide_nav:
+    label: Cacher l'index de navigation de gauche
+    type: list_boolean
+    settings:
+      allowed_values:
+        0: Afficher l'index de navigation de gauche
+        1: Cacher l'index de navigation de gauche
+    widget:
+      type: options_onoff
+
+  menu_hide_bottom:
+    label: Cacher les enfants en bas de la page
+    type: list_boolean
+    settings:
+      allowed_values:
+        0: Afficher les enfants en bas de la page
+        1: Cacher les enfants en bas de la page
+    widget:
+      type: options_onoff
+
+  labels:
+    label: Labels
+    type: taxonomy_term_reference
+    cardinality: -1
+    settings:
+      allowed_values: [{ vocabulary: labels, parent: 0 }]
+      options_list_callback: ucms_label_allowed_values
+    widget:
+      type: options_select

@@ -1,0 +1,98 @@
+# Image node type
+field:
+
+  image:
+    label: Image
+    type: image
+    widget:
+      type: file_chunked
+    instance:
+      required: true
+      settings:
+        alt_field: true
+        title_field: true
+        file_directory: images
+
+#  media_licence:
+#  media_author:
+#  media_source:
+
+entity:
+  node:
+
+    image:
+      name: Image
+      field:
+        body: ~
+        image: true
+        # labels: true
+        labels: ~
+
+view:
+  node:
+    image:
+
+      default:
+        image:
+          type: iresponsive
+          settings:
+            viewport: 60
+            html_tag: img
+            include_full: false
+
+      default_square:
+        image:
+          type: iresponsive
+          settings:
+            viewport: 50
+            modifier: s
+            html_tag: img
+            include_full: false
+
+      banner:
+        image:
+          type: image
+          settings:
+            image_style: front_banner
+            image_link: ~
+
+      image_3:
+        image:
+          type: image
+          settings:
+            image_style: front_3
+            image_link: ~
+
+      image_4:
+        image:
+          type: image
+          settings:
+            image_style: front_4
+            image_link: ~
+
+      image_63:
+        image:
+          type: image
+          settings:
+            image_style: front_63
+            image_link: ~
+
+      square: {}
+
+      # For content administration
+      favorite:
+        image:
+          type: iresponsive
+          settings:
+            viewport: 30
+            html_tag: img
+            modifier: s
+            include_full: false
+      contentadmin:
+        image:
+          type: iresponsive
+          settings:
+            viewport: 30
+            html_tag: img
+            modifier: s
+            include_full: false

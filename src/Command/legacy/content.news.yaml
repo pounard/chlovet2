@@ -1,0 +1,70 @@
+# News node type
+field:
+
+  news_teaser: '@teaserfield'
+  news_body: '@textfield'
+
+  news_image:
+    label: Vignette
+    type: unoderef
+    widget:
+      type: unoderef
+      settings:
+        bundles: [image]
+        view_mode: default
+
+entity:
+  node:
+
+    news:
+      name: Actualité
+      field:
+        body: ~
+        front_square_title: true
+        news_teaser: true
+        news_image: true
+        news_body: true
+        biblio: true
+        content_author: true
+        content_date: true
+        # labels: true
+        labels: ~
+        menu_hide_nav: true
+        menu_hide_bottom: true
+        menu_children_as_teasers: true
+        hide_breadcrumb: true
+
+view:
+  node:
+    news:
+
+      default:
+        news_image: '@media_view_small'
+        news_body: '@text_view_trimmed'
+        news_teaser: true
+
+      full:
+        news_image: '@media_view_default'
+        news_body: true
+        content_author: true
+        content_date: true
+        biblio: true
+
+      teaser:
+        news_image: '@media_view_square'
+        news_body: '@text_view_trimmed'
+        news_teaser: true
+
+      front_teaser:
+        news_image: '@media_view_63'
+        news_body: '@text_view_trimmed_smaller'
+        news_teaser: true
+
+      front:
+        news_image: '@media_view_default'
+
+      square:
+        front_square_title: true
+
+      favorite: {}
+      contentadmin: {}

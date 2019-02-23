@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pages{% endblock %}
+
+{% block body %}
+{# @todo find a better way to pass input options (using constants instead of ints) #}
+{{ view.render(viewDef, items, query)|raw }}
+{% endblock %}

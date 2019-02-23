@@ -1,0 +1,31 @@
+{
+    "license": "proprietary",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@babel/preset-react": "^7.0.0",
+        "@symfony/webpack-encore": "^0.22.0",
+        "@types/jquery": "^3.3.29",
+        "@types/react": "^16.7.20",
+        "@types/react-dom": "^16.0.11",
+        "bootstrap": "^4.2.1",
+        "node-sass": "^4.11.0",
+        "prop-types": "^15.6.2",
+        "react": "^16.7.0",
+        "react-dom": "^16.7.0",
+        "sass-loader": "^7.1.0",
+        "ts-loader": "^5.3.3",
+        "typescript": "^3.2.2",
+        "webpack-notifier": "^1.6.0"
+    },
+    "devDependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^11.2.0",
+        "jquery": "^3.3.1",
+        "popper.js": "^1.14.6"
+    }
+}

@@ -1,0 +1,34 @@
+page_rest_info:
+    path: /page/{id}/info
+    controller: App\Controller\PageRestController::info
+    methods: [GET, HEAD]
+
+page_rest_create:
+    path: /page/create
+    controller: App\Controller\PageRestController::create
+    # methods: [POST]
+
+page_rest_set_current:
+    path: /page/{id}/current/{revision}/set
+    controller: App\Controller\PageRestController::setCurrent
+    methods: [POST, PUT]
+
+page_rest_current:
+    path: /page/{id}/current
+    controller: App\Controller\PageRestController::current
+    methods: [GET, HEAD]
+
+page_rest_revisions:
+    path: /page/{id}/revisions
+    controller: App\Controller\PageRestController::revisions
+    methods: [GET]
+
+page_rest_append:
+    path: /page/{id}/append
+    controller: App\Controller\PageRestController::append
+    # methods: [POST]
+
+page_rest_find:
+    path: /page/find
+    controller: App\Controller\PageRestController::find
+    methods: [GET]

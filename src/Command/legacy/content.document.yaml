@@ -1,0 +1,35 @@
+# Document node type
+field:
+
+  file:
+    label: Fichier
+    type: file
+    instance:
+      required: true
+      settings:
+        file_extensions: txt pdf
+        file_directory: documents
+        max_filesize: 5242880
+    widget:
+      type: file_chunked
+
+entity:
+  node:
+
+    document:
+      name: Document
+      field:
+        body: ~
+        file: true
+        # labels: true
+        labels: ~
+
+view:
+  node:
+    document:
+
+      default:
+        file: true
+
+      favorite: {}
+      square: {}

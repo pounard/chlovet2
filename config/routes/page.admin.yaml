@@ -1,0 +1,9 @@
+page_admin_list:
+    path: /admin/page
+    controller: App\Controller\PageAdminController::list
+    methods: [GET, HEAD]
+
+page_admin_append:
+    path: /admin/page/{id}/edit
+    controller: App\Controller\PageAdminController::append
+    methods: [GET, HEAD]

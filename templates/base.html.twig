@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+{{ encore_entry_link_tags('app.client') }}
+<title>{% block title %}Accueil{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
+</head>
+<body>
+
+<div class='help-button'>
+  <button>Aide</button>
+</div>
+
+<div id="site">
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    La barre d'administration
+  </nav>
+
+  {% block accessibility %}
+  <nav aria-label="Skip Link" id="controls" class="container">
+    <ul class="skip-link">
+      <li><a href="#main">Skip to Content</a></li>
+    </ul>
+  </nav>
+  {% endblock %}
+
+  <main id="main">
+
+  {% block breadcrumb %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-11">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            {% block breadcrumb_content %}
+            <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+            {% endblock %}
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block layout %}
+  <div class="container">
+    {% block header %}
+    <div class="row header-content">
+      <div class="col-md-5 col-sm-12 col-title">
+        <h1>{% block header_title %}PLEASE CHANGE ME{% endblock %}</h1>
+      </div>
+      <div class="col col-intro">
+        {% block header_text %}
+        <p>
+          Duis bibendum id nulla vitae ullamcorper. Proin posuere arcu vitae lorem lobortis,
+          non sollicitudin odio sollicitudin. Donec ac eleifend arcu. Aenean risus metus, placerat
+          id mauris vitae, faucibus rutrum urna. Nulla scelerisque mollis leo. Integer tempus
+          suscipit leo quis dictum. Pellentesque consequat sapien a ipsum pellentesque bibendum.
+        </p>
+        {% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+
+    {% block main_content %}
+    <div class="main clearfix">
+      <div class="row main-content">
+        <div class="col">
+          {% block body %}{% endblock %}
+        </div>
+      </div>
+    </div>
+    {% endblock %}
+  </div>
+  {% endblock %}
+
+  </main>
+</div>
+<a href="#" class="gotop icon_font" title="retour haut de page">↑</a>
+
+{{ encore_entry_script_tags('app.client') }}
+{{ encore_entry_script_tags('app.gestion') }}
+</body>
+</html>
