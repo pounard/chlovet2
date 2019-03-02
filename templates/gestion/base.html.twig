@@ -1,68 +1,43 @@
-<!doctype html>
-<html lang="fr">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-{{ encore_entry_link_tags('app.client') }}
-<title>{% block title %}Administration{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
 
-<div id="site">
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
-    La barre d'administration
-  </nav>
-
-  <main id="main">
-
-  {% block breadcrumb %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-11">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            {% block breadcrumb_content %}
-            <li class="breadcrumb-item active" aria-current="page">Administration</li>
-            {% endblock %}
-          </ol>
-        </nav>
-      </div>
+{% block breadcrumb %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-11">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          {% block breadcrumb_content %}
+          <li class="breadcrumb-item active" aria-current="page">Administration</li>
+          {% endblock %}
+        </ol>
+      </nav>
     </div>
   </div>
-  {% endblock %}
-
-  {% block layout %}
-  <div class="container">
-    {% block header %}
-    <div class="row header-content">
-      <div class="col-md-5 col-sm-12 col-title">
-        <h1>{% block header_title %}{{ block('title') }}{% endblock %}</h1>
-      </div>
-      <div class="col col-intro">
-        {% block header_text %}
-        {% endblock %}
-      </div>
-    </div>
-    {% endblock %}
-
-    {% block main_content %}
-    <div class="main clearfix">
-      <div class="row main-content">
-        <div class="col">
-          {% block body %}{% endblock %}
-        </div>
-      </div>
-    </div>
-    {% endblock %}
-  </div>
-  {% endblock %}
-
-  </main>
 </div>
-<a href="#" class="gotop icon_font" title="retour haut de page">↑</a>
+{% endblock %}
 
-{{ encore_entry_script_tags('app.client') }}
-{{ encore_entry_script_tags('app.gestion') }}
-</body>
-</html>
+{% block layout %}
+<div class="container">
+  {% block header %}
+  <div class="row header-content">
+    <div class="col-md-5 col-sm-12 col-title">
+      <h1>{% block header_title %}{{ block('title') }}{% endblock %}</h1>
+    </div>
+    <div class="col col-intro">
+      {% block header_text %}
+      {% endblock %}
+    </div>
+  </div>
+  {% endblock %}
+
+  {% block main_content %}
+  <div class="main clearfix">
+    <div class="row main-content">
+      <div class="col">
+        {% block body %}{% endblock %}
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</div>
+{% endblock %}
