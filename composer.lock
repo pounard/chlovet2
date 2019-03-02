@@ -1355,16 +1355,16 @@
         },
         {
             "name": "makinacorpus/goat-bundle",
-            "version": "1.0.0-alpha8",
+            "version": "1.0.0-alpha10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-bundle.git",
-                "reference": "0847660491e7ec3118d9fdb6276f6461418e785f"
+                "reference": "aab19769e1f691251bf4c9bbae5281c350beabad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-bundle/zipball/0847660491e7ec3118d9fdb6276f6461418e785f",
-                "reference": "0847660491e7ec3118d9fdb6276f6461418e785f",
+                "url": "https://api.github.com/repos/pounard/goat-bundle/zipball/aab19769e1f691251bf4c9bbae5281c350beabad",
+                "reference": "aab19769e1f691251bf4c9bbae5281c350beabad",
                 "shasum": ""
             },
             "require": {
@@ -1407,7 +1407,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2019-02-08T13:47:36+00:00"
+            "time": "2019-02-13T16:06:44+00:00"
         },
         {
             "name": "makinacorpus/goat-hydrator",
@@ -1469,16 +1469,16 @@
         },
         {
             "name": "makinacorpus/goat-query",
-            "version": "1.0.0-alpha14",
+            "version": "1.0.0-alpha15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-query.git",
-                "reference": "b89430d12903f14bed3d349eb0e1260325e8f37e"
+                "reference": "26b407980bf909687a5244d3ad6e8e5851ff3f9b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-query/zipball/b89430d12903f14bed3d349eb0e1260325e8f37e",
-                "reference": "b89430d12903f14bed3d349eb0e1260325e8f37e",
+                "url": "https://api.github.com/repos/pounard/goat-query/zipball/26b407980bf909687a5244d3ad6e8e5851ff3f9b",
+                "reference": "26b407980bf909687a5244d3ad6e8e5851ff3f9b",
                 "shasum": ""
             },
             "require": {
@@ -1518,7 +1518,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2019-02-08T13:44:20+00:00"
+            "time": "2019-02-27T15:25:10+00:00"
         },
         {
             "name": "makinacorpus/php-layout",
@@ -1599,16 +1599,16 @@
         },
         {
             "name": "ocramius/package-versions",
-            "version": "1.3.0",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Ocramius/PackageVersions.git",
-                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f"
+                "reference": "a4d4b60d0e60da2487bd21a2c6ac089f85570dbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/4489d5002c49d55576fa0ba786f42dbb009be46f",
-                "reference": "4489d5002c49d55576fa0ba786f42dbb009be46f",
+                "url": "https://api.github.com/repos/Ocramius/PackageVersions/zipball/a4d4b60d0e60da2487bd21a2c6ac089f85570dbb",
+                "reference": "a4d4b60d0e60da2487bd21a2c6ac089f85570dbb",
                 "shasum": ""
             },
             "require": {
@@ -1617,6 +1617,7 @@
             },
             "require-dev": {
                 "composer/composer": "^1.6.3",
+                "doctrine/coding-standard": "^5.0.1",
                 "ext-zip": "*",
                 "infection/infection": "^0.7.1",
                 "phpunit/phpunit": "^7.0.0"
@@ -1644,7 +1645,7 @@
                 }
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
-            "time": "2018-02-05T13:05:30+00:00"
+            "time": "2019-02-21T12:16:21+00:00"
         },
         {
             "name": "ocramius/proxy-manager",
@@ -2915,16 +2916,16 @@
         },
         {
             "name": "symfony/flex",
-            "version": "v1.1.8",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/flex.git",
-                "reference": "955774ecf07b10230bb5b44e150ba078b45f68fa"
+                "reference": "7f04fb50c5da6d020e4df743b4c764c188bb24bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/flex/zipball/955774ecf07b10230bb5b44e150ba078b45f68fa",
-                "reference": "955774ecf07b10230bb5b44e150ba078b45f68fa",
+                "url": "https://api.github.com/repos/symfony/flex/zipball/7f04fb50c5da6d020e4df743b4c764c188bb24bf",
+                "reference": "7f04fb50c5da6d020e4df743b4c764c188bb24bf",
                 "shasum": ""
             },
             "require": {
@@ -2933,12 +2934,14 @@
             },
             "require-dev": {
                 "composer/composer": "^1.0.2",
-                "symfony/phpunit-bridge": "^3.2.8"
+                "symfony/dotenv": "^3.4|^4.0",
+                "symfony/phpunit-bridge": "^3.4.19|^4.1.8",
+                "symfony/process": "^2.7|^3.0|^4.0"
             },
             "type": "composer-plugin",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.2-dev"
                 },
                 "class": "Symfony\\Flex\\Flex"
             },
@@ -2958,7 +2961,7 @@
                 }
             ],
             "description": "Composer plugin for Symfony",
-            "time": "2018-11-15T06:11:38+00:00"
+            "time": "2019-02-21T11:31:25+00:00"
         },
         {
             "name": "symfony/form",
@@ -4610,16 +4613,16 @@
         },
         {
             "name": "symfony/webpack-encore-bundle",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/webpack-encore-bundle.git",
-                "reference": "9c89795a4577c522101206a1a88272660735257c"
+                "reference": "5035f5257927a4151fb0d2d3f3bd1dc5503b7c03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/9c89795a4577c522101206a1a88272660735257c",
-                "reference": "9c89795a4577c522101206a1a88272660735257c",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/5035f5257927a4151fb0d2d3f3bd1dc5503b7c03",
+                "reference": "5035f5257927a4151fb0d2d3f3bd1dc5503b7c03",
                 "shasum": ""
             },
             "require": {
@@ -4660,7 +4663,7 @@
                 }
             ],
             "description": "Integration with your Symfony app & Webpack Encore!",
-            "time": "2019-01-17T02:29:30+00:00"
+            "time": "2019-03-01T18:56:32+00:00"
         },
         {
             "name": "symfony/yaml",
