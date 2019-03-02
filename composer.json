@@ -9,6 +9,7 @@
         "doctrine/dbal": "^2.9",
         "doctrine/doctrine-bundle": "^1.10",
         "doctrine/doctrine-migrations-bundle": "^2.0",
+        "jbroadway/urlify": "^1.1",
         "makinacorpus/calista-core": "^1.0@alpha",
         "makinacorpus/filechunk-bundle": "^1.0@beta",
         "makinacorpus/goat-bundle": "^1.0@alpha",

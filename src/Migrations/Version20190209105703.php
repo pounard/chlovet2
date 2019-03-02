@@ -51,6 +51,7 @@ create table if not exists "public"."page_route" (
     "id" bigserial not null,
     "page_id" uuid default null,
     "slug" varchar(255) not null,
+    "title" varchar(255) default null,
     "route" varchar(1024) not null,
     "weight" int default 0,
     "parent_id" bigint default null,

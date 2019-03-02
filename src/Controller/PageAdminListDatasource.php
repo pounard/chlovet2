@@ -11,7 +11,7 @@ use MakinaCorpus\Calista\Datasource\AbstractDatasource;
 use MakinaCorpus\Calista\Datasource\DatasourceResultInterface;
 use MakinaCorpus\Calista\Query\Query;
 
-final class PageAdminDatasource extends AbstractDatasource
+final class PageAdminListDatasource extends AbstractDatasource
 {
     private $repository;
 

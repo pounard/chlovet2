@@ -20,9 +20,9 @@ final class PageAdminController extends Controller
 {
     use ControllerTrait;
 
-    public function list(Request $request, ViewFactory $viewFactory, PageRepository $repository): Response
+    public function list(Request $request, ViewFactory $viewFactory): Response
     {
-        $datasource = new PageAdminDatasource($repository);
+        $datasource = new PageAdminListDatasource($this->repository);
 
         $inputDef = new DatasourceInputDefinition($datasource, [
             'limit_default' => 30,
@@ -43,6 +43,41 @@ final class PageAdminController extends Controller
 
         return $this->render('gestion/page/list.html.twig', [
             'items' => $datasource->getItems($query),
+            'query' => $query,
+            'view' => $viewFactory->getView($viewDef->getViewType()),
+            'viewDef' => $viewDef,
+        ]);
+    }
+
+    public function revisions(Request $request, ViewFactory $viewFactory, string $id): Response
+    {
+        if (!$page = $this->repository->info($id = $this->uuid($id))) {
+            throw new NotFoundHttpException();
+        }
+
+        $datasource = new PageAdminRevisionsDatasource($this->repository);
+
+        $inputDef = new DatasourceInputDefinition($datasource, [
+            'base_query' => ['id' => [(string)$id]],
+            'limit_default' => 30,
+            'pager_enable' => true,
+            'sort_default_field' => 'pr.created_at',
+            'sort_default_order' => 'desc',
+        ]);
+        $viewDef = new ViewDefinition([
+            'properties' => ['disable' => []],
+            'show_filters' => true,
+            'show_pager' => true,
+            'show_sort' => true,
+            'templates' => ['default' => 'gestion/page/revisions-calista.html.twig'],
+            'view_type' => 'twig_page',
+        ]);
+
+        $query = $inputDef->createQueryFromRequest($request);
+
+        return $this->render('gestion/page/revisions.html.twig', [
+            'items' => $datasource->getItems($query),
+            'page' => $page,
             'query' => $query,
             'view' => $viewFactory->getView($viewDef->getViewType()),
             'viewDef' => $viewDef,
@@ -126,15 +161,6 @@ final class PageAdminController extends Controller
 
     public function create(Request $request): Response
     {
-        throw new \Exception("Not implemented yet");
-    }
-
-    public function revisions(Request $request, string $id): Response
-    {
-        if (!$page = $this->repository->info($this->uuid($id))) {
-            throw new NotFoundHttpException();
-        }
-
         throw new \Exception("Not implemented yet");
     }
 

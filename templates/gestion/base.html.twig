@@ -4,17 +4,13 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 {{ encore_entry_link_tags('app.client') }}
-<title>{% block title %}Accueil{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
+<title>{% block title %}Administration{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
 </head>
 <body>
 
-<div class='help-button'>
-  <button>Aide</button>
-</div>
-
 <div id="site">
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
     La barre d'administration
   </nav>
 
@@ -27,7 +23,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             {% block breadcrumb_content %}
-            <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+            <li class="breadcrumb-item active" aria-current="page">Administration</li>
             {% endblock %}
           </ol>
         </nav>
@@ -45,12 +41,6 @@
       </div>
       <div class="col col-intro">
         {% block header_text %}
-        <p>
-          Duis bibendum id nulla vitae ullamcorper. Proin posuere arcu vitae lorem lobortis,
-          non sollicitudin odio sollicitudin. Donec ac eleifend arcu. Aenean risus metus, placerat
-          id mauris vitae, faucibus rutrum urna. Nulla scelerisque mollis leo. Integer tempus
-          suscipit leo quis dictum. Pellentesque consequat sapien a ipsum pellentesque bibendum.
-        </p>
         {% endblock %}
       </div>
     </div>

@@ -3,6 +3,11 @@ page_admin_list:
     controller: App\Controller\PageAdminController::list
     methods: [GET, HEAD]
 
+page_admin_revisions:
+    path: /admin/page/{id}/revisions
+    controller: App\Controller\PageAdminController::revisions
+    methods: [GET, HEAD]
+
 page_admin_append:
     path: /admin/page/{id}/edit
     controller: App\Controller\PageAdminController::append

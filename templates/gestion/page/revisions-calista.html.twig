@@ -1,0 +1,48 @@
+{% extends calista_theme %}
+
+{%- block item -%}
+{% set revision = item.revision %}
+<tr>
+  <td>
+    {{ item.title }}
+  </td>
+  <td>{{ item.creationDate|date('d/m/Y H:i') }}</td>
+  <td>
+    {#
+    <a href="{{ path('page', {id: item.pageId}) }}" class="btn btn-sm btn-primary">
+      Voir
+    </a>
+     #}
+    <a href="#" class="btn btn-sm btn-warning">
+      Revenir
+    </a>
+  </td>
+</tr>
+{%- endblock -%}
+
+{% block item_list %}
+<table class="table table-bordered table-hover table-sm">
+  <thead>
+    <tr>
+      <th{% if query.sortField == 'pr.title' %} class="active"{% endif %}>
+        {% with {label: "Titre", field: 'pr.title'} %}
+        {{ block('sort_link') }}
+        {% endwith %}
+      </th>
+      <th{% if query.sortField == 'pr.created_at' %} class="active"{% endif %}>
+        {% with {label: "Modifiée le", field: 'pr.created_at'} %}
+        {{ block('sort_link') }}
+        {% endwith %}
+      </th>
+      <th title="Actions">
+        <span class="sr-only">Actions</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    {{ block('item') }}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

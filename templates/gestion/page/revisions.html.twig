@@ -4,7 +4,8 @@
 
 {% block breadcrumb_content %}
 <li class="breadcrumb-item"><a href="#">Administration</a></li>
-<li class="breadcrumb-item active" aria-current="page">Pages</li>
+<li class="breadcrumb-item"><a href="{{ path('page_admin_list') }}">Pages</a></li>
+<li class="breadcrumb-item active" aria-current="page">Liste des révisions</li>
 {% endblock %}
 
 {% block body %}
