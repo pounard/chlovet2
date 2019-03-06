@@ -1,0 +1,82 @@
+/**
+ * modules/mixins
+ * ---
+ */
+
+
+ @mixin reset-box {
+    padding: 0;
+    margin: 0;
+  }
+  
+  // MEDIAQUERIES
+  $breakpoints: (
+      "phone":        400px,
+      "phone-wide":   480px,
+      "phablet":      560px,
+      "tablet-small": 640px,
+      "tablet":       768px,
+      "tablet-wide":  1024px,
+      "desktop":      1248px,
+      "desktop-wide": 1440px
+  );
+  
+  @mixin mq($width, $type: min) {
+      @if map_has_key($breakpoints, $width) {
+          $width: map_get($breakpoints, $width);
+          @if $type == max {
+              $width: $width - 1px;
+          }
+          @media only screen and (#{$type}-width: $width) {
+              @content;
+          }
+      }
+  }
+  
+  // USAGE
+  // @include mq('phone'); (default is min)
+  // @include mq('tablet', max);
+  
+  // ROUNDED CORNER
+  @mixin rounded($radius) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+            border-radius: $radius;
+  }
+  
+  // BOX SHADOW
+  @mixin boxshadow($x, $y, $offset, $color, $inset: false) {
+      $ie-color: ie-hex-str($color);
+  
+    @if $inset {
+          -webkit-box-shadow: inset $x $y $offset $color;
+                  box-shadow: inset $x $y $offset $color;
+      } @else {
+          -webkit-box-shadow: $x $y $offset $color;
+                  box-shadow: $x $y $offset $color;
+          filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=#{$x}, OffY=#{$y}, Color='#{$ie-color}');
+      }
+  }
+  // USAGE
+  // @include boxshadow(1px,1px,5px, rgba(0,0,0,0.5));
+  // @include boxshadow(1px,1px,5px, rgba(0,0,0,0.5), inset);
+  
+  // FONTES PX TO REM
+  
+  $browser-context: $font-size-base;
+  
+  @function rem($pixels, $context: $browser-context) {
+    @if (unitless($pixels)) {
+      $pixels: $pixels * 1px;
+    }
+  
+    @if (unitless($context)) {
+      $context: $context * 1px;
+    }
+  
+    @return $pixels / $context * 1rem;
+  }
+  
+  // USAGE
+  // font-size: rem(12px);

@@ -1,0 +1,33 @@
+#header {
+    background-color:#fff;
+}
+
+.navbar-nav {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #003A77;
+    text-align: center;
+    a {
+        color: $gris-bleu-fonce;
+        font-size: rem(13px);
+    }
+}
+
+#main-menu {
+    background: transparent;
+}
+
+// Navigation
+.nav-item {
+    .nav-link {
+        &.home {
+            &:before {
+                content: "";
+                width: 16px;
+                height: 16px;
+                //border: 1px solid; 
+                display: inline-block;
+            }
+        }
+    }
+}

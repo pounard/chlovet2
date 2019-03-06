@@ -1,0 +1,12 @@
+.breadcrumb {
+    font-size: rem(12);
+    .breadcrumb-item {
+        color: #fff;
+        &.active {
+            color: #fff;
+        }
+        a {
+            color: #fff;
+        }
+    }
+}

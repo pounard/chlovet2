@@ -1,0 +1,38 @@
+footer {
+    padding-top: 1em;
+    padding-bottom: 2em;
+    background-color: #fff;
+    .col-logo {
+        padding: 10px;
+    }
+    h2 {
+        font-size: rem(14);
+        font-weight: 600;
+        color: $gris-bleu-fonce;
+    }
+    p {
+        font-size: rem(13);
+        color: $gris-bleu-fonce;
+        font-weight: 400;
+    }
+    ul {
+        font-size: rem(13);
+        font-weight: 400;
+        &.footer {
+            margin: 0;
+            li {
+                + li {
+                    &:before {
+                        content: "| ";
+                        margin-right: 10px;
+                    }
+                }
+
+                a {
+                    font-weight: 600;
+                    color: $gris-bleu-fonce;
+                }
+            }
+        }
+    }
+}

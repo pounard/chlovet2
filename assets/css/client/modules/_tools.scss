@@ -1,0 +1,29 @@
+.tools {
+    margin-bottom: $breadcrumb-margin-bottom;
+    padding: $breadcrumb-padding-y $breadcrumb-padding-x;
+    text-align: center;
+}
+.font-sizer {
+    background: #FFFFFF;
+    border-radius: 13px;
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    li {
+        display: inline-block;
+    }
+}
+
+.progressbar {
+    //display: block !important;
+    font-size: rem(10);
+    font-weight: 500;
+    color: $orange;
+    margin-bottom: 0.5em;
+    border-bottom: 2px solid $orange;
+}
+
+.messages {
+    font-size: rem(12);
+    margin-bottom: 0.5em;
+}

@@ -1,0 +1,21 @@
+
+.menu {
+    &.nav {
+        > li {
+            margin-bottom: 1em;
+            > a {
+                font-weight: bold;
+            }
+            > .nav {
+                border-left: 2px solid $gris-bleu-fonce;
+            }
+        }
+    }
+    &.nav {
+        .nav {
+            padding-left: .75em;
+            margin-left: .75em;
+            border-left: 2px dotted $gris-bleu-fonce;
+        }
+    }
+}

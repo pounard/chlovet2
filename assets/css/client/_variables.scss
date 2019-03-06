@@ -1,0 +1,43 @@
+
+$font-size-base: 1rem;
+
+$font-stack-nav: sans-serif;
+$font-stack-title: 'Trebuchet MS',Arial,sans-serif;
+$font-stack-regular: 'Work Sans', sans-serif;;
+
+// Primary
+$orange: #F18825;
+$gris-bleu: #485573;
+$gris-bleu-fonce: #252c3c;
+
+// Espaces
+$family: #71C8E2;
+// Secondary
+$lightgrey: #F2F2F2;
+$darkgrey: #5D5D5D;
+$yellow: #FECF3B;
+$green: #7ED321;
+
+//$primary: $orange;
+
+// LINKS
+$link-color: #000;
+$link-decoration: none;
+$link-hover-color: #000;
+$link-hover-decoration: underline;
+
+$border-color: #D8D8D8;
+
+// breadcrumb
+$breadcrumb-padding-x: 0;
+$breadcrumb-bg: transparent;
+$breadcrumb-active-color: #fff;
+$breadcrumb-divider: "›";
+$breadcrumb-divider-color: "#fff";
+
+$custom-file-border-radius: 25px;
+$custom-file-button-bg: #fff;
+$custom-file-text: (
+  en: "Browse",
+  fr: "Choisir un fichier"
+);
