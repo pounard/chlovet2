@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block title %}Arborescence du site{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item"><a href="#">Administration</a></li>
+<li class="breadcrumb-item"><a href="{{ path('page_admin_route') }}">Arborescence du site</a></li>
+<li class="breadcrumb-item active" aria-current="page">Ré-organiser</li>
+{% endblock %}
+
+{% block body %}
+<div data-arborescence get-url="{{ path('page_rest_tree') }}" post-url="{{ path('page_rest_tree') }}"></div>
+{% endblock %}

@@ -11,6 +11,10 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
+    App\Twig\:
+        resource: '../src/Twig'
+        tags: ['twig.extension', 'container.hot_path']
+
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']

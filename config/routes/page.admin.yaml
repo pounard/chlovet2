@@ -12,3 +12,8 @@ page_admin_append:
     path: /admin/page/{id}/edit
     controller: App\Controller\PageAdminController::append
     methods: [GET, HEAD, POST]
+
+page_admin_delete:
+    path: /admin/page/{id}/delete
+    controller: App\Controller\PageAdminController::delete
+    methods: [GET, HEAD, POST, DELETE]

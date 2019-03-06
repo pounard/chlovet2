@@ -1,0 +1,39 @@
+{% block item_link %}
+{% set pageId = item.pageId %}
+{% set active = current and item.isInTrailOfPage(current) %}
+{% if pageId %}
+<a class="{% if active %}active{% endif %}" href="{{ path('page', {id: item.pageId}) }}">{{ item.title }}</a>
+{% else %}
+<a class="disabled {% if active %}active"{% endif %}" href="#">{{ item.title }}</a>
+{% endif %}
+{% endblock %}
+
+{% block item_children %}
+{% if menu.children %}
+<ul class="nav flex-column">
+  {% for item in menu.children %}
+  {{ block('item') }}
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
+
+{% block item %}
+<li class="nav-item">
+  {{ block('item_link') }}
+  {% with {menu: item} %}{{ block('item_children') }}{% endwith %}
+</li>
+{% endblock %}
+
+{% block menu %}
+{% if current is not defined %}
+{% set current = null %}
+{% endif %}
+{% if menu.children %}
+<ul class="menu nav flex-column">
+  {% for item in menu.children %}
+  {{ block('item') }}
+  {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}

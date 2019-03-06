@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Repository\MenuRepository;
 use App\Repository\PageRepository;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -16,12 +17,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 trait ControllerTrait
 {
     private $debug = false;
+    private $menuRepository;
     private $repository;
     private $serializer;
 
-    public function __construct(PageRepository $repository, SerializerInterface $serializer, bool $debug = false)
+    public function __construct(PageRepository $repository, MenuRepository $menuRepository, SerializerInterface $serializer, bool $debug = false)
     {
         $this->debug = $debug;
+        $this->menuRepository = $menuRepository;
         $this->repository = $repository;
         $this->serializer = $serializer;
     }

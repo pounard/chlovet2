@@ -1,0 +1,10 @@
+
+page_rest_create:
+    path: /api/arborescence/create
+    controller: App\Controller\MenuRestController::create
+    # methods: [POST]
+
+page_rest_tree:
+    path: /api/arborescence/tree
+    controller: App\Controller\MenuRestController::tree
+    methods: [GET]

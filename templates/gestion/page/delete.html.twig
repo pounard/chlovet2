@@ -1,0 +1,14 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block title %}Supprimer {{ page.id }}{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item"><a href="#">Administration</a></li>
+<li class="breadcrumb-item"><a href="{{ path('page_admin_list') }}">Pages</a></li>
+<li class="breadcrumb-item active" aria-current="page">Supprimer la page</li>
+{% endblock %}
+
+{% block body %}
+{# @todo find a better way to pass input options (using constants instead of ints) #}
+{{ form(form) }}
+{% endblock %}

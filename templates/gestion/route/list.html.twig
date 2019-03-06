@@ -1,0 +1,19 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block title %}Arborescence du site{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item"><a href="#">Administration</a></li>
+<li class="breadcrumb-item active" aria-current="page">Arborescence du site</li>
+{% endblock %}
+
+{% block navbar_right_custom %}
+{# @todo access rights #}
+<li class="nav-item">
+  <a class="nav-link text-dark btn btn-warning btn-sm" href="{{ path('page_admin_route_tree') }}">Ré-organiser</a>
+</li>
+{% endblock %}
+
+{% block body %}
+{{ app_menu() }}
+{% endblock %}

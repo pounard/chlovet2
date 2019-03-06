@@ -20,20 +20,19 @@
     <div class="collapse navbar-collapse">
       {% block navbar_left %}
       <ul class="navbar-nav mr-auto">
-        {#
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Pages <span class="sr-only">(current)</span></a>
-        </li>
-         #}
+        {% block navbar_left_custom %}
+        {% endblock %}
       </ul>
       {% endblock %}
       {% block navbar_right %}
       <ul class="navbar-nav">
+        {% block navbar_right_custom %}
+        {% endblock %}
         <li class="nav-item">
           <a class="nav-link" href="{{ path('page_admin_list') }}">Pages</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Arborescence</a>
+          <a class="nav-link" href="{{ path('page_admin_route') }}">Arborescence</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Logout</a>
@@ -44,6 +43,42 @@
   </nav>
   {% endblock %}
 
+  <header class="container">
+     <nav class="navbar navbar-expand-lg navbar-light" id="main-menu">
+       <a class="navbar-brand" href="{{ path('index') }}">
+         <img src="{{ asset('/img/logo-cabinet.jpg') }}" alt="">
+       </a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ul class="navbar-nav mr-auto">
+        {% set menu = app_load_menu_top() %}
+        {% for item in menu.children %}
+        {% set pageId = item.pageId %}
+        {% if pageId %}
+          {% if false %} {# current #}
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }} <span class="sr-only">(current)</span></a>
+          </li>
+          {% elseif false %} {# active in trail #}
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
+          </li>
+          {% endif %}
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">{{ item.title }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </header>
+
   <main id="main">
 
   {% block breadcrumb %}
@@ -52,6 +87,7 @@
       <div class="col-md-11">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">&nbsp;</li>
             {% block breadcrumb_content %}
             <li class="breadcrumb-item active" aria-current="page">Accueil</li>
             {% endblock %}
@@ -67,16 +103,18 @@
     {% block header %}
     <div class="row header-content">
       <div class="col-md-5 col-sm-12 col-title">
-        <h1>{% block header_title %}{{ block('title') }}{% endblock %}</h1>
+        <h1>{% block header_title %}Vétérinaire St Clément{% endblock %}</h1>
+        <p>Au plus proche de vos compagnons.</p>
       </div>
       <div class="col col-intro">
         {% block header_text %}
-        <p>
-          Duis bibendum id nulla vitae ullamcorper. Proin posuere arcu vitae lorem lobortis,
-          non sollicitudin odio sollicitudin. Donec ac eleifend arcu. Aenean risus metus, placerat
-          id mauris vitae, faucibus rutrum urna. Nulla scelerisque mollis leo. Integer tempus
-          suscipit leo quis dictum. Pellentesque consequat sapien a ipsum pellentesque bibendum.
-        </p>
+        <address>
+          <strong>Cabinet Vétérinaire St Clément</strong><br/>
+          21 Avenue Chanzy<br/>
+          44000 Nantes<br/>
+          <strong><a href="tel:0228248896">Tél&nbsp;: 02&nbsp;28&nbsp;24&nbsp;88&nbsp;96</a></strong><br/>
+          <strong><a href="mailto:veterinaire.saint.clement@gmail.com">veterinaire.saint.clement@gmail.com</a></strong>
+        </address>
         {% endblock %}
       </div>
     </div>

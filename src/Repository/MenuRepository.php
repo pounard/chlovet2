@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Menu;
+use App\Entity\MenuItem;
+use Goat\Runner\ResultIterator;
 use Goat\Runner\Runner;
 use Ramsey\Uuid\UuidInterface;
 
@@ -12,7 +15,7 @@ use Ramsey\Uuid\UuidInterface;
  * one SQL query: handling transactions properly must be done at the controller
  * or handler level.
  */
-final class PageRouteRepository
+final class MenuRepository
 {
     private $runner;
 
@@ -165,12 +168,125 @@ final class PageRouteRepository
         ;
     }
 
-    /**
-     * 
-     */
-    public function findForPage()
+    private function queryFromRoot(): ResultIterator
     {
-        
+        return $this
+            ->runner
+            ->execute(<<<SQL
+  select child.*
+  from page_route as child
+  where
+      child.parent_id is null
+SQL
+        , [], ['class' => MenuItem::class]);
+    }
+
+    private function queryFromItem(int $id): ResultIterator
+    {
+        return $this
+            ->runner
+            ->execute(<<<SQL
+  select child.*
+  from page_route as child
+  where
+      child.parent_id = ?
+SQL
+        , [$id], ['class' => MenuItem::class]);
+    }
+
+    private function recursiveQueryFromRoot(?int $depth = null): ResultIterator
+    {
+        return $this
+            ->runner
+            ->execute(<<<SQL
+with recursive parent_item(id) as (
+        select *
+        from page_route
+        where
+            parent_id is null
+    union all
+        select child.*
+        from page_route as child, parent_item
+        where
+            child.parent_id = parent_item.id
+)
+select * from parent_item
+SQL
+        , [], ['class' => MenuItem::class]);
+    }
+
+    private function recursiveQueryFromItem(int $id, ?int $depth = null): ResultIterator
+    {
+        return $this
+            ->runner
+            ->execute(<<<SQL
+with recursive parent_item(id) as (
+        select *
+        from page_route
+        where
+            id = ?
+    union all
+        select child.*
+        from page_route as child, parent_item
+        where
+            child.parent_id = parent_item.id
+)
+select * from parent_item
+SQL
+        , [$id], ['class' => MenuItem::class]);
+    }
+
+    /**
+     * Load full tree (this might NOT be a good idea)
+     */
+    public function loadTree(?int $depth = null): Menu
+    {
+        if (1 === $depth) {
+            return new Menu($this->queryFromRoot());
+        }
+
+        return new Menu($this->recursiveQueryFromRoot($depth));
+    }
+
+    /**
+     * Load subtree from
+     */
+    public function loadSubTree(int $rootId, ?int $depth = null): Menu
+    {
+        if (1 === $depth) {
+            return new Menu($this->queryFromItem($rootId));
+        }
+
+        return new Menu($this->recursiveQueryFromItem($rootId, $depth), $rootId);
+    }
+
+    /**
+     * Load menu trail for the given page, for building a breadcrumb
+     *
+     * @return MenuItem[]
+     *   Parenting tree, from the top most to the closest item
+     */
+    public function loadTrailFor(UuidInterface $pageId): iterable
+    {
+        throw new \Exception("Not implemented yet");
+    }
+
+    /**
+     * Find all items that point to that page
+     *
+     * @return MenuItem[]
+     */
+    public function findAllForPage(UuidInterface $pageId): iterable
+    {
+        throw new \Exception("Not implemented yet");
+    }
+
+    /**
+     * Find first item that points to that page
+     */
+    public function findFirstForPage(UuidInterface $pageId): ?MenuItem
+    {
+        throw new \Exception("Not implemented yet");
     }
 
     /**

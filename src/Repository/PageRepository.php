@@ -131,7 +131,6 @@ final class PageRepository
                     ->fetchField()
                 ) + 1;
 
-                /** @var \IrpAuto\EditorialBundle\Domain\Model\Text $ret */
                 $ret = $builder
                     ->insertValues('public.page_revision')
                     ->values([
@@ -165,6 +164,27 @@ final class PageRepository
     public function setCurrentRevision(UuidInterface $id, int $revision): ?PageRevision
     {
         throw new \Exception("Not implemented yet");
+    }
+
+    /**
+     * Delete a complete page, along all revisions
+     */
+    public function delete(UuidInterface $id): int
+    {
+        $queryBuilder = $this->runner->getQueryBuilder();
+
+        $queryBuilder
+            ->delete('public.page_revision')
+            ->condition('id', $id)
+            ->execute()
+        ;
+
+        return $queryBuilder
+            ->delete('public.page')
+            ->condition('id', $id)
+            ->execute()
+            ->countRows()
+        ;
     }
 
     /**

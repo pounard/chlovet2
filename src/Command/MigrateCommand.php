@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Repository\PageRepository;
-use App\Repository\PageRouteRepository;
+use App\Repository\MenuRepository;
 use Goat\Bridge\Symfony\DependencyInjection\RunnerFactory;
 use Goat\Converter\ConverterInterface;
 use Goat\Query\Query;
@@ -19,15 +19,15 @@ use Ramsey\Uuid\UuidInterface;
 
 /**
  * Exemple:
- *   bin/console app:migrate mysql://irpa_portailvac:irpa_portailvac@localhost/irpa_portailvac
+ *   bin/console app:migrate pgsql://chlovet:chlovet@localhost/chlovet
  */
 final class MigrateCommand extends Command
 {
     const SQLDATE = 'Y-m-d H:i:s';
 
     private $converter;
+    private $menuRepository;
     private $pageRepository;
-    private $pageRouteRepository;
     private $runner;
     protected static $defaultName = 'app:migrate';
 
@@ -38,13 +38,13 @@ final class MigrateCommand extends Command
         Runner $runner,
         ConverterInterface $converter,
         PageRepository $pageRepository,
-        PageRouteRepository $pageRouteRepository
+        MenuRepository $menuRepository
     ) {
         parent::__construct();
 
         $this->converter = $converter;
+        $this->menuRepository = $menuRepository;
         $this->pageRepository = $pageRepository;
-        $this->pageRouteRepository = $pageRouteRepository;
         $this->runner = $runner;
     }
 
@@ -244,19 +244,19 @@ final class MigrateCommand extends Command
     /**
      * Recursively create page route for tree
      */
-    private function createPageRoute(OutputInterface $output, array $items, int $parentId = null): void
+    private function createMenuItem(OutputInterface $output, array $items, int $parentId = null): void
     {
         /** @var \App\Command\MigrationDistTreeItem $item */
         foreach ($items as $item) {
             $routeId = null;
             if ($parentId) {
-                $routeId = $this->pageRouteRepository->insertAsChild($parentId, $item->localId, $item->slug, $item->title);
+                $routeId = $this->menuRepository->insertAsChild($parentId, $item->localId, $item->slug, $item->title);
             } else {
-                $routeId = $this->pageRouteRepository->insert($item->localId, $item->slug, $item->title);
+                $routeId = $this->menuRepository->insert($item->localId, $item->slug, $item->title);
             }
 
             if ($item->children) {
-                $this->createPageRoute($output, $item->children, $routeId);
+                $this->createMenuItem($output, $item->children, $routeId);
             }
         }
     }
@@ -359,7 +359,7 @@ final class MigrateCommand extends Command
             if ($output->isVeryVerbose()) {
                 $this->displayMenuTree($output, $tree);
             }
-            $this->createPageRoute($output, $tree);
+            $this->createMenuItem($output, $tree);
 
         } else {
             $output->writeln("Skipping menu migration, no main menu found.");

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\PageRevision;
-use App\Repository\PageRepository;
 use MakinaCorpus\Calista\Bridge\Symfony\DependencyInjection\ViewFactory;
 use MakinaCorpus\Calista\Datasource\DatasourceInputDefinition;
 use MakinaCorpus\Calista\View\ViewDefinition;
@@ -25,7 +24,7 @@ final class PageAdminController extends Controller
         $datasource = new PageAdminListDatasource($this->repository);
 
         $inputDef = new DatasourceInputDefinition($datasource, [
-            'limit_default' => 30,
+            'limit_default' => 20,
             'pager_enable' => true,
             'sort_default_field' => 'p.created_at',
             'sort_default_order' => 'desc',
@@ -173,12 +172,46 @@ final class PageAdminController extends Controller
         throw new \Exception("Not implemented yet");
     }
 
-    public function delete(string $id, int $revision): Response
+    public function delete(Request $request, string $id): Response
     {
         if (!$page = $this->repository->info($this->uuid($id))) {
             throw new NotFoundHttpException();
         }
 
-        throw new \Exception("Not implemented yet");
+        $form = $this
+            ->createFormBuilder()
+            ->add('are_you_sure', Form\CheckboxType::class, [
+                'label' => "Veuillez cocher cette case si vous êtes sûr de vouloir supprimer cette page",
+                'required' => true,
+            ])
+            ->add('submit', Form\SubmitType::class, [
+                'attr' => ['class' => 'btn btn-danger'],
+                'label' => "Supprimer",
+            ])
+            ->getForm()
+            ->handleRequest($request)
+        ;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $this->repository->delete($page->getId());
+
+                $this->addFlash('success', "La page a été supprimée.");
+
+                return $this->redirectToRoute('page_admin_list');
+
+            } catch (\Exception $e) {
+                if ($this->isDebug()) {
+                    throw $e;
+                }
+
+                $this->addFlash('error', "Une erreur est survenue, merci de réessayer plus tard.");
+            }
+        }
+
+        return $this->render('gestion/page/delete.html.twig', [
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
     }
 }

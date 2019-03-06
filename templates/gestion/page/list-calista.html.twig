@@ -22,15 +22,16 @@
   <td>{{ item.pageCreationDate|date('d/m/Y H:i') }}</td>
   <td>{{ item.creationDate|date('d/m/Y H:i') }}</td>
   <td>
-    <a href="{{ path('page', {id: item.pageId}) }}" class="btn btn-sm btn-primary">
+    {% if revision %}
+    <a href="{{ path('page', {id: item.pageId}) }}" class="btn btn-sm btn-info">
       Voir
     </a>
-    <a href="{{ path('page_admin_append', {id: item.pageId}) }}" class="btn btn-sm btn-warning">
-      {% if revision %}
-      Modifier
-      {% else %}
-      Créer
-      {% endif %}
+    {% endif %}
+    <a href="{{ path('page_admin_append', {id: item.pageId}) }}" class="btn btn-sm btn-info">
+      {% if revision %}Modifier{% else %}Créer{% endif %}
+    </a>
+    <a href="{{ path('page_admin_delete', {id: item.pageId}) }}" class="btn btn-sm btn-remove">
+      <span class="sr-only">Supprimer</span>
     </a>
   </td>
 </tr>

@@ -2,6 +2,13 @@
 
 {% block title %}{{ page.title }}{% endblock %}
 
+{% block navbar_right_custom %}
+{# @todo access rights #}
+<li class="nav-item">
+  <a class="nav-link text-dark btn btn-warning btn-sm" href="{{ path('page_admin_list') }}">Modifier</a>
+</li>
+{% endblock %}
+
 {% block body %}
 <h1>{{ page.title }}</h1>
 
