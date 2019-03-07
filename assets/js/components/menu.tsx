@@ -159,10 +159,10 @@ function doTreeGet(url: string): Promise<TreeResult> {
 /**
  * Initialize widget.
  */
-export function createTreeWidget(element: Element, getUrl: string, postUrl: string) {
+export function createTreeWidget(element: Element, getUrl: string, postUrl?: string) {
     doTreeGet(getUrl)
         .then(result => ReactDOM.render(
-            <MenuWidget items={result.tree} getUrl={getUrl} postUrl={postUrl}/>,
+            <MenuWidget items={result.tree} getUrl={getUrl} postUrl={postUrl || getUrl}/>,
             element
          ))
         .catch(err => console.log(err))

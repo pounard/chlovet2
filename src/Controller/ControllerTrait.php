@@ -54,6 +54,14 @@ trait ControllerTrait
         }
     }
 
+    private function iterable($value): iterable
+    {
+        if (!\is_iterable($value)) {
+            throw new BadRequestHttpException();
+        }
+        return $value;
+    }
+
     private function unfound(): void
     {
         throw new NotFoundHttpException();

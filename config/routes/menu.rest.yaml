@@ -7,4 +7,4 @@ page_rest_create:
 page_rest_tree:
     path: /api/arborescence/tree
     controller: App\Controller\MenuRestController::tree
-    methods: [GET]
+    methods: [GET, POST]

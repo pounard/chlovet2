@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Goat\Runner\Runner;
 
 final class MenuRestController
 {
@@ -42,8 +44,103 @@ final class MenuRestController
         return ['tree' => \array_values(\array_map([$this, 'menuItemToArray'], $menu->getChildren()))];
     }
 
-    public function tree(): Response
+    /**
+     * Flatten and validate incomming tree
+     */
+    private function validateIncommingTree(iterable $tree, ?int $parentId = null): array
     {
+        $ret = [];
+        $previousId = null;
+
+        foreach ($tree as $item) {
+
+            if (!$currentId = (int)($item['id'] ?? null)) {
+                throw new BadRequestHttpException();
+            }
+
+            // Generated tree is a set of commands to pass to the item tree
+            // storage in the given order: if 'after' is set, use the "move
+            // item after" command, else if 'parent' is set, use "insert as
+            // child" command, if none, then "move to root" instead.
+            // Since that ALL items are being processed, if any is misplaced
+            // temporarily during the transaction, it will be replaced
+            // correctly when its own siblings will be moved themselves.
+            $ret[] = [
+                'id' => $currentId,
+                'title' => $item['title'] ?? null,
+                'parent' => $parentId,
+                'after' => $previousId
+            ];
+
+            $previousId = $currentId;
+
+            // Flatten children and dispose them after the current item.
+            if ($item['children'] ?? null) {
+                foreach ($this->validateIncommingTree($this->iterable($item['children']), $currentId) as $child) {
+                    $ret[] = $child;
+                }
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * From incomming request, find and save tree.
+     */
+    private function saveTreeFromRequest(Request $request)
+    {
+        $content = $request->getContent();
+        $input = null;
+
+        if (!\is_string($content) || (!$input = @\json_decode($content, true)) || !isset($input['tree'])) {
+            throw new BadRequestHttpException();
+        }
+
+        $deleted = $existing = [];
+        $flattened = $this->validateIncommingTree($input['tree']);
+
+        try {
+            $tx = $this->menuRepository->getRunner()->startTransaction()->start();
+
+            foreach ($flattened as $item) {
+                $existing[] = $id = $item['id'];
+                if ($item['after']) {
+                    $this->menuRepository->moveAfter($id, $item['after']);
+                } else if ($item['parent']) {
+                    $this->menuRepository->moveAsChild($id, $item['parent']);
+                } else {
+                    $this->menuRepository->moveToRoot($id);
+                }
+                if ($item['title']) {
+                    $this->menuRepository->update($id, null, $item['title']);
+                }
+            }
+
+            if ($existing) {
+                /*
+                $args = [':list[]' => $existing];
+                $deleted = $this->database->query("SELECT id FROM {umenu_item} WHERE menu_id = :id AND id NOT IN (:list[])", $args)->fetchCol();
+                $this->database->query("DELETE FROM {umenu_item} WHERE menu_id = :id AND id NOT IN (:list[])", $args);
+                 */
+            }
+
+            $tx->commit();
+
+        } catch (\Throwable $e) {
+            if ($tx) {
+                $tx->rollback();
+            }
+            throw $e;
+        }
+    }
+
+    public function tree(Request $request): Response
+    {
+        if ($request->isMethod('post')) {
+            $this->saveTreeFromRequest($request);
+        }
+
         return new JsonResponse(
             $this->menuToArray(
                 $this->menuRepository->loadTree()

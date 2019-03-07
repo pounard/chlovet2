@@ -28,6 +28,14 @@ final class MenuRepository
     }
 
     /**
+     * Get runner, if you need transactions for example
+     */
+    public function getRunner(): Runner
+    {
+        return $this->runner;
+    }
+
+    /**
      * Validate item exits, and return its parent id and weight
      */
     private function validateItem(int $id): array
@@ -105,25 +113,6 @@ final class MenuRepository
     }
 
     /**
-     * Move item at the given position
-     */
-    private function moveItem(int $id, ?int $parentId = null, ?int $weight = null): void
-    {
-        $weight = $weight ?? $this->getMaxWeight($parentId);
-        if ($parentId) {
-            $this->runner->execute(
-                "update public.page_route set parent_id = ?, weight = ? where id = ?",
-                [$parentId, $weight, $id]
-            );
-        } else {
-            $this->runner->execute(
-                "update public.page_route set parent_id = null, weight = ? where id = ?",
-                [$weight, $id]
-            );
-        }
-    }
-
-    /**
      * Compute route for element
      */
     private function computeRoute(string $slug, ?int $parentId = null): string
@@ -143,6 +132,29 @@ final class MenuRepository
         }
 
         return $slug;
+    }
+
+    /**
+     * Move item at the given position
+     */
+    private function moveItem(int $id, ?int $parentId = null, ?int $weight = null): void
+    {
+        $weight = $weight ?? $this->getMaxWeight($parentId);
+
+        $slug = $this->runner->execute("select slug from page_route where id = ?", [$id])->fetchField();
+        $route = $this->computeRoute($slug, $parentId);
+
+        if ($parentId) {
+            $this->runner->execute(
+                "update public.page_route set parent_id = ?, weight = ?, route = ? where id = ?",
+                [$parentId, $weight, $route, $id]
+            );
+        } else {
+            $this->runner->execute(
+                "update public.page_route set parent_id = null, weight = ?, route = ? where id = ?",
+                [$weight, $route, $id]
+            );
+        }
     }
 
     /**
@@ -348,9 +360,16 @@ SQL
      */
     public function update(int $id, ?string $slug = null, ?string $title = null)
     {
-        $this->validateItem($id);
+        list($parentId) = $this->validateItem($id);
 
         $values = [];
+        if ($slug) {
+            $values['slug'] = $slug;
+            $values['route'] = $this->computeRoute($slug, $parentId);
+        }
+        if ($title) {
+            $values['title'] = $title;
+        }
 
         if (empty($values)) {
             return;
