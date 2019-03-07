@@ -9,9 +9,13 @@
 </li>
 {% endblock %}
 
-{% block body %}
-<h1>{{ page.title }}</h1>
+{% block header_title %}{{ page.title }}{% endblock %}
 
+{% block menu %}
+{{ app_menu_of(page.pageId) }}
+{% endblock %}
+
+{% block body %}
 {% set data = page.data %}
 
 {% if data.teaser is defined and data.teaser.value is defined %}
@@ -21,6 +25,8 @@
 {% if data.body is defined and data.body.value is defined %}
 {{ data.body.value|raw }} {# @todo security #}
 {% endif %}
+
+<h2>Debug</h2>
 
 <pre>
 {{ dump(page.data) }}

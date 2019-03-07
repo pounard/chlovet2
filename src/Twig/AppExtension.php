@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Entity\Menu;
 use App\Repository\MenuRepository;
+use Ramsey\Uuid\UuidInterface;
 use Twig\Environment;
 
 final class AppExtension extends \Twig_Extension
@@ -39,6 +40,7 @@ final class AppExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('app_menu', [$this, 'renderMenu'], ['is_safe' => ['html']]),
+            new \Twig_SimpleFunction('app_menu_of', [$this, 'renderMenuOf'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('app_load_menu', [$this, 'loadMenu'], ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('app_load_menu_top', [$this, 'loadMenuTop'], ['is_safe' => ['html']]),
         ];
@@ -61,9 +63,21 @@ final class AppExtension extends \Twig_Extension
     }
 
     /**
+     * Renders the menu with only the current trail opened.
+     */
+    public function renderMenuOf(?UuidInterface $pageId = null)
+    {
+        return $this->renderPartial('partial/menu.html.twig', 'menu', [
+            'menu' => $this->loadMenu(),
+            'current' => $pageId,
+            'only_active' => true,
+        ]);
+    }
+
+    /**
      * Render menu
      */
-    public function renderMenu($menu = null): string
+    public function renderMenu($menu = null, ?UuidInterface $pageId = null): string
     {
         if (null === $menu) {
             $menu = $this->loadMenu();
@@ -71,6 +85,9 @@ final class AppExtension extends \Twig_Extension
             throw new \InvalidArgumentException("Not a menu");
         }
 
-        return $this->renderPartial('partial/menu.html.twig', 'menu', ['menu' => $menu]);
+        return $this->renderPartial('partial/menu.html.twig', 'menu', [
+            'current' => $pageId,
+            'menu' => $menu,
+        ]);
     }
 }

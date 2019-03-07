@@ -2,19 +2,27 @@
 {% set pageId = item.pageId %}
 {% set active = current and item.isInTrailOfPage(current) %}
 {% if pageId %}
-<a class="{% if active %}active{% endif %}" href="{{ path('page', {id: item.pageId}) }}">{{ item.title }}</a>
+  <a class="{% if active %}active{% endif %}" href="{{ path('page', {id: item.pageId}) }}">{{ item.title }}</a>
 {% else %}
-<a class="disabled {% if active %}active"{% endif %}" href="#">{{ item.title }}</a>
+  <a class="disabled {% if active %}active"{% endif %}" href="#">{{ item.title }}</a>
 {% endif %}
 {% endblock %}
 
 {% block item_children %}
 {% if menu.children %}
-<ul class="nav flex-column">
-  {% for item in menu.children %}
-  {{ block('item') }}
-  {% endfor %}
-</ul>
+  <ul class="nav flex-column">
+    {% if only_active %}
+      {% if item.isInTrailOfPage(current) %}
+        {% for item in menu.children %}
+          {{ block('item') }}
+        {% endfor %}
+      {% endif %}
+    {% else %}
+      {% for item in menu.children %}
+        {{ block('item') }}
+      {% endfor %}
+    {% endif %}
+  </ul>
 {% endif %}
 {% endblock %}
 
@@ -26,14 +34,17 @@
 {% endblock %}
 
 {% block menu %}
+{% if only_active is not defined %}
+  {% set only_active = false %}
+{% endif %}
 {% if current is not defined %}
-{% set current = null %}
+  {% set current = null %}
 {% endif %}
 {% if menu.children %}
-<ul class="menu nav flex-column">
-  {% for item in menu.children %}
-  {{ block('item') }}
-  {% endfor %}
-</ul>
+  <ul class="menu nav flex-column">
+    {% for item in menu.children %}
+      {{ block('item') }}
+    {% endfor %}
+  </ul>
 {% endif %}
 {% endblock %}

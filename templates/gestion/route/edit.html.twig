@@ -8,6 +8,13 @@
 <li class="breadcrumb-item active" aria-current="page">Ré-organiser</li>
 {% endblock %}
 
+{% block navbar_right_custom %}
+{# @todo access rights #}
+<li class="nav-item">
+  <a class="nav-link text-white btn btn-danger btn-sm" href="{{ path('page_admin_route') }}">Annuler</a>
+</li>
+{% endblock %}
+
 {% block body %}
 <div data-arborescence get-url="{{ path('page_rest_tree') }}" post-url="{{ path('page_rest_tree') }}"></div>
 {% endblock %}

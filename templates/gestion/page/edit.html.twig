@@ -8,6 +8,13 @@
 <li class="breadcrumb-item active" aria-current="page">Créer une nouvelle révision</li>
 {% endblock %}
 
+{% block navbar_right_custom %}
+{# @todo access rights #}
+<li class="nav-item">
+  <a class="nav-link text-white btn btn-danger btn-sm" href="{{ path('page_admin_list') }}">Annuler</a>
+</li>
+{% endblock %}
+
 {% block body %}
 {# @todo find a better way to pass input options (using constants instead of ints) #}
 {{ form(form) }}

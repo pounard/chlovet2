@@ -28,7 +28,7 @@ trait MenuTrait
 
     public function isInTrailOfPage(UuidInterface $pageId): bool
     {
-        if (isset($this->page_id) && $pageId === $this->page_id) {
+        if (isset($this->page_id) && $pageId->equals($this->page_id)) {
             return true;
         }
         if ($this->children) {
