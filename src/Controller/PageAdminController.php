@@ -101,8 +101,22 @@ final class PageAdminController extends Controller
             ->add('body', Form\TextareaType::class, [
                 'attr' => ['data-editor' => "true"],
                 'data' => $revision->get('body', [])['value'] ?? null,
-                'label' => "Text de la page",
+                'label' => "Texte de la page",
                 'required' => false,
+            ])
+            ->add('biblio', Form\TextareaType::class, [
+                'attr' => ['data-editor' => "true"],
+                'data' => $revision->get('biblio', [])['value'] ?? null,
+                'label' => "Bibliographie",
+                'required' => false,
+            ])
+            ->add('children_display', Form\ChoiceType::class, [
+                'choices' => [
+                    "Ne pas afficher" => null,
+                ],
+                'data' => $revision->get('display', [])['children'] ?? null,
+                'label' => "Affichage des enfants",
+                'required' => true,
             ])
         ;
     }

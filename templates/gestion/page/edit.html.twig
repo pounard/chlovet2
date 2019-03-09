@@ -16,6 +16,34 @@
 {% endblock %}
 
 {% block body %}
-{# @todo find a better way to pass input options (using constants instead of ints) #}
-{{ form(form) }}
+{{ form_start(form) }}
+<div class="row">
+  <div class="col-2">
+    <div class="nav flex-column nav-pills" id="myTab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link" id="info-tab" data-toggle="tab" href="#edit-info" role="tab" aria-controls="profile" aria-selected="false">Information</a>
+      <a class="nav-link active" id="texte-tab" data-toggle="tab" href="#edit-texte" role="tab" aria-controls="home" aria-selected="true">Texte</a>
+      <a class="nav-link" id="intro-tab" data-toggle="tab" href="#edit-intro" role="tab" aria-controls="contact" aria-selected="false">Biblio</a>
+    </div>
+  </div>
+  <div class="col">
+    <div class="form-actions">
+      {{ form_row(form.submit) }}
+    </div>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane" id="edit-info" role="tabpanel" aria-labelledby="info-tab">
+        {{ form_row(form.title) }}
+        {{ form_row(form.teaser) }}
+        {{ form_row(form.children_display) }}
+      </div>
+      <div class="tab-pane show active" id="edit-texte" role="tabpanel" aria-labelledby="texte-tab">
+        {{ form_row(form.body) }}
+      </div>
+      <div class="tab-pane" id="edit-intro" role="tabpanel" aria-labelledby="intro-tab">
+        {{ form_row(form.biblio) }}
+      </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+  </div>
+</div>
 {% endblock %}

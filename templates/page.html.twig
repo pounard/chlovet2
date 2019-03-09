@@ -5,7 +5,7 @@
 {% block navbar_right_custom %}
 {# @todo access rights #}
 <li class="nav-item">
-  <a class="nav-link text-dark btn btn-warning btn-sm" href="{{ path('page_admin_list') }}">Modifier</a>
+  <a class="nav-link text-dark btn btn-warning btn-sm" href="{{ path('page_admin_append', {id: page.pageId}) }}">Modifier</a>
 </li>
 {% endblock %}
 
