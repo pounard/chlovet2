@@ -11,7 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^2.0",
         "jbroadway/urlify": "^1.1",
         "makinacorpus/calista-core": "^1.0@alpha",
-        "makinacorpus/filechunk-bundle": "^1.0@beta",
+        "makinacorpus/filechunk-bundle": "^2.0.0-alpha8",
         "makinacorpus/goat-bundle": "^1.0@alpha",
         "makinacorpus/goat-hydrator": "^1.0@alpha",
         "makinacorpus/goat-query": "^1.0.0-alpha11",

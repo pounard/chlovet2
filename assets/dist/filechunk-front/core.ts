@@ -1,11 +1,11 @@
 
+import { Context, Item, Translate, UpdateProgress, upload } from "./upload";
+
 const DEFAULT_CHUNKSIZE = 1024 * 1024 * 2;
 const DEFAULT_REMOVE_BUTTON = `<button class="filechunk-remove btn btn-primary" type="submit" value="LABEL">LABEL</button>`;
 const DEFAULT_ITEM_TEMPLATE = `<li data-fid="FID"></li>`;
 const TEMPLATE_ERROR_ZONE = `<div class="messages error file-upload-js-error" aria-live="polite" style="display: none;"></div>`;
 const TEMPLATE_PROGRESS_BAR = `<div class="progressbar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" style="display: none;"></div>`;
-
-declare type Translate = (text: string, variables?: any) => string;
 
 // From https://codepen.io/gapcode/pen/vEJNZN
 function detectIE(): number | null {
@@ -41,32 +41,19 @@ function checkNumber(value: any, min?: number): number {
     return value;
 }
 
-class Item {
-    readonly id: string;
-    readonly filename: string;
-    readonly hash: string | null;
-    readonly preview: string | null;
-
-    constructor(id: string, filename: string, hash?: string, preview?: string) {
-        this.id = id;
-        this.filename = filename;
-        this.hash = hash || null;
-        this.preview = hash || null;
-    }
-}
-
-class FilechunkConfig {
-    readonly token: string;
+class FilechunkConfig implements Context {
+    readonly chunksize: number;
+    readonly endpoint: string;
     readonly fieldname: string;
     readonly isMultiple: boolean;
-    readonly chunksize: number;
-    readonly maxCount: number;
-    readonly uploadUrl: string;
-    readonly removeUrl: string;
-    readonly removeButtonTemplate: string = `<button class="filechunk-remove btn btn-primary" type="submit" value="Remove">' + Drupal.t( "Remove" ) + '</button>`;
     readonly itemPreviewTemplate: string = `<li data-fid="FID"></li>`;
+    readonly maxCount: number;
+    readonly onUpdate?: UpdateProgress;
+    readonly removeButtonTemplate: string = `<button class="filechunk-remove btn btn-primary" type="submit" value="Remove">' + Drupal.t( "Remove" ) + '</button>`;
+    readonly removeUrl: string;
+    readonly token: string;
 
-    constructor(element: HTMLInputElement) {
+    constructor(element: HTMLInputElement, onUpdate?: UpdateProgress) {
         if (element.type !== "file") {
             throw "Input widget is not a file input";
         }
@@ -97,14 +84,15 @@ class FilechunkConfig {
             this.maxCount = 1;
         }
 
-        this.token = <string>element.getAttribute('data-token');
+        this.chunksize = checkNumber(element.getAttribute('data-chunksize') || DEFAULT_CHUNKSIZE);
+        this.endpoint = <string>element.getAttribute('data-uri-upload');
         this.fieldname = <string>element.getAttribute('data-field-name');
         this.isMultiple = element.multiple;
-        this.chunksize = checkNumber(element.getAttribute('data-chunksize') || DEFAULT_CHUNKSIZE);
-        this.uploadUrl = <string>element.getAttribute('data-uri-upload');
-        this.removeUrl = <string>element.getAttribute('data-uri-remove');
-        this.removeButtonTemplate = element.getAttribute( 'data-tpl-remove' ) || DEFAULT_REMOVE_BUTTON;
         this.itemPreviewTemplate = element.getAttribute( 'data-tpl-item' ) || DEFAULT_ITEM_TEMPLATE;
+        this.onUpdate = onUpdate;
+        this.removeButtonTemplate = element.getAttribute( 'data-tpl-remove' ) || DEFAULT_REMOVE_BUTTON;
+        this.removeUrl = <string>element.getAttribute('data-uri-remove');
+        this.token = <string>element.getAttribute('data-token');
     }
 }
 
@@ -287,7 +275,7 @@ export class FilechunkWidget {
             }
 
             req.addEventListener("load", () => {
-                resolve()
+                resolve();
             });
 
             req.addEventListener("error", () => {
@@ -298,62 +286,11 @@ export class FilechunkWidget {
         });
     }
 
-    private remoteUploadCall(file: File, start: number, step: number): Promise<Item> {
-        const stop = Math.min(start + step, file.size);
-
-        return new Promise<Item>((resolve: (item: Item | Promise<Item>) => void, reject: (error: any) => void) => {
-            const req = new XMLHttpRequest();
-            req.open('POST', this.config.uploadUrl);
-            req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-            req.setRequestHeader("Accept", "application/json" );
-            req.setRequestHeader("X-File-Name", btoa(encodeURIComponent(file.name)));
-            req.setRequestHeader("Content-Range", "bytes " + start + "-" + stop + "/" + file.size);
-            req.setRequestHeader('Content-type', 'application/octet-stream');
-            req.setRequestHeader("X-File-Token", this.config.token);
-            req.setRequestHeader("X-File-field", this.config.fieldname);
-            if (req.overrideMimeType) {
-                req.overrideMimeType("application/octet-stream");
-            }
-
-            req.addEventListener("loadend", () => {
-                try {
-                    const response = JSON.parse(req.responseText);
-                    if (200 !== req.status) {
-                        throw response.message || `error: ${req.status} ${req.statusText}`;
-                    } else {
-                        if (file.size <= stop || response.finished) {
-                            if (!response.fid || !response.hash) {
-                                throw this.translate("File could not be completely uploaded");
-                            }
-                            this.updateProgress(100);
-                            resolve(new Item(response.fid, file.name, response.hash, response.preview));
-                        } else {
-                            this.updateProgress(Math.round((<number>response.offset / file.size) * 100));
-                            // Recursive promise execution
-                            if (response.resume && response.offset) {
-                                resolve(this.remoteUploadCall(file, response.offset, step));
-                            } else {
-                                resolve(this.remoteUploadCall(file, stop, step));
-                            }
-                        }
-                    }
-                } catch (error) {
-                    // Promises don't catch asyncly throwed exceptions, since
-                    // that we are working with and asynchronous XMLHttpRequest
-                    // we must catch errors manually and reject() them.
-                    reject(error);
-                }
-            });
-
-            req.send(file.slice(start, stop));
-        });
-    }
-
     private replaceUpload() {
         // https://stackoverflow.com/a/16596041
         if (this.isMSIE) {
-            const clone = <HTMLInputElement>this.inputElement.cloneNode(false);
-            (<Element>this.inputElement.parentElement).replaceChild(clone, this.inputElement);
+            const clone = this.inputElement.cloneNode(false) as HTMLInputElement;
+            (this.inputElement.parentElement as Element).replaceChild(clone, this.inputElement);
             this.inputElement = clone;
             this.inputElement.addEventListener("change", event => this.onUploadChangeListener(event));
             this.inputElement.addEventListener("drop", event => this.onUploadChangeListener(event));
@@ -386,7 +323,7 @@ export class FilechunkWidget {
             let file: File = files[i];
             this.showError(this.translate("Uploading file @file...", {'@file': file.name}));
 
-            this.remoteUploadCall(file, 0, this.config.chunksize).then(item => {
+            upload(file, this.config).then(item => {
                 this.currentValue.push(item);
                 this.clearError();
                 this.replaceUpload();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef0b925006a853504cff8fc95e7d87a7",
+    "content-hash": "474d3ac02269621e269c7b534b15ba9d",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1248,25 +1248,26 @@
         },
         {
             "name": "makinacorpus/filechunk-bundle",
-            "version": "1.0.0-beta7",
+            "version": "2.0.0-alpha8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/makinacorpus/filechunk-bundle.git",
-                "reference": "d605b18f6d0db7f7c4783371e632dedae6f7b4d8"
+                "reference": "1259da99fccc82fc10b172c2a4f16e5d9eba1ebd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/makinacorpus/filechunk-bundle/zipball/d605b18f6d0db7f7c4783371e632dedae6f7b4d8",
-                "reference": "d605b18f6d0db7f7c4783371e632dedae6f7b4d8",
+                "url": "https://api.github.com/repos/makinacorpus/filechunk-bundle/zipball/1259da99fccc82fc10b172c2a4f16e5d9eba1ebd",
+                "reference": "1259da99fccc82fc10b172c2a4f16e5d9eba1ebd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0",
-                "symfony/dependency-injection": "^2.3|^3.0|^4",
-                "symfony/framework-bundle": "^2.3|^3.0|^4"
+                "php": ">=7.2",
+                "symfony/dependency-injection": "^3.4|^4",
+                "symfony/framework-bundle": "^3.4|^4"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.0"
+                "phpunit/phpunit": "^8.0",
+                "twig/twig": "^2.7"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -1290,7 +1291,7 @@
             ],
             "description": "Javascript file upload widget and form type for Symfony",
             "homepage": "http://github.com/makinacorpus/filechunk-bundle",
-            "time": "2018-09-07T13:28:55+00:00"
+            "time": "2019-04-13T12:01:36+00:00"
         },
         {
             "name": "makinacorpus/generated-hydrator",
@@ -5064,7 +5065,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "makinacorpus/calista-core": 15,
-        "makinacorpus/filechunk-bundle": 10,
+        "makinacorpus/filechunk-bundle": 15,
         "makinacorpus/goat-bundle": 15,
         "makinacorpus/goat-hydrator": 15,
         "makinacorpus/goat-query": 15,
