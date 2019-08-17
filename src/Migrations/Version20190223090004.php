@@ -20,7 +20,7 @@ final class Version20190223090004 extends AbstractAppMigration
     public function up(Schema $schema) : void
     {
         $this->addSql(<<<SQL
-create table if not exists "public"."drupal_map" (
+create table if not exists "drupal_map" (
     "source_type" varchar(64) not null,
     "source_id" varchar(64) not null,
     "local_id" uuid not null,

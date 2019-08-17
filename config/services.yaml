@@ -1,4 +1,5 @@
 parameters:
+    app_file_directory: "%kernel.project_dir%/public/data"
 
 services:
     _defaults:
@@ -6,10 +7,15 @@ services:
         autoconfigure: true
         bind:
             $debug: "%kernel.debug%"
+            $storageDirectory: "%app_file_directory%"
 
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Event\:
+        resource: '../src/Event'
+        tags: ['event.subscriber', 'container.hot_path']
 
     App\Twig\:
         resource: '../src/Twig'

@@ -22,7 +22,7 @@ final class Version20190209105703 extends AbstractAppMigration
         // If no corresponding line exists in "page_state" it means that
         // page is unpublished and will not be visible in front.
         $this->addSql(<<<SQL
-create table if not exists "public"."page" (
+create table if not exists "page" (
     "id" uuid not null default uuid_generate_v4(),
     "created_at" timestamp not null default now(),
     "current_revision" integer default null,
@@ -32,7 +32,7 @@ SQL
         );
 
         $this->addSql(<<<SQL
-create table if not exists "public"."page_revision" (
+create table if not exists "page_revision" (
     "id" uuid not null,
     "revision" integer not null,
     "created_at" timestamp not null default now(),
@@ -40,14 +40,14 @@ create table if not exists "public"."page_revision" (
     "data" jsonb default null,
     primary key ("id", "revision"),
     foreign key ("id")
-        references "public"."page" ("id")
+        references "page" ("id")
         on delete cascade
 );
 SQL
         );
 
     $this->addSql(<<<SQL
-create table if not exists "public"."page_route" (
+create table if not exists "page_route" (
     "id" bigserial not null,
     "page_id" uuid default null,
     "slug" varchar(255) not null,
@@ -58,10 +58,10 @@ create table if not exists "public"."page_route" (
     primary key("id"),
     unique ("parent_id", "slug"),
     foreign key ("page_id")
-        references "public"."page" ("id")
+        references "page" ("id")
         on delete set null,
     foreign key ("parent_id")
-        references "public"."page_route" ("id")
+        references "page_route" ("id")
 );
 SQL
         );

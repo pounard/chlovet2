@@ -29,7 +29,7 @@
     },
     "devDependencies": {
         "@ckeditor/ckeditor5-build-classic": "^11.2.0",
-        "@ckeditor/ckeditor5-upload": "^11.0.0",
+        "@ckeditor/ckeditor5-upload": "^11.0.1",
         "jquery": "^3.3.1",
         "popper.js": "^1.14.6"
     }
