@@ -33,21 +33,6 @@ final class PageRepository
     }
 
     /**
-     * Get type map for iterator results (performance improvement)
-     */
-    private function getTypeMap(): array
-    {
-        return [
-            'created_at' => 'timestamp',
-            'current_revision' => 'int',
-            'data' => 'jsonb',
-            'id' => 'uuid',
-            'revision' => 'int',
-            'title' => 'varchar',
-        ];
-    }
-
-    /**
      * Fetch basic information
      */
     public function info(UuidInterface $id): ?Page
@@ -59,7 +44,6 @@ final class PageRepository
             ->columns(['p.*'])
             ->condition('p.id', $id)
             ->execute([], Page::class)
-            ->setTypeMap($this->getTypeMap())
             ->fetch()
         ;
     }
@@ -77,7 +61,6 @@ final class PageRepository
             ->join('public.page', 'p.id = pr.id and pr.revision = p.current_revision', 'p')
             ->condition('pr.id', $id)
             ->execute([], PageRevision::class)
-            ->setTypeMap($this->getTypeMap())
             ->fetch()
         ;
     }
@@ -93,7 +76,6 @@ final class PageRepository
             ->insertValues('public.page')
             ->returning()
             ->execute([], Page::class)
-            ->setTypeMap($this->getTypeMap())
             ->fetch()
         ;
     }
@@ -127,7 +109,6 @@ final class PageRepository
                     ->columnExpression('max(revision)')
                     ->condition('id', $id)
                     ->execute()
-                    ->setTypeMap(['id' => 'int'])
                     ->fetchField()
                 ) + 1;
 
@@ -142,7 +123,6 @@ final class PageRepository
                     ])
                     ->returning()
                     ->execute([], PageRevision::class)
-                    ->setTypeMap($this->getTypeMap())
                     ->fetch()
                 ;
 
@@ -200,7 +180,6 @@ final class PageRepository
             ->condition('revision', $revision)
             ->returning()
             ->execute([], PageRevision::class)
-            ->setTypeMap($this->getTypeMap())
             ->fetch()
         ;
     }

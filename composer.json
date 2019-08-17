@@ -12,25 +12,29 @@
         "jbroadway/urlify": "^1.1",
         "makinacorpus/calista-core": "^1.0@alpha",
         "makinacorpus/filechunk-bundle": "^2.0.0-alpha8",
+        "makinacorpus/generated-hydrator": "dev-master",
         "makinacorpus/goat-bundle": "^1.0@alpha",
         "makinacorpus/goat-hydrator": "^1.0@alpha",
         "makinacorpus/goat-query": "^1.0.0-alpha11",
         "makinacorpus/php-layout": "dev-master",
         "neitanod/forceutf8": "^2.0",
         "ramsey/uuid": "^3.8",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
+        "symfony/console": "4.3.*",
+        "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.1",
-        "symfony/form": "4.2.*",
-        "symfony/framework-bundle": "4.2.*",
+        "symfony/form": "4.3.*",
+        "symfony/framework-bundle": "4.3.*",
         "symfony/profiler-pack": "^1.0",
-        "symfony/security-bundle": "4.2.*",
+        "symfony/security-bundle": "4.3.*",
         "symfony/serializer-pack": "^1.0",
-        "symfony/twig-bundle": "4.2.*",
+        "symfony/twig-bundle": "4.3.*",
         "symfony/webpack-encore-bundle": "^1.0",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.3.*"
     },
     "config": {
+        "platform": {
+            "php": "7.3.4"
+        },
         "preferred-install": {
             "*": "dist"
         },
@@ -72,7 +76,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "4.2.*"
+            "require": "4.3.*"
         }
     },
     "require-dev": {
