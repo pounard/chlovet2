@@ -9,9 +9,8 @@ use App\Entity\MenuItem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Goat\Runner\Runner;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 final class MenuRestController
 {
@@ -98,10 +97,11 @@ final class MenuRestController
         }
 
         $deleted = $existing = [];
+        $tx = null;
         $flattened = $this->validateIncommingTree($input['tree']);
 
         try {
-            $tx = $this->menuRepository->getRunner()->startTransaction()->start();
+            $tx = $this->menuRepository->getRunner()->beginTransaction()->start();
 
             foreach ($flattened as $item) {
                 $existing[] = $id = $item['id'];
