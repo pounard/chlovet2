@@ -8,9 +8,6 @@
 <title>{% block title %}Accueil{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
 </head>
 <body>
-
-<div id="site">
-
   {% block navbar_layout %}
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
     <a class="navbar-brand" href="{{ path('index') }}">Accueil</a>
@@ -42,20 +39,20 @@
     </div>
   </nav>
   {% endblock %}
-
-  <header class="container">
-     <nav class="navbar navbar-expand-lg navbar-light" id="main-menu">
-       <a class="navbar-brand" href="{{ path('index') }}">
-         <img src="{{ asset('/img/logo-cabinet-notext.png') }}" alt="">
-       </a>
-       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="navbar-nav mr-auto">
-        {% set menu = app_load_menu_top() %}
-        {% for item in menu.children %}
-        {% set pageId = item.pageId %}
-        {% if pageId %}
+  <header id="header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light" id="main-menu">
+        <a class="navbar-brand" href="{{ path('index') }}" title="Vétérinaire St Clément Nantes - Retour à l'accueil">
+          <img src="{{ asset('/img/logo-cabinet-notext.png') }}" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <ul class="navbar-nav mr-auto">
+          {% set menu = app_load_menu_top() %}
+          {% for item in menu.children %}
+          {% set pageId = item.pageId %}
+          {% if pageId %}
           {% if false %} {# current #}
           <li class="nav-item active">
             <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }} <span class="sr-only">(current)</span></a>
@@ -69,79 +66,66 @@
             <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
           </li>
           {% endif %}
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">{{ item.title }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </nav>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">{{ item.title }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
   </header>
-
   <main id="main">
-
-  {% block breadcrumb %}
-  <div class="container">
-    <div class="row">
-      <div class="col-md-11">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item active" aria-current="page">&nbsp;</li>
-            {% block breadcrumb_content %}
-            <li class="breadcrumb-item active" aria-current="page">Accueil</li>
-            {% endblock %}
-          </ol>
-        </nav>
-      </div>
-    </div>
-  </div>
-  {% endblock %}
-
-  {% block layout %}
-  <div class="container">
-    {% block header %}
-    <div class="row header-content">
-      <div class="col-md-6 col-sm-12 col-title">
-        <h1>{% block header_title %}Vétérinaire St Clément{% endblock %}</h1>
-        <p>Au plus proche de vos compagnons.</p>
-      </div>
-      <div class="col col-intro">
-        {% block header_text %}
-        <address>
-          <strong>Cabinet Vétérinaire St Clément</strong><br/>
-          21 Avenue Chanzy<br/>
-          44000 Nantes<br/>
-          <strong><a href="tel:0228248896">Tél&nbsp;: 02&nbsp;28&nbsp;24&nbsp;88&nbsp;96</a></strong><br/>
-          <strong><a href="mailto:veterinaire.saint.clement@gmail.com">veterinaire.saint.clement@gmail.com</a></strong>
-        </address>
-        {% endblock %}
-      </div>
-    </div>
-    {% endblock %}
-
-    {% block main_content %}
-    <div class="main clearfix">
-      <div class="row main-content">
-        <div class="col col-md-9 col-sm-12">
-          {% block body %}
-          BODY
-          {% endblock %}
-        </div>
-        <div class="col col-md-3 col-sm-12">
-          {% block menu %}
-          COuCOU
-          {% endblock %}
+    {% block breadcrumb %}
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item" aria-current="page">&nbsp;</li>
+              {% block breadcrumb_content %}
+              <li class="breadcrumb-item active" aria-current="page">Accueil</li>
+              {% endblock %}
+            </ol>
+          </nav>
         </div>
       </div>
     </div>
     {% endblock %}
-  </div>
-  {% endblock %}
-
+    {% block layout %}
+    <div class="container">
+      {% block main_content %}
+      <div class="main clearfix">
+        <div class="row main-content">
+          <div class="col col-md-8 col-sm-12">
+            {% block header %}
+            <h1 class="mb-3">{% block header_title %}Vétérinaire St Clément{% endblock %}</h1>
+            {% endblock header %}
+            {% block body %}
+            BODY
+            {% endblock body %}
+          </div>
+          <div class="col col-md-4 col-sm-12">
+            {% block menu_top %}
+            <address>
+              <strong>Cabinet Vétérinaire St Clément</strong><br/>
+              21 Avenue Chanzy<br/>
+              44000 Nantes<br/>
+              <strong><a href="tel:+33228248896">Tél&puncsp;: 02&nbsp;28&nbsp;24&nbsp;88&nbsp;96</a></strong><br/>
+              <strong><a href="mailto:veterinaire.saint.clement@gmail.com">veterinaire.saint.clement@gmail.com</a></strong>
+            </address>
+            {% endblock menu_top %}
+            {% block menu %}
+            COUCOU
+            {% endblock menu %}
+          </div>
+        </div>
+      </div>
+      {% endblock main_content %}
+    </div>
+    {% endblock layout %}
   </main>
-</div>
-
 {{ encore_entry_script_tags('app.client') }}
 {{ encore_entry_script_tags('app.gestion') }}
 {% block asset_footer_custom %}{% endblock %}

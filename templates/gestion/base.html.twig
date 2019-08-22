@@ -3,7 +3,7 @@
 {% block breadcrumb %}
 <div class="container">
   <div class="row">
-    <div class="col-md-11">
+    <div class="col">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           {% block breadcrumb_content %}
@@ -18,26 +18,19 @@
 
 {% block layout %}
 <div class="container">
-  {% block header %}
-  <div class="row header-content">
-    <div class="col-md-5 col-sm-12 col-title">
-      <h1>{% block header_title %}{{ block('title') }}{% endblock %}</h1>
-    </div>
-    <div class="col col-intro">
-      {% block header_text %}
-      {% endblock %}
-    </div>
-  </div>
-  {% endblock %}
-
   {% block main_content %}
   <div class="main clearfix">
     <div class="row main-content">
       <div class="col">
-        {% block body %}{% endblock %}
+        {% block header %}
+        <h1 class="mb-3">{% block header_title %}{{ block('title') }}{% endblock %}</h1>
+        {% endblock header %}
+        {% block body %}
+        BODY
+        {% endblock body %}
       </div>
     </div>
   </div>
-  {% endblock %}
+  {% endblock main_content %}
 </div>
-{% endblock %}
+{% endblock layout %}

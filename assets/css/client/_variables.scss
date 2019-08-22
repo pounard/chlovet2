@@ -1,14 +1,31 @@
 
+// Base
 $font-size-base: 1rem;
-
 $font-stack-nav: sans-serif;
 $font-stack-title: 'Trebuchet MS',Arial,sans-serif;
-$font-stack-regular: 'Work Sans', sans-serif;;
+$font-family-sans-serif: "The Antiqua B",Georgia,Droid-serif,serif;
+
+// Layout
+$shadow-color: rgba(0,0,0,.04);
+$shadow-border-color: #eff0f3;
+$body-bg-color: #f5f6f8;
+$body-content-border-color: #f5f5f5;
+$default-bg-color: white;
+
+// Typo
+$h1-font-size: $font-size-base * 2 !default;
+$h2-font-size: $font-size-base * 1.8 !default;
+$h3-font-size: $font-size-base * 1.6 !default;
+$h4-font-size: $font-size-base * 1.4 !default;
+$h5-font-size: $font-size-base * 1.2 !default;
+$h6-font-size: $font-size-base !default;
 
 // Primary
 $orange: #F18825;
 $gris-bleu: #485573;
 $gris-bleu-fonce: #252c3c;
+
+$body-color: #383f4e;
 
 // Espaces
 $family: #71C8E2;
@@ -31,9 +48,9 @@ $border-color: #D8D8D8;
 // breadcrumb
 $breadcrumb-padding-x: 0;
 $breadcrumb-bg: transparent;
-$breadcrumb-active-color: #fff;
+//$breadcrumb-active-color: #fff;
 $breadcrumb-divider: "›";
-$breadcrumb-divider-color: "#fff";
+//$breadcrumb-divider-color: "#fff";
 
 $custom-file-border-radius: 25px;
 $custom-file-button-bg: #fff;

@@ -18,9 +18,11 @@
 {% block body %}
 {% set data = page.data %}
 
-{% if data.teaser is defined and data.teaser.value is defined %}
-{{ data.teaser.value|raw }} {# @todo security #}
-{% endif %}
+<div class="teaser">
+  {% if data.teaser is defined and data.teaser.value is defined %}
+  {{ data.teaser.value|raw }} {# @todo security #}
+  {% endif %}
+</div>
 
 {% if data.body is defined and data.body.value is defined %}
 {{ data.body.value|raw }} {# @todo security #}

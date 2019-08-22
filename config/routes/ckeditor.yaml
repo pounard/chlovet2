@@ -1,0 +1,4 @@
+ckeditory_upload:
+    path: /ckeditor/upload
+    controller: App\Controller\CkeditorController::upload
+    methods: [GET, HEAD, POST, PUT]

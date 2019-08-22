@@ -1,1 +1,0 @@
-# Back-end (gestionnaire) skin

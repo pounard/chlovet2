@@ -47,11 +47,12 @@
 @import "~react-sortable-tree/style.css";
 
 // Custom styles
-@import "client/modules/mixins";
-@import "client/modules/typos";
+// @import "client/modules/mixins";
+@import "client/modules/typo";
 @import "client/modules/layout";
-@import "client/modules/header";
-@import "client/modules/tools";
-@import "client/modules/footer";
-@import "client/modules/breacrumb";
+@import "client/modules/page";
+// @import "client/modules/header";
+// @import "client/modules/tools";
+// @import "client/modules/footer";
+// @import "client/modules/breacrumb";
 @import "client/modules/menu";
