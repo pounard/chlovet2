@@ -2,6 +2,15 @@
 
 {% block title %}Arborescence du site{% endblock %}
 
+{% block navbar_left_custom %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ path('page_admin_route') }}">
+    <i class="fas fa-angle-left"></i>
+    Arborescence
+  </a>
+</li>
+{% endblock %}
+
 {% block breadcrumb_content %}
 <li class="breadcrumb-item"><a href="#">Administration</a></li>
 <li class="breadcrumb-item"><a href="{{ path('page_admin_route') }}">Arborescence du site</a></li>

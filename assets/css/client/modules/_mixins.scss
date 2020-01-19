@@ -1,0 +1,47 @@
+@mixin heading {
+    font-family: $font-family-header;
+    letter-spacing: -0.03rem;
+}
+@mixin block {
+    padding: ($grid-gutter-width / 2);
+    margin-bottom: ($grid-gutter-width / 2);
+    border-top: 2px solid transparent;
+    h2 {
+        text-transform: uppercase;
+        margin-bottom: ($grid-gutter-width / 2);
+        font-size: 1.1rem;
+    }
+    hr {
+        margin: ($grid-gutter-width / 2) auto;
+    }
+    p {
+        margin: 0;
+    }
+    @include media-breakpoint-down(md) {
+        padding: ($grid-gutter-width / 4);
+        h2 {
+            margin-bottom: ($grid-gutter-width / 4);
+        }
+        hr {
+            margin: ($grid-gutter-width / 4) auto;
+        }
+    }
+}
+@mixin hlaside {
+    @include block;
+    border-color: #829ace;
+    color: black;
+    background-color: #f4f4f4cc;
+}
+.halside {
+    @include hlaside;
+}
+@mixin halurgent {
+  @include hlaside;
+    color: #721c24;
+    background-color: #ffeded;
+    border-color: #ff9898;
+}
+.halurgent {
+    @include halurgent;
+}

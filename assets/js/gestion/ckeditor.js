@@ -1,5 +1,5 @@
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic/build/ckeditor';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import AppUploadPlugin from '../ckeditor/upload-adapter';
 
 const elements = document.querySelectorAll('[data-editor]');

@@ -2,8 +2,45 @@ img {
     max-width: 100%;
     height: auto;
 }
-
 p {
     font-size: 1rem;
+    margin-bottom: $p-spacing;
     line-height: 1.55;
+}
+.tel {
+    white-space: nowrap;
+}
+h1, h2, h3, h4, h5, h6 {
+  @include heading;
+}
+.typo {
+    h2, h3, h4, h5 {
+        font-weight: bold;
+        margin-top: $p-spacing * 2;
+        margin-bottom: $p-spacing;
+    }
+    h2 + h3, h3 + h4, h4 + h5 {
+        margin-top: 0;
+    }
+    figure {
+        margin: ($p-spacing * 2) auto;
+        figcaption {
+            @include heading;
+            font-size: $p-spacing;
+            margin-top: $p-spacing;
+            color: $text-muted;
+        }
+    }
+    ul {
+        margin-bottom: $p-spacing;
+        li {
+            margin-bottom: $p-spacing;
+        }
+    }
+}
+
+/* Home */
+.intro {
+    @include block;
+    border-color: $vert-bordure;
 }

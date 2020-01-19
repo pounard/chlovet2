@@ -1,4 +1,4 @@
-import FileRepository from '@ckeditor/ckeditor5-upload/src/filerepository';
+// import FileRepository from '@ckeditor/ckeditor5-build-classic';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { fetchToken, upload } from "../../dist/filechunk-front/upload";
 
@@ -10,6 +10,8 @@ import { fetchToken, upload } from "../../dist/filechunk-front/upload";
 
 export default function AppUploadPlugin(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+        // console.log("Loading upload plugin");
+        // console.log(loader);
         return new AppUploadAdapter(loader);
     };
 }
@@ -22,6 +24,8 @@ class AppUploadAdapter {
 
     doUpload(file) {
         const total = file.size;
+        // Somehow, "this" scope is lost... 
+        const self = this;
 
         return fetchToken()
             .then(token => upload(file, {
@@ -29,26 +33,31 @@ class AppUploadAdapter {
                 endpoint: "/filechunk/upload",
                 fieldname: "ckeditor", // "ckeditor", @todo needs to be pre-configured in session
                 // propose "special" fields with a fixed configuration in yaml config
-                onUpdate: (percent) => {
+                onUpdate: percent => {
                     percent = parseInt(percent, 10);
-                    this.loader.uploadTotal = total;
-                    this.loader.uploaded = Math.round(total * (percent / 100));
+                    self.loader.uploadTotal = total;
+                    self.loader.uploaded = Math.round(total * (percent / 100));
                 },
                 token: token,
             }))
             .then(data => {
-            	console.log(data);
-                return {"default": data.url};
+                // console.log(data);
+                return {
+                    default: data.url
+                };
             })
         ;
     }
 
     upload() {
-        console.log(this.loader.file);
-        console.log(this.loader);
+        // console.log(this.loader.file);
+        // console.log(this.loader);
+
+        // Somehow, "this" scope is lost... 
+        const self = this;
 
         if (this.loader.file.then) {
-            return this.loader.file.then(this.doUpload);
+            return this.loader.file.then(file => self.doUpload(file));
         }
 
         return this.doUpload(this.loader.file);

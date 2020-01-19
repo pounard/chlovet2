@@ -23,14 +23,19 @@
   <td>{{ item.creationDate|date('d/m/Y H:i') }}</td>
   <td>
     {% if revision %}
-    <a href="{{ path('page', {id: item.pageId}) }}" class="btn btn-sm btn-info">
-      Voir
+    <a href="{{ path('page', {id: item.pageId}) }}" class="btn">
+     <i class="fas fa-eye"></i>
+      <span class="sr-only">Voir</span>
     </a>
     {% endif %}
-    <a href="{{ path('page_admin_append', {id: item.pageId}) }}" class="btn btn-sm btn-info">
-      {% if revision %}Modifier{% else %}Créer{% endif %}
+    <a href="{{ path('page_admin_append', {id: item.pageId}) }}" class="btn">
+      <i class="fas fa-pencil-alt"></i>
+      <span class="sr-only">
+        {% if revision %}Modifier{% else %}Créer{% endif %}
+      </span>
     </a>
-    <a href="{{ path('page_admin_delete', {id: item.pageId}) }}" class="btn btn-sm btn-remove">
+    <a href="{{ path('page_admin_delete', {id: item.pageId}) }}" class="btn">
+      <i class="fas fa-trash"></i>
       <span class="sr-only">Supprimer</span>
     </a>
   </td>
@@ -38,7 +43,7 @@
 {%- endblock -%}
 
 {% block item_list %}
-<table class="table table-bordered table-hover table-sm">
+<table class="table">
   <thead>
     <tr>
       <th{% if query.sortField == 'pr.title' %} class="active"{% endif %}>

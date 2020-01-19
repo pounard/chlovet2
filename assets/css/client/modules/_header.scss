@@ -1,0 +1,59 @@
+.nav-link {
+    @include heading;
+    text-transform: uppercase;
+}
+#header {
+    /* Positionning */
+    position: fixed;
+    height: 145px; /* Force size for element after margin. */
+    top: 0;
+    left: 0;
+    right: 0;
+    /* Various tweaks */
+    > .nav {
+        padding-left: 0; /* Remove gutters */
+        padding-right: 0;
+    }
+    /* Beautify a bit */
+    box-shadow: 0 .4rem .4rem 0 $shadow-color;
+    border-top: .5rem solid $gris-bleu;
+    border-bottom: .1rem solid $shadow-border-color;
+    z-index: 2;
+}
+#adminbar, #main {
+    margin-top: 145px;
+}
+#main.with-adminbar {
+    margin-top: 0px;
+}
+@mixin fixed-header {
+    height: 65px;
+    font-size: 0.93rem;
+    box-shadow: none;
+    .navbar-brand {
+        padding: 0 !important;
+        img {
+            height: 34px;
+            width: auto;
+        }
+    }
+}
+.fix {
+    #header {
+        @include fixed-header;
+    }
+    #adminbar, #main {
+        margin-top: 65px;
+    }
+    #main.with-adminbar {
+        margin-top: 0px;
+    }
+}
+@include media-breakpoint-down(md) {
+    #header {
+        @include fixed-header;
+    }
+    #main {
+        margin-top: 65px;
+    }
+}

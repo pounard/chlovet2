@@ -1,3 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block breadcrumb_content %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-12">
+    <div class="intro">
+      <h2>
+        Bienvenue au cabinet vétérinaire St Clément à Nantes.
+      </h2>
+      <p>
+        Nos deux vétérinaires, le Dr Chloé Guénégan et le Dr Marie Raoux,
+        ainsi que notre auxiliaire spécialisée Justine Monet sont à votre
+        écoute pour vous conseiller et répondre vos demandes concernant
+        vos animaux de compagnie.
+      </p>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="halside">
+      <h2>
+        Nouveau&puncsp;: prise de rendez-vous en ligne sur Vetolib&puncsp;!
+      </h2>
+      <p>
+        Seules certaines plages horaires sont ouvertes en ligne, vous
+        pouvez nous contacter par téléphone si vous ne trouvez pas
+        d'horaires qui vous conviennent.
+      </p>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="halside">
+      <h2>Encore du texte</h2>
+      <p>
+        Venez manger des bonnes saucisses de la lama pendant la fête
+        de la laine à Saint-Denis, sensations garanties&puncsp;!
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock body %}
+
+{% block menu_top %}
+{{ parent() }}
+
+<div class="halurgent">
+  <h2>Urgences</h2>
+  <p>
+    En cas d'urgence, en dehors des heures d'ouverture du Cabinet, vous pouvez
+    joindre le <strong>Centre Hospitalier Vétérinaire Atlantia</strong>,
+    sur l'ile de Nantes au
+    <a class="tel" href="tel:+33240474009" title="Centre Hospitalier Vétérinaire Atlantia">
+      02&puncsp;40&puncsp;47&puncsp;40&puncsp;09
+    </a>,
+    ou bien les <strong>services d'urgences vétérinaires à domicile
+    Vétoadom44</strong> au
+    <a class="tel"  href="tel:+33240894444" title="Appeller les services d'urgences vétérinaires à domicile Vétoadom44">
+      02&puncsp;40&puncsp;89&puncsp;44&puncsp;44
+    </a>
+  </p>
+</div>
+{% endblock %}

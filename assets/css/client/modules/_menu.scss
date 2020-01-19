@@ -1,20 +1,24 @@
 .menu {
+    a {
+        color: $text-muted;
+    }
     &.nav {
         > li {
-            margin-bottom: 1em;
+            margin-bottom: 1rem;
             > a {
                 font-weight: bold;
+                font-color: $gris-bleu;
             }
             > .nav {
-                border-left: 2px solid $gris-bleu-fonce;
+                border-left: 2px solid $gris-bleu-clair;
             }
         }
     }
     &.nav {
         .nav {
-            padding-left: .75em;
-            margin-left: .75em;
-            border-left: 2px dotted $gris-bleu-fonce;
+            padding-left: .75rem;
+            margin-left: .75rem;
+            border-left: 2px dotted $gris-bleu-clair;
         }
     }
 }

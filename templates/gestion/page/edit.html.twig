@@ -2,6 +2,15 @@
 
 {% block title %}Edit {{ revision.title }}{% endblock %}
 
+{% block navbar_left_custom %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ path('page_admin_list') }}">
+    <i class="fas fa-angle-left"></i>
+    Pages
+  </a>
+</li>
+{% endblock %}
+
 {% block breadcrumb_content %}
 <li class="breadcrumb-item"><a href="#">Administration</a></li>
 <li class="breadcrumb-item"><a href="{{ path('page_admin_list') }}">Pages</a></li>
