@@ -13,7 +13,7 @@ final class PageController extends AbstractController
 
     public function home(): Response
     {
-        return $this->render('home-blank.html.twig');
+        return $this->render('home.html.twig');
     }
 
     public function page(string $id): Response

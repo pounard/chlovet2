@@ -12,10 +12,10 @@ use Ramsey\Uuid\UuidInterface;
  */
 trait MenuTrait
 {
-    private $children = [];
-    private $id;
-    private $page_id;
-    private $sorted = false;
+    private array $children = [];
+    private /* int */ $id;
+    private /* ?UuidInterface */ $page_id;
+    private bool $sorted = false;
 
     private function sortChildren(): void
     {

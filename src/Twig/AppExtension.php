@@ -8,8 +8,10 @@ use App\Entity\Menu;
 use App\Repository\MenuRepository;
 use Ramsey\Uuid\UuidInterface;
 use Twig\Environment;
+use Twig\TwigFunction;
+use Twig\Extension\AbstractExtension;
 
-final class AppExtension extends \Twig_Extension
+final class AppExtension extends AbstractExtension
 {
     private $debug = false;
     private $menuRepository;
@@ -39,10 +41,10 @@ final class AppExtension extends \Twig_Extension
     public function getFunctions()
     {
         return [
-            new \Twig_SimpleFunction('app_menu', [$this, 'renderMenu'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('app_menu_of', [$this, 'renderMenuOf'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('app_load_menu', [$this, 'loadMenu'], ['is_safe' => ['html']]),
-            new \Twig_SimpleFunction('app_load_menu_top', [$this, 'loadMenuTop'], ['is_safe' => ['html']]),
+            new TwigFunction('app_menu', [$this, 'renderMenu'], ['is_safe' => ['html']]),
+            new TwigFunction('app_menu_of', [$this, 'renderMenuOf'], ['is_safe' => ['html']]),
+            new TwigFunction('app_load_menu', [$this, 'loadMenu'], ['is_safe' => ['html']]),
+            new TwigFunction('app_load_menu_top', [$this, 'loadMenuTop'], ['is_safe' => ['html']]),
         ];
     }
 

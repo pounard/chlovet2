@@ -10,11 +10,11 @@ final class MenuItem
 {
     use MenuTrait;
 
-    private $parent_id;
-    private $route;
-    private $slug;
-    private $title;
-    private $weight;
+    private /* ?int */ $parent_id;
+    private /* string */ $route;
+    private /* string */ $slug;
+    private /* ?string */ $title;
+    private int $weight = 0;
 
     public function getId(): int
     {

@@ -14,7 +14,7 @@ use MakinaCorpus\Calista\Query\Query;
 
 final class PageAdminRevisionsDatasource extends AbstractDatasource
 {
-    private $repository;
+    private PageRepository $repository;
 
     public function __construct(PageRepository $repository)
     {

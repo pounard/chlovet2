@@ -9,15 +9,21 @@ use Ramsey\Uuid\UuidInterface;
 
 final class Page
 {
-    private $created_at;
-    private $revision_at;
-    private $current_revision;
-    private $id;
-    private $title;
+    private \DateTimeInterface $created_at;
+    private ?\DateTimeInterface $revision_at = null;
+    private ?int $current_revision = null;
+    private UuidInterface $id;
+    private ?string $title = null;
+
+    private function __construct()
+    {
+        $this->id = Uuid::uuid4();
+        $this->created_at = new \DateTimeImmutable();
+    }
 
     public function getId(): UuidInterface
     {
-        return $this->id ?? ($this->id = Uuid::uuid4());
+        return $this->id;
     }
 
     public function getCurrentRevision(): ?int
@@ -27,7 +33,7 @@ final class Page
 
     public function getCreationDate(): \DateTimeInterface
     {
-        return $this->created_at ?? ($this->created_at = new \DateTimeImmutable());
+        return $this->created_at;
     }
 
     public function getRevisionDate(): ?\DateTimeInterface

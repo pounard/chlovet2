@@ -1,5 +1,20 @@
 goat:
     runner:
-        driver: doctrine
+        default:
+              driver: doctrine
+              doctrine_connection: default
+              metadata_cache: apcu
+              metadata_cache_prefix: "app_%kernel.environment%"
+        logging:
+              autocommit: true
+              driver: doctrine
+              doctrine_connection: logging
+              metadata_cache: apcu
+              metadata_cache_prefix: "app_%kernel.environment%"
     query:
         enabled: true
+    domain:
+        enabled: false
+        event_store: true
+        lock_service: true
+  

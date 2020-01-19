@@ -8,14 +8,14 @@ use App\Entity\PageRevision;
 use MakinaCorpus\Calista\Bridge\Symfony\DependencyInjection\ViewFactory;
 use MakinaCorpus\Calista\Datasource\DatasourceInputDefinition;
 use MakinaCorpus\Calista\View\ViewDefinition;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type as Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class PageAdminController extends Controller
+final class PageAdminController extends AbstractController
 {
     use ControllerTrait;
 

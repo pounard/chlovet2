@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Repository\PageRepository;
 use App\Repository\MenuRepository;
+use App\Repository\PageRepository;
 use Goat\Bridge\Symfony\DependencyInjection\RunnerFactory;
 use Goat\Converter\ConverterInterface;
 use Goat\Query\Query;
 use Goat\Runner\Runner;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * Exemple:
@@ -25,10 +24,10 @@ final class MigrateCommand extends Command
 {
     const SQLDATE = 'Y-m-d H:i:s';
 
-    private $converter;
-    private $menuRepository;
-    private $pageRepository;
-    private $runner;
+    private ConverterInterface $converter;
+    private MenuRepository $menuRepository;
+    private PageRepository $pageRepository;
+    private Runner $runner;
     protected static $defaultName = 'app:migrate';
 
     /**

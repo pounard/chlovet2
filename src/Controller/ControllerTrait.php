@@ -16,10 +16,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 trait ControllerTrait
 {
-    private $debug = false;
-    private $menuRepository;
-    private $repository;
-    private $serializer;
+    private bool $debug = false;
+    private MenuRepository $menuRepository;
+    private PageRepository $repository;
+    private SerializerInterface $serializer;
 
     public function __construct(PageRepository $repository, MenuRepository $menuRepository, SerializerInterface $serializer, bool $debug = false)
     {

@@ -8,25 +8,41 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-use Symfony\Component\HttpFoundation\File\MimeType\MimeTypeGuesser;
+use Symfony\Component\Mime\MimeTypes;
 
 final class EditorialFile
 {
-    private $created_at;
-    private $filesize;
-    private $id;
-    private $mimetype;
-    private $name;
-    private $sha1sum;
-    private $uri;
+    private \DateTimeImmutable $created_at;
+    private int $filesize;
+    private ?int $id;
+    private string $mimetype = 'application/octet-stream';
+    private string $name;
+    private ?string $sha1sum;
+    private string $uri;
 
     /**
      * Use static methods or hydration.
      *
      * @codeCoverageIgnore
      */
-    private function __construct()
+    private function __construct(string $uri)
     {
+        self::ensureFilename($uri);
+
+        $this->created_at = new \DateTimeImmutable('@'.\filemtime($uri));
+        $this->uri = $uri;
+        $this->filesize = \filesize($uri);
+        $this->mimetype = self::guessUriMimeType($uri);
+        $this->name = \basename($uri);
+        $this->sha1sum = \sha1_file($uri);
+    }
+
+    /**
+     * Guess URI mime type
+     */
+    public static function guessUriMimeType(string $uri): string
+    {
+        return MimeTypes::getDefault()->guessMimeType($uri) ?? 'application/octet-stream';
     }
 
     /**
@@ -34,17 +50,7 @@ final class EditorialFile
      */
     public static function fromFile(string $uri): self
     {
-        self::ensureFilename($uri);
-
-        $ret = new self;
-        $ret->created_at = new \DateTimeImmutable('@'.\filemtime($uri));
-        $ret->uri = $uri;
-        $ret->filesize = \filesize($uri);
-        $ret->mimetype = MimeTypeGuesser::getInstance()->guess($uri);
-        $ret->name = \basename($uri);
-        $ret->sha1sum = \sha1_file($uri);
-
-        return $ret;
+        return new self($uri);
     }
 
     /**
@@ -121,7 +127,7 @@ final class EditorialFile
      */
     public function getMimetype(): string
     {
-        return $this->mimetype ?? ($this->mimetype = MimeTypeGuesser::getInstance()->guess($this->uri));
+        return $this->mimetype;
     }
 
     /**

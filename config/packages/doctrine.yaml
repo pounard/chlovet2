@@ -3,5 +3,16 @@ parameters:
 
 doctrine:
     dbal:
-        driver: 'pdo_pgsql'
-        url: '%env(resolve:DATABASE_URL)%'
+        default_connection: default
+        connections:
+            default:
+                driver: 'pdo_pgsql'
+                server_version: '9.6'
+                charset: utf8
+                url: '%env(resolve:DATABASE_URL)%'
+                application_name: '%env(resolve:DATABASE_URL)%'
+            logging:
+                driver: 'pdo_pgsql'
+                server_version: '9.6'
+                charset: utf8
+                url: '%env(resolve:DATABASE_URL)%'

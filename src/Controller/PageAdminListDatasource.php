@@ -13,7 +13,7 @@ use MakinaCorpus\Calista\Query\Query;
 
 final class PageAdminListDatasource extends AbstractDatasource
 {
-    private $repository;
+    private PageRepository $repository;
 
     public function __construct(PageRepository $repository)
     {

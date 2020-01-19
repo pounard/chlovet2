@@ -1,5 +1,0 @@
-goat_hydrator:
-    blacklist:
-        - DateTime
-        - DateTimeImmutable
-        - DateTimeInterface

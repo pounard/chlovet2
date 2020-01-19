@@ -71,17 +71,14 @@
     "makinacorpus/filechunk-bundle": {
         "version": "1.0.0-beta7"
     },
-    "makinacorpus/generated-hydrator": {
-        "version": "2.0.3"
-    },
-    "makinacorpus/goat-bundle": {
-        "version": "1.0.0-alpha1"
-    },
-    "makinacorpus/goat-hydrator": {
-        "version": "1.0.0-alpha4"
+    "makinacorpus/goat": {
+        "version": "1.0.3"
     },
     "makinacorpus/goat-query": {
         "version": "1.0.0-alpha10"
+    },
+    "makinacorpus/normalizer": {
+        "version": "dev-master"
     },
     "makinacorpus/php-layout": {
         "version": "1.0.0-alpha2"
@@ -89,11 +86,23 @@
     "neitanod/forceutf8": {
         "version": "v2.0.2"
     },
+    "nikic/php-parser": {
+        "version": "v4.3.0"
+    },
+    "ocramius/code-generator-utils": {
+        "version": "1.0.0"
+    },
+    "ocramius/generated-hydrator": {
+        "version": "3.0.0"
+    },
     "ocramius/package-versions": {
         "version": "1.3.0"
     },
     "ocramius/proxy-manager": {
         "version": "2.2.2"
+    },
+    "php": {
+        "version": "7.3.4"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -110,6 +119,9 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
     "psr/log": {
         "version": "1.1.0"
     },
@@ -121,6 +133,9 @@
     },
     "symfony/cache": {
         "version": "v4.2.1"
+    },
+    "symfony/cache-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/config": {
         "version": "v4.2.1"
@@ -134,9 +149,6 @@
             "ref": "0fa049c19069a65f52c1c181d64be3de672c1504"
         }
     },
-    "symfony/contracts": {
-        "version": "v1.0.2"
-    },
     "symfony/debug": {
         "version": "v4.2.1"
     },
@@ -149,8 +161,14 @@
     "symfony/dotenv": {
         "version": "v4.2.1"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.2"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.1"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.7"
     },
     "symfony/filesystem": {
         "version": "v4.2.1"
@@ -242,14 +260,29 @@
     "symfony/security-core": {
         "version": "v4.2.2"
     },
+    "symfony/security-csrf": {
+        "version": "v5.0.2"
+    },
+    "symfony/security-guard": {
+        "version": "v5.0.2"
+    },
+    "symfony/security-http": {
+        "version": "v5.0.2"
+    },
     "symfony/serializer": {
         "version": "v4.2.2"
     },
     "symfony/serializer-pack": {
         "version": "v1.0.2"
     },
+    "symfony/service-contracts": {
+        "version": "v2.0.1"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.2"
+    },
+    "symfony/translation-contracts": {
+        "version": "v2.0.1"
     },
     "symfony/twig-bridge": {
         "version": "v4.2.2"
@@ -293,6 +326,12 @@
     "twig/twig": {
         "version": "v2.6.0"
     },
+    "voku/portable-ascii": {
+        "version": "1.4.6"
+    },
+    "voku/stop-words": {
+        "version": "2.0.1"
+    },
     "webmozart/assert": {
         "version": "1.4.0"
     },
@@ -300,6 +339,12 @@
         "version": "3.3.1"
     },
     "zendframework/zend-eventmanager": {
+        "version": "3.2.1"
+    },
+    "zendframework/zend-hydrator": {
+        "version": "2.4.2"
+    },
+    "zendframework/zend-stdlib": {
         "version": "3.2.1"
     }
 }
