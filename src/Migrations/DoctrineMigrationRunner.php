@@ -3,9 +3,11 @@
 namespace App\Migrations;
 
 use Doctrine\Migrations\AbstractMigration;
+use Goat\Converter\ConverterInterface;
 use Goat\Query\DeleteQuery;
 use Goat\Query\InsertQueryQuery;
 use Goat\Query\InsertValuesQuery;
+use Goat\Query\Query;
 use Goat\Query\QueryBuilder;
 use Goat\Query\QueryError;
 use Goat\Query\SelectQuery;
@@ -16,6 +18,7 @@ use Goat\Runner\ResultIterator;
 use Goat\Runner\Runner;
 use Goat\Runner\Transaction;
 use Goat\Runner\Driver\DriverError;
+use Goat\Runner\Metadata\ResultMetadataCache;
 
 /**
  * @todo
@@ -51,17 +54,11 @@ class DoctrineMigrationRunner implements Runner
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function setDebug(bool $value): void
     {
         $this->runner->setDebug($value);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isDebugEnabled(): bool
     {
         return $this->runner->isDebugEnabled();
@@ -86,8 +83,8 @@ class DoctrineMigrationRunner implements Runner
 
         try {
             $prepared = $this->getFormatter()->prepare($query, $arguments);
-            $rawSQL = $prepared->getQuery();
-            $args = $prepared->getArguments();
+            $rawSQL = $prepared->getRawSQL();
+            $args = $prepared->prepareArgumentsWith($this->runner->getConverter(), $query, $arguments);
 
             $this->addSql($rawSQL, $args);
 
@@ -132,7 +129,7 @@ class DoctrineMigrationRunner implements Runner
 
             public function insertValues($relation): InsertValuesQuery
             {
-                $query = new InsertQueryQuery($relation);
+                $query = new InsertValuesQuery($relation);
                 $query->setRunner($this->migrationRunner);
 
                 return $query;
@@ -152,6 +149,11 @@ class DoctrineMigrationRunner implements Runner
                 $query->setRunner($this->migrationRunner);
 
                 return $query;
+            }
+
+            public function prepare(callable $callback, ?string $identifier = null): Query
+            {
+                throw new \BadMethodCallException("%s::prepare() is not supported during migrations", QueryBuilder::class);
             }
         };
     }
@@ -176,6 +178,14 @@ class DoctrineMigrationRunner implements Runner
      * {@inheritdoc}
      */
     public function supportsDeferingConstraints(): bool
+    {
+        return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsTransactionSavepoints(): bool
     {
         return false;
     }
@@ -215,7 +225,15 @@ class DoctrineMigrationRunner implements Runner
     /**
      * {@inheritdoc}
      */
-    public function startTransaction(int $isolationLevel = Transaction::REPEATABLE_READ, bool $allowPending = false): Transaction
+    public function createTransaction(int $isolationLevel = Transaction::REPEATABLE_READ, bool $allowPending = true): Transaction
+    {
+        throw new \BadMethodCallException("Sorry, but transactions will automatically handled by Doctrine itself during migrations.");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function beginTransaction(int $isolationLevel = Transaction::REPEATABLE_READ, bool $allowPending = true): Transaction
     {
         throw new \BadMethodCallException("Sorry, but transactions will automatically handled by Doctrine itself during migrations.");
     }
@@ -226,5 +244,29 @@ class DoctrineMigrationRunner implements Runner
     public function runTransaction(callable $callback, int $isolationLevel = Transaction::REPEATABLE_READ)
     {
         throw new \BadMethodCallException("Sorry, but transactions will automatically handled by Doctrine itself during migrations.");
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setResultMetadataCache(ResultMetadataCache $metadataCache): void
+    {
+        $this->runner->setResultMetadataCache($metadataCache);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isResultMetadataSlow(): bool
+    {
+        return $this->runner->isResultMetadataSlow();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConverter(): ConverterInterface
+    {
+        return $this->runner->getConverter();
     }
 }
