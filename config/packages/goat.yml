@@ -1,16 +1,13 @@
 goat:
     runner:
         default:
-              driver: doctrine
-              doctrine_connection: default
+              driver: ext-pgsql
               metadata_cache: apcu
-              metadata_cache_prefix: "app_%kernel.environment%"
+              url: '%env(resolve:DATABASE_URL)%'
         logging:
-              autocommit: true
-              driver: doctrine
-              doctrine_connection: logging
+              driver: ext-pgsql
               metadata_cache: apcu
-              metadata_cache_prefix: "app_%kernel.environment%"
+              url: '%env(resolve:DATABASE_URL)%'
     query:
         enabled: true
     domain:

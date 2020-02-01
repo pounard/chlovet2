@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15b2ea1ecd3d1645a9edf74feb3b3ad5",
+    "content-hash": "7979585e0289d4725648aa438d755b82",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1253,16 +1253,16 @@
         },
         {
             "name": "makinacorpus/goat",
-            "version": "1.0.3",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/makinacorpus/php-goat.git",
-                "reference": "8e6ae64667cdffc565996e45a320751c00ac5b1c"
+                "reference": "8134bb2c435681fddebe0ba3a9ed892269e6622f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/makinacorpus/php-goat/zipball/8e6ae64667cdffc565996e45a320751c00ac5b1c",
-                "reference": "8e6ae64667cdffc565996e45a320751c00ac5b1c",
+                "url": "https://api.github.com/repos/makinacorpus/php-goat/zipball/8134bb2c435681fddebe0ba3a9ed892269e6622f",
+                "reference": "8134bb2c435681fddebe0ba3a9ed892269e6622f",
                 "shasum": ""
             },
             "require": {
@@ -1271,28 +1271,32 @@
                 "ramsey/uuid": "^3.8"
             },
             "replace": {
+                "makinacorpus/generated-hydrator": "*",
                 "makinacorpus/goat-bundle": "*",
                 "makinacorpus/goat-domain": "*",
+                "makinacorpus/goat-hydrator": "*",
                 "makinacorpus/goat-preferences": "*"
             },
             "require-dev": {
-                "makinacorpus/amqp-patterns": "*",
-                "makinacorpus/goat-query": "^1.0.0-alpha8",
+                "makinacorpus/calista-core": "^1.0",
+                "makinacorpus/goat-query": "^1.0.0-alpha30",
                 "phpunit/phpunit": "7.*",
+                "symfony/config": "^4.4 || ^5.0",
                 "symfony/console": "^4.0|^5.0",
                 "symfony/dependency-injection": "^4.2|^5.0",
                 "symfony/event-dispatcher": "^4.0|^5.0",
                 "symfony/form": "^4|^5.0",
+                "symfony/http-kernel": "^4.4 || ^5.0",
                 "symfony/messenger": "^4.4|^5.0",
-                "symfony/serializer-pack": "^1.0|^5.0"
+                "symfony/serializer-pack": "^1.0|^5.0",
+                "twig/twig": "^2.5 || ^3.0"
             },
             "suggest": {
                 "doctrine/dbal": "For query builder usage over a Doctrine PDO connection",
                 "doctrine/doctrine-bundle": "For query builder usage over a Doctrine PDO connection",
                 "jdorn/sql-formatter": "Formats SQL queries nicely in Symfony profiler plugin",
-                "makinacorpus/amqp-patterns": "Allows pluging the domain's dispatcher on an AMQP broker",
-                "makinacorpus/goat-hydrator": "Brings a graph object hydrator for performant object hydration",
                 "makinacorpus/goat-query": "For using PostgreSQL implementations of everything",
+                "ocramius/generated-hydrator": "For using the makinacorpus/goat-hydrator replacement",
                 "symfony/form": "For preferences form widget usage",
                 "symfony/messenger": "For domain's event store and message publisher usage",
                 "symfony/serializer-pack": "For better object serialisation and normalisation within the bus"
@@ -1302,6 +1306,7 @@
                 "psr-4": {
                     "Goat\\Bridge\\Symfony\\": "src/Bridge/Symfony/",
                     "Goat\\Domain\\": "src/Domain/",
+                    "Goat\\Hydrator\\": "src/Hydrator/",
                     "Goat\\Preferences\\": "src/Preferences"
                 },
                 "classmap": [
@@ -1351,20 +1356,20 @@
                 "preferences",
                 "symfony"
             ],
-            "time": "2019-12-04T13:31:51+00:00"
+            "time": "2020-01-31T09:15:35+00:00"
         },
         {
             "name": "makinacorpus/goat-query",
-            "version": "1.0.0-alpha29",
+            "version": "1.0.0-alpha30",
             "source": {
                 "type": "git",
-                "url": "https://github.com/pounard/goat-query.git",
-                "reference": "b9a9031541aa0ee058a1fe933962575be9dca84b"
+                "url": "git@github.com:pounard/goat-query.git",
+                "reference": "185f3b5e1602aa6c3f6a92b1e326c5cb489ff692"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-query/zipball/b9a9031541aa0ee058a1fe933962575be9dca84b",
-                "reference": "b9a9031541aa0ee058a1fe933962575be9dca84b",
+                "url": "https://api.github.com/repos/pounard/goat-query/zipball/185f3b5e1602aa6c3f6a92b1e326c5cb489ff692",
+                "reference": "185f3b5e1602aa6c3f6a92b1e326c5cb489ff692",
                 "shasum": ""
             },
             "require": {
@@ -1407,7 +1412,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2019-10-01T10:57:49+00:00"
+            "time": "2020-01-24T15:05:58+00:00"
         },
         {
             "name": "neitanod/forceutf8",
