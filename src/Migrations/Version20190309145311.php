@@ -9,12 +9,12 @@ use Doctrine\DBAL\Schema\Schema;
 
 final class Version20190309145311 extends AbstractAppMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Editorial file schema';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $this->addSql(<<<SQL
 create table "editorial_file" (

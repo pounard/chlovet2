@@ -12,12 +12,12 @@ use Doctrine\DBAL\Schema\Schema;
  */
 final class Version20190209105703 extends AbstractAppMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return "Database initialisation, you need the 'uuid-ossp' pgsql extension to be enabled in your database.";
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // If no corresponding line exists in "page_state" it means that
         // page is unpublished and will not be visible in front.

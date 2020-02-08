@@ -12,12 +12,12 @@ use Doctrine\DBAL\Schema\Schema;
  */
 final class Version20190223090004 extends AbstractAppMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return 'Mapping table for migrations';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $this->addSql(<<<SQL
 create table if not exists "drupal_map" (
