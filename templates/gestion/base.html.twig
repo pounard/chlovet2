@@ -74,3 +74,7 @@
   {% endblock main_content %}
 </div>
 {% endblock layout %}
+
+{% block asset_footer_gestion %}
+{{ encore_entry_script_tags('app.gestion') }}
+{% endblock %}

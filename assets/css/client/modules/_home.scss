@@ -1,0 +1,53 @@
+
+/* les fameux carrés */
+#primary-links {
+    padding-top: $grid-gutter-width;
+
+    a {
+        @include heading;
+
+        /* for fun */
+        box-shadow: 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.19);
+
+        /* center text */
+        position: relative;
+        > span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+        }
+
+        /* make it a square (actually a bit less height) */
+        display: block;
+        width: 100%;
+        &:before {
+            content: "";
+            display: block;
+            padding-top: 70%;
+        }
+    }
+
+    /* make it smaller */
+    > div {
+        padding: 0 $grid-gutter-width / 2; 
+    }
+
+    /* color stuff */
+    > .row > div:nth-child(1n) a {
+        border: 0.2rem solid #829ace;
+        background: #e5e8f0;
+    }
+    > .row > div:nth-child(2n) a {
+        border: 0.2rem solid #eab2b2;
+        background: #f0e5e5;
+    }
+    > .row > div:nth-child(3n) a {
+        border: 0.2rem solid #85b082;
+        background: #eaf2ea;
+    }
+    > .row > div:nth-child(4n) a {
+        border: 0.2rem solid #cebf82;
+        background: #f0efe5;
+    }
+}

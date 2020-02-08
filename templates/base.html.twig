@@ -10,46 +10,81 @@
 <body>
   {% block header_wrapper %}
   <header id="header">
-    <nav class="navbar navbar-expand-lg navbar-light container" id="main-menu">
-      <a class="navbar-brand" href="{{ path('index') }}" title="Vétérinaire St Clément Nantes - Retour à l'accueil">
-        <img src="{{ asset('/img/logo-cabinet-notext.png') }}" alt="">
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header-menu" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <ul class="navbar-nav" id="header-menu">
-        {% set menu = app_load_menu_top() %}
-        {% for item in menu.children %}
-        {% set pageId = item.pageId %}
-        {% if pageId %}
-        {% if false %} {# current #}
-        <li class="nav-item active">
-          <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }} <span class="sr-only">(current)</span></a>
-        </li>
-        {% elseif false %} {# active in trail #}
-        <li class="nav-item active">
-          <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
-        </li>
-        {% endif %}
-        {% else %}
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">{{ item.title }}</a>
-        </li>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </nav>
+    {# This one is a block, and will keep its position #}
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light" id="header-top">
+        <div class="col col-auto">
+          <a class="navbar-brand" href="{{ path('index') }}" title="Vétérinaire St Clément Nantes - Retour à l'accueil">
+            <img src="{{ asset('/img/logo-cabinet-notext.png') }}" alt="">
+          </a>
+        </div>
+        <div class="col mr-auto site-title">
+          Vétérinaire St Clément Nantes
+        </div>
+        <ul class="navbar-nav col-auto">
+          <li class="nav-item">
+            <a href="https://vetolib.vet/clinique-veterinaire/nantes/cabinet-veterinaire-st-clement-nantes" class="btn btn-success">
+              Prendre <strong>RDV en ligne</strong>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="tel:+33228248896 " class="btn btn-warning">
+              Appeler au <strong>02 28 24 88 96</strong>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    {# This one will be sticky (not fixed) and always remain on the screen #}
+    <div id="main-menu-container">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light" id="main-menu">
+          <div class="col">
+            <a class="navbar-brand" href="{{ path('index') }}" title="Vétérinaire St Clément Nantes - Retour à l'accueil">
+              <img src="{{ asset('/img/logo-cabinet-notext.png') }}" alt="">
+            </a>
+          </div>
+          {#
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header-menu" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+           #}
+          <ul class="navbar-nav col-auto" id="header-menu">
+            {% set menu = app_load_menu_top() %}
+            {% for item in menu.children %}
+            {% set pageId = item.pageId %}
+            {% if pageId %}
+            {% if false %} {# current #}
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }} <span class="sr-only">(current)</span></a>
+            </li>
+            {% elseif false %} {# active in trail #}
+            <li class="nav-item active">
+              <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ path('page', {id: pageId}) }}">{{ item.title }}</a>
+            </li>
+            {% endif %}
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link disabled" href="#">{{ item.title }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+          <div class="col"></div> {# Centers menu #}
+        </nav>
+      </div>
+    </div>
   </header>
   <script>
     ;(() => {
-      const header = document.querySelector('#header');
-      const stick = header.offsetTop;
+      const mainMenu = document.querySelector('#main-menu');
+      const stick = mainMenu.offsetTop;
       window.onscroll = () => {
-        if (window.pageYOffset > stick) {
+        if (window.pageYOffset >= stick) {
           document.body.classList.add('fix');
         } else {
           document.body.classList.remove('fix');
@@ -61,6 +96,8 @@
   {% block navbar_layout %}
   {% endblock %}
   <main id="main" class="{% block main_class %}{% endblock %}">
+    {% block main_top %}
+    {% endblock %}
     {% block breadcrumb %}
     <div class="container">
       <div class="row" id="breadcrumb-row">
@@ -118,7 +155,7 @@
     {% endblock layout %}
   </main>
 {{ encore_entry_script_tags('app.client') }}
-{{ encore_entry_script_tags('app.gestion') }}
+{% block asset_footer_gestion %}{% endblock %}
 {% block asset_footer_custom %}{% endblock %}
 </body>
 </html>

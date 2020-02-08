@@ -1,0 +1,22 @@
+{
+  "entrypoints": {
+    "app.client": {
+      "js": [
+        "/build/runtime.js",
+        "/build/app.client.js"
+      ],
+      "css": [
+        "/build/app.client.css"
+      ]
+    },
+    "app.gestion": {
+      "js": [
+        "/build/runtime.js",
+        "/build/app.gestion.js"
+      ],
+      "css": [
+        "/build/app.gestion.css"
+      ]
+    }
+  }
+}

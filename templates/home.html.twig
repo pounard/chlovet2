@@ -1,5 +1,23 @@
 {% extends 'base.html.twig' %}
 
+{% block main_top %}
+<div id="banner">
+  <img src="{{ asset('/img/cat-banner.jpg') }}"/>
+</div>
+<div class="container" id="primary-links">
+  <div class="row">
+    {% for text in ['Services', 'Clinique', 'Équipe', 'Conseil'] %}
+    {# <div class="col-xs-12 col-sm-6"> #}
+    <div class="col-3">
+      <a href="#">
+        <span>Services</span>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
 {% block breadcrumb %}{% endblock %}
 
 {% block body %}

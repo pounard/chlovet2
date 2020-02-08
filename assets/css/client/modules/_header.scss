@@ -1,35 +1,94 @@
+@mixin border-light {
+    box-shadow: 0 .4rem .4rem 0 $shadow-color;
+    border-bottom: .1rem solid $shadow-border-color;
+}
+
 .nav-link {
     @include heading;
     text-transform: uppercase;
 }
 #header {
-    /* Positionning */
-    position: fixed;
-    height: 145px; /* Force size for element after margin. */
-    top: 0;
-    left: 0;
-    right: 0;
-    /* Various tweaks */
-    > .nav {
-        padding-left: 0; /* Remove gutters */
+    padding: 0;
+    margin: 0;
+    > div {
+        /* Remove gutters of navs (avoid transparent gutters). */
+        padding-left: 0;
         padding-right: 0;
+        background: white;
+        /* Always on top (for fixed main menu). */
+        z-index: 2;
     }
-    /* Beautify a bit */
-    box-shadow: 0 .4rem .4rem 0 $shadow-color;
     border-top: .5rem solid $gris-bleu;
-    border-bottom: .1rem solid $shadow-border-color;
-    z-index: 2;
 }
-#adminbar, #main {
-    margin-top: 145px;
+nav#header-top {
+    height: $header-top-height;
+    > * {
+        padding-left: $grid-gutter-width / 4;
+        padding-right: $grid-gutter-width / 4;
+    }
+    .navbar-brand {
+        margin-right: 0;
+    }
+    .site-title {
+        @include heading;
+        font-size: 1.45rem;
+    }
 }
-#main.with-adminbar {
-    margin-top: 0px;
-}
-@mixin fixed-header {
-    height: 65px;
+nav#main-menu {
+    @include border-light;
+    /* Position */
+    height: $header-main-menu-height;
     font-size: 0.93rem;
-    box-shadow: none;
+}
+
+/* Buttons styling */
+#header {
+    .btn {
+        @include heading;
+        margin-left: $grid-gutter-width / 4;
+        border-radius: 2rem;
+
+        /* for fun */
+        box-shadow: 0 0.2rem 0.2rem 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+/*
+ * Relative to width:
+ *   - considering desktop will always be 16:9, we want the banner
+ *     to be about 40% height of screen: it's 9 / 16 * .3 vw height
+ *     which gives us approx. 22%,
+ *   - mobiles are different, since they stretch vertically, so we
+ *     we are just going to keep a fair 16:9 ratio, which gives us
+ *     9 / 16 vw which is approx 56%.
+ */
+#banner {
+    height: 56vw;
+    overflow: hidden;
+    position: relative;
+    > img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        max-width: none;
+        width: auto;
+        height: 100%;
+    }
+    border-bottom: .1rem solid $shadow-border-color;
+}
+@include media-breakpoint-up(sm) {
+    #banner {
+        height: 22vw;
+        > img {
+            width: 100%;
+            height: auto;
+        }
+    }
+}
+
+nav#main-menu {
+    /* box-shadow: none; */
+    /* @todo for now, make logo smaller. */
     .navbar-brand {
         padding: 0 !important;
         img {
@@ -38,22 +97,26 @@
         }
     }
 }
+
+#header-top .navbar-brand {
+    display: inline-block;
+}
+#main-menu .navbar-brand {
+    display: none;
+}
 .fix {
-    #header {
-        @include fixed-header;
+    #header-top .navbar-brand {
+        display: none;
     }
-    #adminbar, #main {
-        margin-top: 65px;
+    #main-menu .navbar-brand {
+        display: inline-block;
     }
-    #main.with-adminbar {
-        margin-top: 0px;
+    #main-menu-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
     }
+    padding-top: $header-main-menu-height;
 }
-@include media-breakpoint-down(md) {
-    #header {
-        @include fixed-header;
-    }
-    #main {
-        margin-top: 65px;
-    }
-}
+ 
