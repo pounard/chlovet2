@@ -8,6 +8,52 @@
 <title>{% block title %}Accueil{% endblock %} | Cabinet vétérinaire Saint Clément à Nantes</title>
 </head>
 <body>
+  {% if is_granted("ROLE_CHEF") %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
+    <div class="container p-0">
+      {% block navbar_left %}
+      <ul class="navbar-nav mr-auto">
+        {% block navbar_left_custom %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('admin_index') }}">
+            <i class="fas fa-wrench"></i>
+            Administration
+          </a>
+        </li>
+        {% endblock %}
+      </ul>
+      {% endblock %}
+      {% block navbar_right %}
+      <ul class="navbar-nav">
+        {% block navbar_right_custom %}{% endblock %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="admin-menu" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Aller à
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="admin-menu">
+            <a class="dropdown-item" href="{{ path('page_admin_list') }}">
+              <i class="fas fa-list"></i>
+              Pages
+            </a>
+            <a class="dropdown-item" href="{{ path('page_admin_route') }}">
+              <i class="fas fa-tree"></i>
+              Arborescence
+            </a>
+            {% if app.user %}
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ path('security_logout') }}">
+              <i class="fas fa-sign-out-alt"></i>
+              Déconnexion
+            </a>
+            {% endif %}
+          </div>
+        </li>
+      </ul>
+      </ul>
+      {% endblock %}
+      </div>
+    </nav>
+  {% endif %}
   {% block header_wrapper %}
   <header id="header">
     {# This one is a block, and will keep its position #}
@@ -155,6 +201,9 @@
     {% endblock layout %}
   </main>
 {{ encore_entry_script_tags('app.client') }}
+{% if is_granted("ROLE_CHEF") %}
+{{ encore_entry_script_tags('app.gestion') }}
+{% endif %}
 {% block asset_footer_gestion %}{% endblock %}
 {% block asset_footer_custom %}{% endblock %}
 </body>
