@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Event;
+namespace App\EventSubscriber;
 
 use App\Repository\EditorialFileRepository;
 use MakinaCorpus\FilechunkBundle\FileEvent;
@@ -10,7 +10,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 final class FileEventSubscriber implements EventSubscriberInterface
 {
-    private $fileRepository;
+    private EditorialFileRepository $fileRepository;
 
     /**
      * Default constructor

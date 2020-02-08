@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Endpoint;
 
+use App\Controller\ControllerTrait;
 use App\Entity\Menu;
 use App\Entity\MenuItem;
 use Symfony\Component\HttpFoundation\JsonResponse;

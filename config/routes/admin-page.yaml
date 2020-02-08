@@ -1,19 +1,19 @@
 page_admin_list:
     path: /admin/page
-    controller: App\Controller\PageAdminController::list
+    controller: App\Controller\Admin\PageController::list
     methods: [GET, HEAD]
 
 page_admin_revisions:
     path: /admin/page/{id}/revisions
-    controller: App\Controller\PageAdminController::revisions
+    controller: App\Controller\Admin\PageController::revisions
     methods: [GET, HEAD]
 
 page_admin_append:
     path: /admin/page/{id}/edit
-    controller: App\Controller\PageAdminController::append
+    controller: App\Controller\Admin\PageController::append
     methods: [GET, HEAD, POST]
 
 page_admin_delete:
     path: /admin/page/{id}/delete
-    controller: App\Controller\PageAdminController::delete
+    controller: App\Controller\Admin\PageController::delete
     methods: [GET, HEAD, POST, DELETE]

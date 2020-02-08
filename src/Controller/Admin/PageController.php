@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Controller\ControllerTrait;
 use App\Entity\PageRevision;
 use MakinaCorpus\Calista\Bridge\Symfony\DependencyInjection\ViewFactory;
 use MakinaCorpus\Calista\Datasource\DatasourceInputDefinition;
@@ -15,13 +16,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-final class PageAdminController extends AbstractController
+final class PageController extends AbstractController
 {
     use ControllerTrait;
 
     public function list(Request $request, ViewFactory $viewFactory): Response
     {
-        $datasource = new PageAdminListDatasource($this->repository);
+        $datasource = new PageListDatasource($this->repository);
 
         $inputDef = new DatasourceInputDefinition($datasource, [
             'limit_default' => 20,
@@ -54,7 +55,7 @@ final class PageAdminController extends AbstractController
             throw new NotFoundHttpException();
         }
 
-        $datasource = new PageAdminRevisionsDatasource($this->repository);
+        $datasource = new PageRevisionsDatasource($this->repository);
 
         $inputDef = new DatasourceInputDefinition($datasource, [
             'base_query' => ['id' => [(string)$id]],

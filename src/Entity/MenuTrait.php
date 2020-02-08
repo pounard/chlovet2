@@ -14,7 +14,7 @@ trait MenuTrait
 {
     private array $children = [];
     private /* int */ $id;
-    private /* ?UuidInterface */ $page_id;
+    private ?UuidInterface $page_id = null;
     private bool $sorted = false;
 
     private function sortChildren(): void

@@ -1,8 +1,0 @@
-
-page_admin_route:
-    path: /admin/arborescence
-    controller: App\Controller\MenuAdminController::list
-
-page_admin_route_tree:
-    path: /admin/arborescence/edit
-    controller: App\Controller\MenuAdminController::edit

@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
+use App\Controller\ControllerTrait;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class MenuAdminController extends AbstractController
+final class MenuController extends AbstractController
 {
     use ControllerTrait;
 

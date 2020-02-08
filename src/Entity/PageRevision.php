@@ -8,17 +8,20 @@ use Ramsey\Uuid\UuidInterface;
 
 final class PageRevision
 {
-    private $created_at;
-    private $data;
-    private $id;
-    private $page_at;
-    private $revision;
-    private $title;
+    private ?\DateTimeInterface $created_at = null;
+    private array $data = [];
+    private /* UuidInterface */ $id;
+    private ?\DateTimeInterface $page_at = null;
+    private ?int $revision = null;
+    private ?string $title = null;
+
+    private function __construct()
+    {
+    }
 
     public function create(UuidInterface $pageId): self
     {
         $ret = new self;
-        $ret->data = [];
         $ret->id = $pageId;
 
         return $ret;

@@ -1,10 +1,10 @@
 
 page_rest_create:
     path: /api/arborescence/create
-    controller: App\Controller\MenuRestController::create
+    controller: App\Controller\Endpoint\MenuRestController::create
     # methods: [POST]
 
 page_rest_tree:
     path: /api/arborescence/tree
-    controller: App\Controller\MenuRestController::tree
+    controller: App\Controller\Endpoint\MenuRestController::tree
     methods: [GET, POST]

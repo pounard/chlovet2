@@ -14,4 +14,12 @@ goat:
         enabled: false
         event_store: true
         lock_service: true
-  
+    preferences:
+        enabled: true
+        # schema:
+        #     app.domain.some_variable:
+        #         label: Some variable
+        #         description: Uncheck this value to deactive this feature
+        #         type: bool
+        #         collection: false
+        #         default: true

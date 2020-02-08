@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connectez-vous{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block menu_top %}{% endblock %}
+
+{% block body %}
+<p>
+  Il semblerait que vous êtes en train d'essayer d'accéder à
+  un espace privé du site. Cependant, seul le <strong>Caporal CHEF</strong>
+  puisse y accéder.
+</p>
+
+<hr/>
+
+{% if is_error %}
+<div class="alert alert-danger" role="alert">
+  La connexion a échoué, veuillez réessayer.
+</div>
+{% endif %}
+
+<form method="post">
+  <div class="username">
+    <label for="username">Déclinez votre identité</label>
+    <input type="text" class="form-control" name="username" id="username">
+  </div>
+  <div class="form-group">
+    <label for="password">Mais aussi votre mot de passe</label>
+    <input type="password" class="form-control" name="password" id="password">
+  </div>
+  <div class="clearfix">
+    <a class="btn btn-success" href="{{ path('index') }}">Retourner à l'accueil</a>
+    <button type="submit" class="btn btn-warning float-right">Se connecter</button>
+  </div>
+</form>
+{% endblock %}

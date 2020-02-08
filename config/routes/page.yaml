@@ -1,3 +1,7 @@
+index:
+    path: /
+    controller: App\Controller\Front\PageController::home
+
 page:
     path: /page/{id}
-    controller: App\Controller\PageController::page
+    controller: App\Controller\Front\PageController::page

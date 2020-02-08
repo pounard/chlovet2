@@ -1,5 +1,6 @@
 parameters:
     app_file_directory: "%kernel.project_dir%/public/data"
+    security_auth_token: "%env(string:SECURITY_AUTH_TOKEN)%"
 
 services:
     _defaults:
@@ -13,14 +14,25 @@ services:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    App\Event\:
-        resource: '../src/Event'
+    App\EventSubscriber\:
+        resource: '../src/EventSubscriber'
         tags: ['event.subscriber', 'container.hot_path']
 
     App\Twig\:
         resource: '../src/Twig'
         tags: ['twig.extension', 'container.hot_path']
 
-    App\Controller\:
-        resource: '../src/Controller'
+    App\Controller\Admin\:
+        resource: '../src/Controller/Admin'
         tags: ['controller.service_arguments']
+
+    App\Controller\Endpoint\:
+        resource: '../src/Controller/Endpoint'
+        tags: ['controller.service_arguments']
+
+    App\Controller\Front\:
+        resource: '../src/Controller/Front'
+        tags: ['controller.service_arguments']
+
+    App\Security\ChefAuthenticator:
+        arguments: ["@router", "%security_auth_token%"]
