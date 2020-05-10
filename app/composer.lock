@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8380fa8780272d6f37eb63e59fac2e0f",
+    "content-hash": "3abe9f09f428346ae178708144aba043",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1476,16 +1476,16 @@
         },
         {
             "name": "makinacorpus/generated-hydrator-bundle",
-            "version": "dev-master",
+            "version": "1.0.0-alpha1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/makinacorpus/generated-hydrator-bundle.git",
-                "reference": "d73a45a1fb3aea9cf042c66c2649562e117ef54f"
+                "reference": "5c38a92e26f9384ed729205f591072a56ba06cdf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/makinacorpus/generated-hydrator-bundle/zipball/d73a45a1fb3aea9cf042c66c2649562e117ef54f",
-                "reference": "d73a45a1fb3aea9cf042c66c2649562e117ef54f",
+                "url": "https://api.github.com/repos/makinacorpus/generated-hydrator-bundle/zipball/5c38a92e26f9384ed729205f591072a56ba06cdf",
+                "reference": "5c38a92e26f9384ed729205f591072a56ba06cdf",
                 "shasum": ""
             },
             "require": {
@@ -1528,7 +1528,7 @@
                 "source": "https://github.com/makinacorpus/generated-hydrator-bundle/tree/master",
                 "issues": "https://github.com/makinacorpus/generated-hydrator-bundle/issues"
             },
-            "time": "2020-04-15T13:17:24+00:00"
+            "time": "2020-05-07T13:13:47+00:00"
         },
         {
             "name": "makinacorpus/goat-mapper",
@@ -1606,16 +1606,16 @@
         },
         {
             "name": "makinacorpus/goat-query",
-            "version": "2.0.0-alpha6",
+            "version": "2.0.0-alpha7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-query.git",
-                "reference": "232a8da7d5fd3e68349060fbd2c102775f991858"
+                "reference": "d4759adf7c3a8b603a400aa3442e9f68b64cbf54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-query/zipball/232a8da7d5fd3e68349060fbd2c102775f991858",
-                "reference": "232a8da7d5fd3e68349060fbd2c102775f991858",
+                "url": "https://api.github.com/repos/pounard/goat-query/zipball/d4759adf7c3a8b603a400aa3442e9f68b64cbf54",
+                "reference": "d4759adf7c3a8b603a400aa3442e9f68b64cbf54",
                 "shasum": ""
             },
             "require": {
@@ -1623,7 +1623,8 @@
                 "psr/log": "^1.1"
             },
             "require-dev": {
-                "makinacorpus/goat-hydrator": "^1.0@alpha",
+                "makinacorpus/generated-hydrator-bundle": "^1.0.0-alpha1",
+                "ocramius/generated-hydrator": "^3.1",
                 "phpunit/phpunit": "8.*",
                 "ramsey/uuid": "^3.8 || ^4"
             },
@@ -1660,7 +1661,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2020-05-10T10:57:03+00:00"
+            "time": "2020-05-10T15:34:39+00:00"
         },
         {
             "name": "makinacorpus/goat-query-bundle",
@@ -6625,7 +6626,7 @@
     "stability-flags": {
         "makinacorpus/calista-core": 15,
         "makinacorpus/filechunk-bundle": 15,
-        "makinacorpus/generated-hydrator-bundle": 20,
+        "makinacorpus/generated-hydrator-bundle": 15,
         "makinacorpus/goat-mapper": 20,
         "makinacorpus/goat-query": 15,
         "makinacorpus/goat-query-bundle": 20

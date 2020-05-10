@@ -25,9 +25,9 @@ services:
         networks: [postgres, php]
         ports: ["8181:9000"]
         working_dir: /var/www/html
-        environment:
-            # DATABASE_URL: "from environment"
-            # APP_ENV: "from environment"
+        # environment:
+        #     DATABASE_URL: "from environment"
+        #     APP_ENV: "from environment"
         volumes:
             - "${APP_DIR}/app:/var/www/html"
     nginx:

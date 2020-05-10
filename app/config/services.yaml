@@ -1,7 +1,9 @@
 parameters:
-    app_file_directory: "%kernel.project_dir%/public/data"
-    security_auth_token: "%env(string:SECURITY_AUTH_TOKEN)%"
     env(DATABASE_URL): ''
+    env(FRONT_ENABLED): ''
+    app_file_directory: "%kernel.project_dir%/public/data"
+    front_enabled: "%env(bool:FRONT_ENABLED)%"
+    security_auth_token: "%env(string:SECURITY_AUTH_TOKEN)%"
 
 services:
     _defaults:
@@ -9,6 +11,7 @@ services:
         autoconfigure: true
         bind:
             $debug: "%kernel.debug%"
+            $isFrontEnabled: "%front_enabled%"
             $storageDirectory: "%app_file_directory%"
 
     App\:
