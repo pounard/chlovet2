@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block main_top %}
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block body %}
+<div class="row">
+  <div class="col-12">
+    <div class="intro">
+      <h2>
+        Bienvenue au cabinet vétérinaire St Clément à Nantes.
+      </h2>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    Vous êtes connecté avec votre lien de connexion.
+  </div>
+  <div class="col-auto">
+    <a class="btn btn-danger" href="{{ path('form_logout') }}">
+      Déconnexion
+    </a>
+  </div>
+</div>
+{% endblock body %}
+
+{% block menu_top %}
+{{ parent() }}
+{% endblock %}

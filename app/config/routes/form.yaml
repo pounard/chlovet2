@@ -1,0 +1,27 @@
+form_admin_token_list:
+    path: /admin/token
+    controller: App\Controller\Admin\FormController::tokenList
+
+form_admin_token_add:
+    path: /admin/token/add
+    controller: App\Controller\Admin\FormController::tokenAdd
+
+form_home:
+    path: /form
+    controller: App\Controller\Form\FormController::home
+
+form_expire:
+    path: /form-expire
+    controller: App\Controller\Form\LoginController::expire
+
+form_login:
+    path: /form/login
+    controller: App\Controller\Form\LoginController::login
+
+form_logout:
+    path: /form/logout
+    controller: App\Controller\Form\LoginController::logout
+
+form_commemoratif:
+    path: /form/commemoratif
+    controller: App\Controller\Form\FormController::commemoratif

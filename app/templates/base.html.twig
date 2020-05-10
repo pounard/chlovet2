@@ -39,6 +39,10 @@
               <i class="fas fa-tree"></i>
               Arborescence
             </a>
+            <a class="dropdown-item" href="{{ path('form_admin_token_list') }}">
+              <i class="fas fa-list"></i>
+              Formulaires
+            </a>
             {% if app.user %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ path('security_logout') }}">

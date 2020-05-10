@@ -38,6 +38,21 @@
         {% block header %}
         <h1 class="mb-3">{% block header_title %}{{ block('title') }}{% endblock %}</h1>
         {% endblock header %}
+
+        {% block flash_messages %}
+        <div class="row">
+          <div class="col">
+            {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label }}">
+              {% for message in messages %}
+              <p class="mb-0">{{ message|raw }}</p>
+              {% endfor %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endblock %}
+
         {% block body %}
         BODY
         {% endblock body %}

@@ -2,10 +2,21 @@ security:
     providers:
         caporal_chef:
             id: App\Security\ChefUserProvider
+        form_client:
+            id: App\Security\FormClientUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        form:
+            pattern: ^/form/
+            provider: form_client
+            guard:
+                entry_point: App\Security\FormClientAuthenticator
+                authenticators:
+                    - App\Security\FormClientAuthenticator
+            logout:
+                path: form_logout
         main:
             anonymous: true
             provider: caporal_chef

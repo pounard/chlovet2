@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block title %}Connexions client{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item">Formulaires</li>
+<li class="breadcrumb-item active" aria-current="page">Connexions client</li>
+{% endblock %}
+
+{% block body %}
+{# @todo find a better way to pass input options (using constants instead of ints) #}
+{{ view.render(viewDef, items, query)|raw }}
+{% endblock %}

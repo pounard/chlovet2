@@ -1,0 +1,34 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block title %}Ajouter une connexion{% endblock %}
+
+{% block navbar_left_custom %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ path('page_admin_list') }}">
+    <i class="fas fa-angle-left"></i>
+    Pages
+  </a>
+</li>
+{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item">Formulaires</li>
+<li class="breadcrumb-item"><a href="{{ path('form_admin_token_list') }}">Connexions client</a></li>
+<li class="breadcrumb-item active" aria-current="page">Ajouter une connexion</li>
+{% endblock %}
+
+{% block navbar_right_custom %}
+{# @todo access rights #}
+<li class="nav-item">
+  <a class="nav-link text-white btn btn-danger btn-sm" href="{{ path('page_admin_list') }}">Annuler</a>
+</li>
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="row">
+  <div class="col">
+    {{ form(form) }}
+  </div>
+</div>
+{% endblock %}

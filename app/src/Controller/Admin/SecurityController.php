@@ -25,9 +25,10 @@ final class SecurityController extends AbstractController
             $session = $request->getSession();
 
             $exception = $session->get(Security::AUTHENTICATION_ERROR);
-            \assert($exception instanceof AuthenticationException);
 
             if ($exception) {
+                \assert($exception instanceof AuthenticationException);
+
                 $isError = true;
                 $session->remove(Security::AUTHENTICATION_ERROR);
             }
