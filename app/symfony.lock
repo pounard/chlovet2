@@ -65,17 +65,26 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.3"
+    },
     "makinacorpus/calista-core": {
         "version": "1.0.0-alpha8"
     },
     "makinacorpus/filechunk-bundle": {
         "version": "1.0.0-beta7"
     },
-    "makinacorpus/goat": {
-        "version": "1.0.3"
+    "makinacorpus/generated-hydrator-bundle": {
+        "version": "dev-master"
+    },
+    "makinacorpus/goat-mapper": {
+        "version": "dev-master"
     },
     "makinacorpus/goat-query": {
         "version": "1.0.0-alpha10"
+    },
+    "makinacorpus/goat-query-bundle": {
+        "version": "dev-master"
     },
     "makinacorpus/normalizer": {
         "version": "dev-master"
@@ -102,7 +111,7 @@
         "version": "2.2.2"
     },
     "php": {
-        "version": "7.3.4"
+        "version": "7.4.5"
     },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
@@ -330,6 +339,9 @@
         "version": "1.4.6"
     },
     "voku/stop-words": {
+        "version": "2.0.1"
+    },
+    "webimpress/safe-writer": {
         "version": "2.0.1"
     },
     "webmozart/assert": {

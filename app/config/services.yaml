@@ -1,6 +1,7 @@
 parameters:
     app_file_directory: "%kernel.project_dir%/public/data"
     security_auth_token: "%env(string:SECURITY_AUTH_TOKEN)%"
+    env(DATABASE_URL): ''
 
 services:
     _defaults:
@@ -36,3 +37,6 @@ services:
 
     App\Security\ChefAuthenticator:
         arguments: ["@router", "%security_auth_token%"]
+
+    goat.runner:
+        alias: Goat\Runner\Runner

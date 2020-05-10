@@ -15,6 +15,8 @@ class Kernel extends BaseKernel
 
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    private string $projectDir;
+
     public function registerBundles()
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
@@ -25,10 +27,16 @@ class Kernel extends BaseKernel
         }
     }
 
+    public function getProjectDir(): string
+    {
+        return $this->projectDir ?? ($this->projectDir = \dirname(__DIR__));
+    }
+
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {
         $container->addResource(new FileResource($this->getProjectDir().'/config/bundles.php'));
         $container->setParameter('container.dumper.inline_class_loader', true);
+        $container->setParameter('container.dumper.inline_factories', true);
         $confDir = $this->getProjectDir().'/config';
 
         $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');

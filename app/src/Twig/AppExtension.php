@@ -13,14 +13,14 @@ use Twig\Extension\AbstractExtension;
 
 final class AppExtension extends AbstractExtension
 {
-    private $debug = false;
-    private $menuRepository;
-    private $twig;
+    private bool $debug = false;
+    private MenuRepository $menuRepository;
+    private Environment $twig;
 
     /**
      * Default constructor
      */
-    public function __construct(Environment $twig, MenuRepository $menuRepository, ?bool $debug)
+    public function __construct(Environment $twig, MenuRepository $menuRepository, bool $debug = false)
     {
         $this->debug = $debug;
         $this->menuRepository = $menuRepository;

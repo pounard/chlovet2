@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class PageRouterDecorator implements RouterInterface, RequestMatcherInterface
 {
-    private $nested;
+    private RouterInterface $nested;
 
     public function __construct(RouterInterface $router)
     {

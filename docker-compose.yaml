@@ -1,0 +1,48 @@
+version: '3.7'
+services:
+    postgres:
+        container_name: postgres
+        build:
+            context: .
+            dockerfile: ./docker/postgres/Dockerfile
+        env_file: [.env, docker.env]
+        networks: [postgres]
+        image: postgres:12
+        ports: ["8182:5432"]
+        restart: always
+        volumes:
+            - "${APP_DIR}/data/pgsql_data:/data"
+            - "${APP_DIR}/data/pgsql_backup:/backup"
+        environment:
+            PGDATA: "/data"
+    phpfpm:
+        container_name: phpfpm
+        build:
+            context: .
+            dockerfile: ./docker/php-fpm/Dockerfile
+        depends_on: [postgres]
+        env_file: [.env, docker.env]
+        networks: [postgres, php]
+        ports: ["8181:9000"]
+        working_dir: /var/www/html
+        environment:
+            # DATABASE_URL: "from environment"
+            # APP_ENV: "from environment"
+        volumes:
+            - "${APP_DIR}/app:/var/www/html"
+    nginx:
+        container_name: nginx
+        build:
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
+        depends_on: [phpfpm]
+        env_file: [.env, docker.env]
+        image: nginx:1.17
+        networks: [php]
+        ports: ["8180:80", "8183:443"]
+        volumes:
+            - "${APP_DIR}/app/public:/usr/share/nginx/html"
+            - "${APP_DIR}/data/logs/nginx:/var/log/nginx"
+networks:
+    postgres:
+    php:

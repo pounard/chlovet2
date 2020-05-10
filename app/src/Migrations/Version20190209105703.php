@@ -23,7 +23,7 @@ final class Version20190209105703 extends AbstractAppMigration
         // page is unpublished and will not be visible in front.
         $this->addSql(<<<SQL
 create table if not exists "page" (
-    "id" uuid not null default uuid_generate_v4(),
+    "id" uuid not null,
     "created_at" timestamp not null default now(),
     "current_revision" integer default null,
     primary key("id")

@@ -17,10 +17,10 @@ use Ramsey\Uuid\UuidInterface;
  */
 final class EditorialFileRepository
 {
-    private $runner;
-    private $fileManager;
-    private $namingStrategy;
-    private $storageDirectory;
+    private Runner $runner;
+    private FileManager $fileManager;
+    private FileNamingStrategy $namingStrategy;
+    private string $storageDirectory;
 
     /**
      * Default constructor

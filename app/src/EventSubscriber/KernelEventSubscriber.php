@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber;
 
-use Goat\Preferences\Domain\Repository\Preferences;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
@@ -18,15 +17,13 @@ use Twig\Environment;
  */
 final class KernelEventSubscriber implements EventSubscriberInterface
 {
-    private Preferences $preferences;
     private Environment $twig;
 
     /**
      * Default constructor
      */
-    public function __construct(Environment $twig, Preferences $preferences)
+    public function __construct(Environment $twig)
     {
-        $this->preferences = $preferences;
         $this->twig = $twig;
     }
 

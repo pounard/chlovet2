@@ -17,7 +17,7 @@ use Ramsey\Uuid\UuidInterface;
  */
 final class MenuRepository
 {
-    private $runner;
+    private Runner $runner;
 
     /**
      * Default constructor

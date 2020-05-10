@@ -14,7 +14,7 @@ use Ramsey\Uuid\UuidInterface;
 
 final class PageRepository
 {
-    private $runner;
+    private Runner $runner;
 
     /**
      * Default constructor

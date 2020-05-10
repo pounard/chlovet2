@@ -5,6 +5,10 @@
 .project
 .settings
 
+# Docker
+docker.env
+/data/*
+
 # Files
 /app/public/files
 
