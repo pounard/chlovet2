@@ -1,24 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends 'form/base.html.twig' %}
 
-{% block main_top %}
+{% block header_title %}
+Cabinet vétérinaire Saint-Clément
 {% endblock %}
 
-{% block breadcrumb %}{% endblock %}
-
-{% block header %}{% endblock %}
-
 {% block body %}
-<div class="row">
-  <div class="col-12">
-    <div class="intro">
-      <h2>
-        Bienvenue au cabinet vétérinaire St Clément à Nantes.
-      </h2>
-    </div>
-  </div>
-</div>
+{{ parent() }}
 
-<div class="row">
+<div class="row mb-3">
   <div class="col">
     Vous êtes connecté avec votre lien de connexion.
   </div>
@@ -29,7 +18,3 @@
   </div>
 </div>
 {% endblock body %}
-
-{% block menu_top %}
-{{ parent() }}
-{% endblock %}

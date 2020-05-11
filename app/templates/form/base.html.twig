@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block main_top %}{% endblock %}
+{% block breadcrumb %}{% endblock %}
+{% block sidebar %}{% endblock %}
+
+{% block header %}
+<div class="col-12">
+  <h1 class="mb-3">{% block header_title %}Vétérinaire St Clément{% endblock %}</h1>
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="row mb-3">
+  <div class="col-12">
+    <h2>
+      Bienvenue dans la section de prise de contact avec votre vétérinaire.
+    </h2>
+  </div>
+</div>
+{% endblock %}
+
+{% block menu_top %}
+{{ parent() }}
+{% endblock %}

@@ -173,11 +173,12 @@
           <h1 class="mb-3">{% block header_title %}Vétérinaire St Clément{% endblock %}</h1>
         </div>
         {% endblock header %}
-        <div class="col-12 col-md-7 col-lg-8">
+        <div class="col">
           {% block body %}
           BODY
           {% endblock %}
         </div>
+        {% block sidebar %}
         <div class="col-12 col-md-5 col-lg-4">
           {% block menu_top %}
           <div class="halside">
@@ -199,6 +200,7 @@
           {% block menu %}
           {% endblock menu %}
         </div>
+        {% endblock sidebar %}
       </div>
       {% endblock main_content %}
     </div>
