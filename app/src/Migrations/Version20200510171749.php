@@ -23,6 +23,7 @@ final class Version20200510171749 extends AbstractAppMigration
                 "email" VARCHAR(512) NOT NULL,
                 "target" VARCHAR(512) NOT NULL DEFAULT 'default',
                 "created_at" TIMESTAMP DEFAULT current_timestamp,
+                "valid_until" TIMESTAMP DEFAULT current_timestamp + interval '7 day',
                 "login_count" BIGINT DEFAULT 0,
                 "login_first" TIMESTAMP DEFAULT NULL,
                 "login_last" TIMESTAMP DEFAULT NULL,

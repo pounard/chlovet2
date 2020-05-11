@@ -67,9 +67,7 @@ final class FormClientAuthenticator extends AbstractGuardAuthenticator
             throw new AuthenticationException();
         }
 
-        $this->tokenRepository->touch($credentials['token']);
-
-        return true;
+        return $this->tokenRepository->touch($credentials['token']);
     }
 
     /**

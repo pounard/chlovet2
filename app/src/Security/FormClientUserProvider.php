@@ -146,6 +146,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
                     "login_last" = current_timestamp
                 WHERE
                     "token" = ?
+                    AND "valid_until" > current_timestamp
                 SQL,
                 [$token]
             )
