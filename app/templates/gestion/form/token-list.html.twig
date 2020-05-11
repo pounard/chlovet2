@@ -7,6 +7,12 @@
 <li class="breadcrumb-item active" aria-current="page">Connexions client</li>
 {% endblock %}
 
+{% block navbar_right_custom %}
+<li class="nav-item">
+  <a class="nav-link text-white btn btn-success btn-sm" href="{{ path('form_admin_token_add') }}">Ajouter</a>
+</li>
+{% endblock %}
+
 {% block body %}
 {# @todo find a better way to pass input options (using constants instead of ints) #}
 {{ view.render(viewDef, items, query)|raw }}

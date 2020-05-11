@@ -24,8 +24,23 @@ final class FormController extends AbstractController
     /**
      * Liste des tokens client.
      */
-    public function tokenList(Request $request, ViewFactory $viewFactory, Runner $runner): Response
-    {
+    public function tokenList(
+        Request $request,
+        ViewFactory $viewFactory,
+        Runner $runner,
+        FormClientTokenRepository $tokenRepository
+    ): Response {
+        // @todo Later, display this into a dialog that does not refresh the page.
+        if ($token = $request->get('view')) {
+            $target = $tokenRepository->findTargetForToken($token);
+            if ($target) {
+                $lien = $this->generateLoginLink($token, $target);
+                $this->addFlash('success', "Lien de connexion:<br/><code>" . $lien . "</code>");
+            }
+
+            return $this->redirectToRoute('form_admin_token_list');
+        }
+
         $datasource = new FormClientTokenDatasource($runner);
 
         $inputDef = new DatasourceInputDefinition($datasource, [
@@ -94,11 +109,7 @@ final class FormController extends AbstractController
             try {
                 $token = $tokenRepository->create($input['email'], $input['target']);
 
-                $lien = $this->generateUrl('form_login', [
-                    'token' => $token,
-                    'form' => $input['target'],
-                ], UrlGeneratorInterface::ABSOLUTE_URL);
-
+                $lien = $this->generateLoginLink($token, $input['target']);
                 $this->addFlash('success', "Lien de connexion créé avec success:<br/><code>" . $lien . "</code>");
 
                 return $this->redirectToRoute('form_admin_token_add');
@@ -115,5 +126,17 @@ final class FormController extends AbstractController
         return $this->render('gestion/form/token-add.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    private function generateLoginLink(string $token, string $target): string
+    {
+        return $this->generateUrl(
+            'form_login',
+            [
+                'token' => $token,
+                'form' => $target,
+            ],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
     }
 }

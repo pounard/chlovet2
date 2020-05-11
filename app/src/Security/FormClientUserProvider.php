@@ -80,6 +80,23 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
     /**
      * {@inheritdoc}
      */
+    public function findTargetForToken(string $token): ?string
+    {
+        return $this
+            ->runner
+            ->execute(
+                <<<SQL
+                SELECT "target" FROM "client_login" WHERE "token" = ?
+                SQL,
+                [$token]
+            )
+            ->fetchField()
+        ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function create(string $emailAddress, ?string $target = null): string
     {
         $exists = false;

@@ -15,6 +15,11 @@ interface FormClientTokenRepository
     public function findEmailAddressForToken(string $token): ?string;
 
     /**
+     * Find target related to token.
+     */
+    public function findTargetForToken(string $token): ?string;
+
+    /**
      * User has logged in.
      */
     public function touch(string $token): bool;
