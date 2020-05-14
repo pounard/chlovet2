@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Form;
 
 use App\Controller\ControllerTrait;
+use App\Entity\Form;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +26,7 @@ final class LoginController extends AbstractController
         if ($form = $request->get('form')) {
             switch ($form) {
 
-                case 'commemoratif':
+                case Form::TYPE_COMMEMORATIF:
                     return $this->redirectToRoute('form_commemoratif');
             }
         }

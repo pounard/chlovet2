@@ -6,8 +6,8 @@ namespace App\Command;
 
 use App\Repository\MenuRepository;
 use App\Repository\PageRepository;
-use Goat\Bridge\Symfony\DependencyInjection\RunnerFactory;
 use Goat\Converter\ConverterInterface;
+use Goat\Driver\DriverFactory;
 use Goat\Query\Query;
 use Goat\Runner\Runner;
 use Ramsey\Uuid\UuidInterface;
@@ -60,7 +60,7 @@ final class MigrateCommand extends Command
 
     private function createConnection(InputInterface $input): Runner
     {
-        return RunnerFactory::createFromDoctrineConnection(
+        return DriverFactory::fromDoctrineConnection(
             \Doctrine\DBAL\DriverManager::getConnection(
                 ['url' => $input->getArgument('database')],
                 new \Doctrine\DBAL\Configuration()

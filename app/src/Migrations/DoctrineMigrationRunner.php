@@ -4,20 +4,16 @@ namespace App\Migrations;
 
 use Doctrine\Migrations\AbstractMigration;
 use Goat\Converter\ConverterInterface;
-use Goat\Query\DeleteQuery;
-use Goat\Query\InsertQueryQuery;
-use Goat\Query\InsertValuesQuery;
-use Goat\Query\Query;
+use Goat\Driver\Query\AbstractSqlWriter;
+use Goat\Driver\Query\SqlWriter;
 use Goat\Query\QueryBuilder;
 use Goat\Query\QueryError;
-use Goat\Query\SelectQuery;
-use Goat\Query\UpdateQuery;
-use Goat\Query\Writer\FormatterInterface;
+use Goat\Runner\AbstractRunnerProxy;
 use Goat\Runner\EmptyResultIterator;
 use Goat\Runner\ResultIterator;
 use Goat\Runner\Runner;
 use Goat\Runner\Transaction;
-use Goat\Runner\Driver\DriverError;
+use Goat\Runner\Hydrator\HydratorRegistry;
 use Goat\Runner\Metadata\ResultMetadataCache;
 
 /**
@@ -26,18 +22,21 @@ use Goat\Runner\Metadata\ResultMetadataCache;
  *
  * Proxifies Goat queries to DoctrineMigration::addSql() method.
  */
-class DoctrineMigrationRunner implements Runner
+class DoctrineMigrationRunner extends AbstractRunnerProxy
 {
-    private $migration;
-    private $runner;
+    private AbstractMigration $migration;
+    private Runner $runner;
+    private ?SqlWriter $formatter = null;
 
     /**
      * Default constructor
      */
     public function __construct(Runner $runner, AbstractMigration $migration)
     {
-        $this->migration = $migration;
+        parent::__construct($runner);
+
         $this->runner = $runner;
+        $this->migration = $migration;
     }
 
     /**
@@ -52,16 +51,6 @@ class DoctrineMigrationRunner implements Runner
             }, $this->migration, AbstractMigration::class),
             $sql, $params
         );
-    }
-
-    public function setDebug(bool $value): void
-    {
-        $this->runner->setDebug($value);
-    }
-
-    public function isDebugEnabled(): bool
-    {
-        return $this->runner->isDebugEnabled();
     }
 
     /**
@@ -89,13 +78,12 @@ class DoctrineMigrationRunner implements Runner
             $this->addSql($rawSQL, $args);
 
             return 1;
-
         } catch (QueryError $e) {
             throw $e;
         } catch (\PDOException $e) {
-            throw new DriverError($rawSQL, [], $e);
+            throw new QueryError($rawSQL, [], $e);
         } catch (\Exception $e) {
-            throw new DriverError($rawSQL, [], $e);
+            throw new QueryError($rawSQL, [], $e);
         }
     }
 
@@ -104,74 +92,33 @@ class DoctrineMigrationRunner implements Runner
      */
     public function getQueryBuilder(): QueryBuilder
     {
-        return new class($this, $this->runner) implements QueryBuilder
-        {
-            private $migrationRunner, $runner;
-
-            public function __construct(Runner $migrationRunner, Runner $runner)
-            {
-                $this->migrationRunner = $migrationRunner;
-                $this->runner = $runner;
-            }
-
-            public function select($relation = null, ?string $alias = null): SelectQuery
-            {
-                return $this->runner->select($relation, $alias);
-            }
-
-            public function update($relation, ?string $alias = null): UpdateQuery
-            {
-                $query = new UpdateQuery($relation, $alias);
-                $query->setRunner($this->migrationRunner);
-
-                return $query;
-            }
-
-            public function insertValues($relation): InsertValuesQuery
-            {
-                $query = new InsertValuesQuery($relation);
-                $query->setRunner($this->migrationRunner);
-
-                return $query;
-            }
-
-            public function insertQuery($relation): InsertQueryQuery
-            {
-                $query = new InsertQueryQuery($relation);
-                $query->setRunner($this->migrationRunner);
-
-                return $query;
-            }
-
-            public function delete($relation, ?string $alias = null): DeleteQuery
-            {
-                $query = new DeleteQuery($relation, $alias);
-                $query->setRunner($this->migrationRunner);
-
-                return $query;
-            }
-
-            public function prepare(callable $callback, ?string $identifier = null): Query
-            {
-                throw new \BadMethodCallException("%s::prepare() is not supported during migrations", QueryBuilder::class);
-            }
-        };
+        return new DoctrineMigrationQueryBuilder($this, $this->runner);
     }
 
     /**
      * Get SQL formatter
      */
-    public function getFormatter(): FormatterInterface
+    public function getFormatter(): SqlWriter
     {
-        return $this->runner->getFormatter();
-    }
+        if ($this->formatter) {
+            return $this->formatter;
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getDriverName(): string
-    {
-        return $this->runner->getDriverName();
+        // Dark magic, again: clone the original formatter, change its formater
+        // by decorating with a custom one, and set this new clone as being our
+        // own formater.
+        $decoratedFormater = clone $this->runner->getFormatter();
+        \call_user_func(
+            \Closure::bind(
+                function () {
+                    $this->escaper = new DoctrineMigrationEscaper($this->escaper);
+                },
+                $decoratedFormater,
+                AbstractSqlWriter::class
+            )
+        );
+
+        return $this->formatter = $decoratedFormater;
     }
 
     /**
@@ -209,7 +156,7 @@ class DoctrineMigrationRunner implements Runner
     /**
      * {@inheritdoc}
      */
-    public function prepareQuery($query, ?string $identifier = null) : string
+    public function prepareQuery($query, ?string $identifier = null): string
     {
         throw new \BadMethodCallException("Sorry, but prepared statements will automatically handled by Doctrine itself during migrations.");
     }
@@ -217,7 +164,7 @@ class DoctrineMigrationRunner implements Runner
     /**
      * {@inheritdoc}
      */
-    public function executePreparedQuery(string $identifier, $arguments = null, $options = null) : ResultIterator
+    public function executePreparedQuery(string $identifier, $arguments = null, $options = null): ResultIterator
     {
         throw new \BadMethodCallException("Sorry, but prepared statements will automatically handled by Doctrine itself during migrations.");
     }
@@ -257,16 +204,16 @@ class DoctrineMigrationRunner implements Runner
     /**
      * {@inheritdoc}
      */
-    public function isResultMetadataSlow(): bool
+    public function setHydratorRegistry(HydratorRegistry $hydratorRegistry): void
     {
-        return $this->runner->isResultMetadataSlow();
+        throw new \BadMethodCallException("Sorry, but this is disabled during migrations.");
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getConverter(): ConverterInterface
+    public function setConverter(ConverterInterface $converter): void
     {
-        return $this->runner->getConverter();
+        throw new \BadMethodCallException("Sorry, but this is disabled during migrations.");
     }
 }

@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Controller\Form;
 
 use App\Controller\ControllerTrait;
+use App\Controller\Form\Type\CommemoratifFormType;
+use App\Entity\Form;
+use App\Repository\FormDataRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type as Form;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,38 +17,45 @@ final class FormController extends AbstractController
 {
     use ControllerTrait;
 
+    const GROUP_GENERAL_DEJA_CONSULTE = 'GeneralDejaConsulte';
+
     public function home(Request $request): Response
     {
         return $this->render('form/form/home.html.twig');
     }
 
-    public function commemoratif(Request $request): Response
+    public function commemoratif(Request $request, FormDataRepository $repository): Response
     {
         $form = $this
             ->createFormBuilder()
-            ->add('email', Form\EmailType::class, [
-                'label' => "Adresse e-mail du client",
+            ->add('data', CommemoratifFormType::class, [
+                'html5' => true,
                 'required' => true,
             ])
-            ->add('target', Form\ChoiceType::class, [
-                'choices' => [
-                    "Commémoratif" => 'commemoratif',
-                ],
-                'label' => "Formulaire cible",
-                'required' => true,
-            ])
-            ->add('submit', Form\SubmitType::class, [
-                'label' => "Ajouter",
+            ->add('submit', SubmitType::class, [
+                'label' => "Envoyer",
             ])
             ->getForm()
             ->handleRequest($request)
         ;
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // $input = $form->getData();
-
             try {
-                $this->addFlash('success', "Merci d'avoir rempli ce formulaire, le cabinet vétérinaire Saint-Clément vous contactera dès que possible.");
+                $this->addFlash(
+                    'success',
+                    <<<TXT
+                    Merci d'avoir rempli ce formulaire, le cabinet vétérinaire
+                    Nantes Saint-Clément vous contactera dès que possible.
+                    TXT
+                );
+
+                $repository->insert(
+                    Form::TYPE_COMMEMORATIF,
+                    FormHelper::humanReadableFormData(
+                        $form,
+                        $form->getData()
+                    )
+                );
 
                 return $this->redirectToRoute('form_home');
 
@@ -54,7 +64,14 @@ final class FormController extends AbstractController
                     throw $e;
                 }
 
-                $this->addFlash('error', "Une erreur est survenue");
+                $this->addFlash(
+                    'error',
+                    <<<TXT
+                    Une erreur est survenue, veuillez ré-essayer plus tard.
+                    Si le problème persiste, contactez le cabinet vétérinaire
+                    Nantes Saint-Clément par mail ou par téléphone.
+                    TXT
+                );
             }
         }
 

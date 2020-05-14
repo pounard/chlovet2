@@ -1,15 +1,155 @@
 {% extends 'form/base.html.twig' %}
 
 {% block header_title %}
-Commémoratif
+Demande de consultation – commémoratifs
 {% endblock %}
 
+{% macro form_row_inline(form) %}
+<div class="form-group row">
+  <div class="col-md-4 col-sm-12 col-form-label">
+    {{ form_label(form) }}
+  </div>
+  <div class="col">
+    {{ form_widget(form) }}
+    {# {{ form_errors(form) }} #}
+    {{ form_help(form) }}
+  </div>
+</div>
+{% endmacro %}
+
+{% macro form_row_inline_container(form) %}
+{% import _self as self %}
+<div>
+  {{ form_errors(form) }}
+  {% for child in form.children %}
+  {% if not child.isRendered() %}
+  {{ self.form_row_inline(child) }}
+  {% endif %}
+  {% endfor %}
+</div>
+{% endmacro %}
+
+{% macro form_card_open_close(titre, form) %}
+{% import _self as self %}
+<div class="card mb-3" data-open-close>
+  <div class="card-header">
+    <div class="row">
+      <span class="col-auto">{{ titre }}</span>
+      {% if form.oui is defined %}
+      <span class="col">
+        {{ form_widget(form.oui) }}
+      </span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="card-body">
+    {{ self.form_row_inline_container(form) }}
+  </div>
+</div>
+{% endmacro %}
+
 {% block body %}
+{% import _self as self %}
 {{ parent() }}
+
+{{ form_start(form) }}
+
+<div class="card mb-3">
+  <div class="card-header">Motif</div>
+  <div class="card-body">
+    {{ self.form_row_inline(form.data.general_date) }}
+    {{ self.form_row_inline(form.data.general_motif) }}
+    {{ self.form_row_inline(form.data.general_deja_consulte) }}
+    {{ self.form_row_inline(form.data.general_deja_consulte_date) }}
+    <em>
+      Pensez à apporter les éventuels compte rendus et ordonnances lors de la consultation.
+    </em>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Contact</div>
+  <div class="card-body">
+    {{ self.form_row_inline_container(form.data.contact) }}
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Animal</div>
+  <div class="card-body">
+    {{ self.form_row_inline_container(form.data.animal) }}
+  </div>
+</div>
+
+<h1>Commémoratifs</h1>
+
+<div class="card mb-3">
+  <div class="card-header">Vaccination</div>
+  <div class="card-body">
+    {{ self.form_row_inline(form.data.vaccination) }}
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Historique médical</div>
+  <div class="card-body">
+    {{ self.form_row_inline(form.data.historique_pathologies) }}
+    {{ self.form_row_inline(form.data.historique_traitement) }}
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Environnement</div>
+  <div class="card-body">
+    {{ self.form_row_inline(form.data.environnement_animaux) }}
+    {{ self.form_row_inline(form.data.environnement_animaux_autre) }}
+    {{ self.form_row_inline(form.data.environnement_exterieur) }}
+    {{ self.form_row_inline(form.data.environnement_changements) }}
+    {{ self.form_row_inline(form.data.environnement_changements_autre) }}
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Alimentation</div>
+  <div class="card-body">
+    FOO
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Dernier vermifuge (traitement contre les vers)</div>
+  <div class="card-body">
+    {{ self.form_row_inline(form.data.vermifuge) }}
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-header">Traitement contre les puces</div>
+  <div class="card-body">
+    {{ self.form_row_inline_container(form.data.traitement_puces) }}
+  </div>
+</div>
+
+<h1>Amamnèse</h1>
+
+<div class="card mb-3">
+  <div class="card-header">Comportement général</div>
+  <div class="card-body">
+    {{ self.form_row_inline_container(form.data.comportement) }}
+  </div>
+</div>
+
+{{ self.form_card_open_close('Problèmes digestifs', form.data.problemes_digestifs) }}
+{# {{ self.form_card_open_close('Problèmes urinaires', form.data.respiratoires) }} #}
+{{ self.form_card_open_close('Problèmes respiratoires', form.data.problemes_respiratoires) }}
+{# {{ self.form_card_open_close('Problèmes aux yeux', form.data.respiratoires) }} #}
+{# {{ self.form_card_open_close('Problèmes locomoteurs', form.data.respiratoires) }} #}
+{{ self.form_card_open_close('Problèmes cutanés', form.data.problemes_cutanes) }}
 
 <div class="row">
   <div class="col-12">
-    {{ form(form) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
   </div>
 </div>
 {% endblock body %}

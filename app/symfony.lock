@@ -59,6 +59,9 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.0.0"
+    },
     "jbroadway/urlify": {
         "version": "1.1.2-stable"
     },

@@ -19,14 +19,14 @@ final class Version20200510171749 extends AbstractAppMigration
         $this->addSql(
             <<<SQL
             CREATE TABLE IF NOT EXISTS "client_login" (
-                "token" VARCHAR(512) NOT NULL,
-                "email" VARCHAR(512) NOT NULL,
-                "target" VARCHAR(512) NOT NULL DEFAULT 'default',
-                "created_at" TIMESTAMP DEFAULT current_timestamp,
-                "valid_until" TIMESTAMP DEFAULT current_timestamp + interval '7 day',
-                "login_count" BIGINT DEFAULT 0,
-                "login_first" TIMESTAMP DEFAULT NULL,
-                "login_last" TIMESTAMP DEFAULT NULL,
+                "token" varchar(512) NOT NULL,
+                "email" varchar(512) NOT NULL,
+                "type" varchar(512) NOT NULL,
+                "created_at" timestamp DEFAULT current_timestamp,
+                "valid_until" timestamp DEFAULT current_timestamp + interval '7 day',
+                "login_count" bigint DEFAULT 0,
+                "login_first" timestamp DEFAULT NULL,
+                "login_last" timestamp DEFAULT NULL,
                 PRIMARY KEY ("token")
             );
             SQL

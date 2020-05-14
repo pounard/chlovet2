@@ -1,4 +1,5 @@
 import "../css/app.client.scss";
+import "./components/form.ts";
 import 'bootstrap';
 import { FilechunkWidget } from "../dist/filechunk-front/core";
 

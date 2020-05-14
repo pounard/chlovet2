@@ -1,0 +1,28 @@
+form {
+    &, .form-control {
+        font-size: .9rem;
+    }
+    .card, .card-header, .card-body {
+        border-color: #999;
+    }
+    .card-header, .card-body {
+        padding: .5rem 1rem;
+    }
+    .card-header {
+        background-color: $color-veterinaire-bright;
+        color: $color-veterinaire-titre-darkblue;
+        font-weight: bold;
+    }
+    .form-control {
+        &::placeholder {
+            font-style: italic;
+        }
+        &:focus {
+            &::placeholder {
+                display: none;
+                font-size: 0;
+                color: rgba(0,0,0,0);
+            }
+        }
+    }
+}

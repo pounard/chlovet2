@@ -29,7 +29,7 @@
 }
 @mixin hlaside {
     @include block;
-    border-color: #829ace;
+    border-color: $color-veterinaire-dark;
     color: black;
     background-color: #f4f4f4cc;
 }

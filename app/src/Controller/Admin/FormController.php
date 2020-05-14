@@ -86,7 +86,7 @@ final class FormController extends AbstractController
             ])
             ->add('target', Form\ChoiceType::class, [
                 'choices' => [
-                    "Commémoratif" => 'commemoratif',
+                    \array_flip(\App\Entity\Form::getAll())
                 ],
                 'label' => "Formulaire cible",
                 'required' => true,

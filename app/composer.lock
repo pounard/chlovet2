@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2211bf069bab4acdc5278554ccef92c0",
+    "content-hash": "048fdf733cd21d4a9b1d6d09aed008bb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1606,16 +1606,16 @@
         },
         {
             "name": "makinacorpus/goat-query",
-            "version": "2.0.0-alpha7",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-query.git",
-                "reference": "d4759adf7c3a8b603a400aa3442e9f68b64cbf54"
+                "reference": "3b32a765e2808ba84023e8196dfde13b6213c485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-query/zipball/d4759adf7c3a8b603a400aa3442e9f68b64cbf54",
-                "reference": "d4759adf7c3a8b603a400aa3442e9f68b64cbf54",
+                "url": "https://api.github.com/repos/pounard/goat-query/zipball/3b32a765e2808ba84023e8196dfde13b6213c485",
+                "reference": "3b32a765e2808ba84023e8196dfde13b6213c485",
                 "shasum": ""
             },
             "require": {
@@ -1623,7 +1623,7 @@
                 "psr/log": "^1.1"
             },
             "require-dev": {
-                "makinacorpus/generated-hydrator-bundle": "^1.0.0-alpha1",
+                "makinacorpus/generated-hydrator-bundle": "^1.0.0-alpha2",
                 "ocramius/generated-hydrator": "^3.1",
                 "phpunit/phpunit": "8.*",
                 "ramsey/uuid": "^3.8 || ^4"
@@ -1661,7 +1661,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2020-05-10T15:34:39+00:00"
+            "time": "2020-05-13T11:59:11+00:00"
         },
         {
             "name": "makinacorpus/goat-query-bundle",
@@ -6727,7 +6727,65 @@
             "time": "2018-08-28T21:34:05+00:00"
         }
     ],
-    "packages-dev": [],
+    "packages-dev": [
+        {
+            "name": "doctrine/sql-formatter",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/sql-formatter.git",
+                "reference": "1ad4f97f10cd0eef7ca7d3f5b7b1cf7e5806786f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/sql-formatter/zipball/1ad4f97f10cd0eef7ca7d3f5b7b1cf7e5806786f",
+                "reference": "1ad4f97f10cd0eef7ca7d3f5b7b1cf7e5806786f",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^7.0",
+                "phpstan/phpstan": "^0.12.18",
+                "phpunit/phpunit": "^8.0",
+                "psalm/plugin-phpunit": "^0.10.0",
+                "vimeo/psalm": "^3.10"
+            },
+            "bin": [
+                "bin/sql-formatter"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\SqlFormatter\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Dorn",
+                    "email": "jeremy@jeremydorn.com",
+                    "homepage": "http://jeremydorn.com/"
+                }
+            ],
+            "description": "a PHP SQL highlighting library",
+            "homepage": "https://github.com/doctrine/sql-formatter/",
+            "keywords": [
+                "highlight",
+                "sql"
+            ],
+            "time": "2020-04-27T09:31:00+00:00"
+        }
+    ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
@@ -6735,7 +6793,6 @@
         "makinacorpus/filechunk-bundle": 15,
         "makinacorpus/generated-hydrator-bundle": 15,
         "makinacorpus/goat-mapper": 20,
-        "makinacorpus/goat-query": 15,
         "makinacorpus/goat-query-bundle": 20
     },
     "prefer-stable": false,
