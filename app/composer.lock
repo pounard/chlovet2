@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "048fdf733cd21d4a9b1d6d09aed008bb",
+    "content-hash": "ae426975952c4944b7e8bc1bff02c848",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1606,16 +1606,16 @@
         },
         {
             "name": "makinacorpus/goat-query",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-query.git",
-                "reference": "3b32a765e2808ba84023e8196dfde13b6213c485"
+                "reference": "e45a79393748e00b03d444420de7499556b901b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-query/zipball/3b32a765e2808ba84023e8196dfde13b6213c485",
-                "reference": "3b32a765e2808ba84023e8196dfde13b6213c485",
+                "url": "https://api.github.com/repos/pounard/goat-query/zipball/e45a79393748e00b03d444420de7499556b901b1",
+                "reference": "e45a79393748e00b03d444420de7499556b901b1",
                 "shasum": ""
             },
             "require": {
@@ -1661,7 +1661,7 @@
                 "postgresql",
                 "symfony"
             ],
-            "time": "2020-05-13T11:59:11+00:00"
+            "time": "2020-05-16T11:58:33+00:00"
         },
         {
             "name": "makinacorpus/goat-query-bundle",
