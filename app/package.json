@@ -16,6 +16,7 @@
         "@types/react-select": "^2.0.13",
         "@types/react-sortable-tree": "^0.3.5",
         "bootstrap": "^4.2.1",
+        "core-js": "3",
         "node-sass": "^4.11.0",
         "prop-types": "^15.6.2",
         "react": "^16.7.0",
