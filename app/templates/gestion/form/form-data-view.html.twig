@@ -1,0 +1,47 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item">
+  <a href="{{ path('form_admin_form_data_list') }}">
+    Formulaires
+  </a>
+</li>
+<li class="breadcrumb-item active" aria-current="page">
+  {{ block('title') }}
+</li>
+{% endblock %}
+
+{% block title %}Soumission du {{ formData.getCreatedAt()|date('d/m/Y H:i') }}{% endblock %}
+
+{% macro render_form_value(values, name) %}
+{% import _self as self %}
+{% if not values is iterable %}
+<div class="row">
+  <div class="col-6">
+    {{ name }}&nbsp;:
+  </div>
+  <div class="col">
+    {{ values }}
+  </div>
+</div>
+{% else %}
+{% set has_items = false %}
+{% for key, value in values %}
+{{ self.render_form_value(value, key) }}
+{% set has_items = true %}
+{% endfor %}
+{% if has_items %}
+<hr/>
+{% endif %}
+{% endif %}
+{% endmacro %}
+
+{#
+ # @todo improve this by displaying results using the form structure.
+ #   pgsql when you use jsonb may re-order contents and restitute it
+ #   in another ordered that you had injected it.
+ #}
+{% block body %}
+{% import _self as self %}
+{{ self.render_form_value(formData.getData(), 'Données') }}
+{% endblock %}

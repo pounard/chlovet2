@@ -1,3 +1,11 @@
+form_admin_form_data_list:
+    path: /admin/soumissions
+    controller: App\Controller\Admin\FormController::formDataList
+
+form_admin_form_data_view:
+    path: /admin/soumissions/{id}
+    controller: App\Controller\Admin\FormController::formDataView
+
 form_admin_token_list:
     path: /admin/token
     controller: App\Controller\Admin\FormController::tokenList

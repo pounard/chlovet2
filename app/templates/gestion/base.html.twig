@@ -35,6 +35,9 @@
   <div class="main clearfix">
     <div class="row main-content">
       <div class="col">
+        {% block header_top %}
+        {% endblock header_top %}
+
         {% block header %}
         <h1 class="mb-3">{% block header_title %}{{ block('title') }}{% endblock %}</h1>
         {% endblock header %}

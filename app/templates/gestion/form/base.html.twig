@@ -1,0 +1,25 @@
+{% extends 'gestion/base.html.twig' %}
+
+{% block navbar_left_custom %}
+<li class="nav-item">
+  <a class="nav-link" href="{{ path('index') }}">
+    <i class="fas fa-angle-left"></i>
+    Accueil
+  </a>
+</li>
+{% endblock %}
+
+{% block breadcrumb_content %}
+<li class="breadcrumb-item">Formulaires</li>
+<li class="breadcrumb-item active" aria-current="page">{% block title %}{% endblock %}</li>
+{% endblock %}
+
+{% block navbar_right_custom %}
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+{% block header_top %}
+{% include 'gestion/form/nav.html.twig' %}
+{% endblock header_top %}

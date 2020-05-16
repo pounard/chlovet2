@@ -1,0 +1,18 @@
+{% set route = app.request.attributes.get('_route') %}
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <a class="nav-link{% if 'form_admin_form_data_list' in route %} active{% endif %}" href="{{ path('form_admin_form_data_list') }}">
+      Soumissions
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if 'form_admin_token_list' in route %} active{% endif %}" href="{{ path('form_admin_token_list') }}">
+      Connexions client
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if 'form_admin_token_add' in route %} active{% endif %}" href="{{ path('form_admin_token_add') }}">
+      Ajouter
+    </a>
+  </li>
+</ul>

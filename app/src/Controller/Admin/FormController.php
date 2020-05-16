@@ -5,11 +5,16 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Controller\ControllerTrait;
+use App\Repository\FormDataRepository;
 use App\Security\FormClientTokenRepository;
+use Goat\Mapper\EntityManager;
+use Goat\Mapper\Error\EntityDoesNotExistError;
 use Goat\Runner\Runner;
 use MakinaCorpus\Calista\Bridge\Symfony\DependencyInjection\ViewFactory;
 use MakinaCorpus\Calista\Datasource\DatasourceInputDefinition;
 use MakinaCorpus\Calista\View\ViewDefinition;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\Exception\InvalidUuidStringException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type as Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +25,57 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class FormController extends AbstractController
 {
     use ControllerTrait;
+
+    /**
+     * Liste des tokens client.
+     */
+    public function formDataList(
+        Request $request,
+        ViewFactory $viewFactory,
+        Runner $runner,
+        EntityManager $entityManager
+    ): Response {
+        $datasource = new FormDataDatasource($entityManager);
+
+        $inputDef = new DatasourceInputDefinition($datasource, [
+            'limit_default' => 100,
+            'pager_enable' => true,
+            'sort_default_field' => 'created_at',
+            'sort_default_order' => 'desc',
+        ]);
+        $viewDef = new ViewDefinition([
+            'properties' => ['disable' => []],
+            'show_filters' => true,
+            'show_pager' => true,
+            'show_sort' => true,
+            'templates' => ['default' => 'gestion/form/form-data-list-calista.html.twig'],
+            'view_type' => 'twig_page',
+        ]);
+
+        $query = $inputDef->createQueryFromRequest($request);
+
+        return $this->render('gestion/form/form-data-list.html.twig', [
+            'items' => $datasource->getItems($query),
+            'query' => $query,
+            'view' => $viewFactory->getView($viewDef->getViewType()),
+            'viewDef' => $viewDef,
+        ]);
+    }
+
+    public function formDataView(string $id, FormDataRepository $repository): Response
+    {
+        try {
+            $formData = $repository->findOne(Uuid::fromString($id));
+        } catch (EntityDoesNotExistError $e) {
+            throw $this->createNotFoundException();
+        } catch (InvalidUuidStringException $e) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('gestion/form/form-data-view.html.twig', [
+            'formData' => $formData,
+        ]);
+    }
 
     /**
      * Liste des tokens client.
@@ -85,9 +141,7 @@ final class FormController extends AbstractController
                 ],
             ])
             ->add('target', Form\ChoiceType::class, [
-                'choices' => [
-                    \array_flip(\App\Entity\Form::getAll())
-                ],
+                'choices' => \array_flip(\App\Entity\Form::getAll()),
                 'label' => "Formulaire cible",
                 'required' => true,
                 'constraints' => [

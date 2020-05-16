@@ -1,0 +1,52 @@
+{% extends calista_theme %}
+
+{%- block item -%}
+<tr>
+  <td>
+    <em>Anonyme</em> {# @todo enregistrer quel client a fait ça #}
+  </td>
+  <td>
+    {{ app_form_label(item.getType()) }}
+  </td>
+  <td>
+    {{ item.getCreatedAt()|date('y/m/d - H:i') }}
+  </td>
+  <td>
+    {% set date = item.getSentAt() %}
+    {% if date %}
+    {{ date|date('y/m/d - H:i') }}
+    {% else %}
+    <em>Non envoyé</em>
+    {% endif %}
+  </td>
+  <td>
+    <a href="{{ path('form_admin_form_data_view', {id: item.getId()}) }}" class="btn">
+      <i class="fas fa-eye"></i>
+      <span class="sr-only">
+        Voir
+      </span>
+    </a>
+  </td>
+</tr>
+{%- endblock -%}
+
+{% block item_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th>Client</th>
+      <th>Formulaire cible</th>
+      <th>Créé le</th>
+      <th>Envoyé le</th>
+      <th title="Actions">
+        <span class="sr-only">Actions</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    {{ block('item') }}
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

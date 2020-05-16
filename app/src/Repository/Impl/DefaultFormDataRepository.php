@@ -8,6 +8,7 @@ use App\Entity\Form;
 use App\Entity\FormData;
 use App\Repository\FormDataRepository;
 use Goat\Mapper\EntityManager;
+use Goat\Mapper\Error\EntityDoesNotExistError;
 use Goat\Mapper\Repository\AbstractRepository;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -46,5 +47,26 @@ class DefaultFormDataRepository extends AbstractRepository implements FormDataRe
         $this->addQueryEntityHydrator($query);
 
         return $query->execute()->fetch();
+    }
+
+    /**
+     * Find single entry.
+     */
+    public function findOne(UuidInterface $id): FormData
+    {
+        $formData = $this
+            ->query()
+            ->matches('id', $id)
+            ->build()
+            ->range(1)
+            ->execute()
+            ->fetch()
+        ;
+
+        if (!$formData) {
+            throw new EntityDoesNotExistError();
+        }
+
+        return $formData;
     }
 }
