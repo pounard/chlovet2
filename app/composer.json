@@ -22,7 +22,7 @@
         "makinacorpus/calista-core": "^1.0@alpha",
         "makinacorpus/filechunk-bundle": "^2.0.0-alpha8",
         "makinacorpus/generated-hydrator-bundle": "^1.0.0-alpha1",
-        "makinacorpus/goat-mapper": "dev-master",
+        "makinacorpus/goat-mapper": "dev-master#0605275",
         "makinacorpus/goat-query": "^2.0.1",
         "makinacorpus/goat-query-bundle": "dev-master",
         "neitanod/forceutf8": "^2.0",

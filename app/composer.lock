@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae426975952c4944b7e8bc1bff02c848",
+    "content-hash": "d0584661a48b681b3398b3e2a1b436bd",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1575,12 +1575,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pounard/goat-mapper.git",
-                "reference": "8412b11929869bed44b72e21f9d88f79e76e6cce"
+                "reference": "0605275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pounard/goat-mapper/zipball/8412b11929869bed44b72e21f9d88f79e76e6cce",
-                "reference": "8412b11929869bed44b72e21f9d88f79e76e6cce",
+                "url": "https://api.github.com/repos/pounard/goat-mapper/zipball/0605275",
+                "reference": "0605275",
                 "shasum": ""
             },
             "require": {
