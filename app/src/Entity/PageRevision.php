@@ -9,7 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 final class PageRevision
 {
     private ?\DateTimeInterface $created_at = null;
-    private array $data = [];
+    private ?array $data = null;
     private /* UuidInterface */ $id;
     private ?\DateTimeInterface $page_at = null;
     private ?int $revision = null;
@@ -57,11 +57,11 @@ final class PageRevision
 
     public function getData(): array
     {
-        return $this->data;
+        return $this->data ?? [];
     }
 
     public function get(string $name, $default = null)
     {
-        return $this->data[$name] ?? $default;
+        return $this->getData()[$name] ?? $default;
     }
 }

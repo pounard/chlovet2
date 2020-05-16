@@ -380,7 +380,7 @@ SQL
             ->getQueryBuilder()
             ->update('page_route')
             ->sets($values)
-            ->condition('id', $id)
+            ->where('id', $id)
             ->execute()
         ;
     }

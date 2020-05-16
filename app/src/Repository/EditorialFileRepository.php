@@ -102,13 +102,13 @@ final class EditorialFileRepository
 
         $queryBuilder
             ->delete('public.page_revision')
-            ->condition('id', $id)
+            ->where('id', $id)
             ->execute()
         ;
 
         return $queryBuilder
             ->delete('public.page')
-            ->condition('id', $id)
+            ->where('id', $id)
             ->execute()
             ->countRows()
         ;

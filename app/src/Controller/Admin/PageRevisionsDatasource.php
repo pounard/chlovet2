@@ -65,7 +65,7 @@ final class PageRevisionsDatasource extends AbstractDatasource
         ;
 
         if ($query->has('id')) {
-            $select->condition('p.id', $query->get('id'));
+            $select->where('p.id', $query->get('id'));
         }
         /*
         if ($query->has('gestion')) {

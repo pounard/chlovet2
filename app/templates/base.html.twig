@@ -99,6 +99,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
            #}
+          {% block header_menu %}
           <ul class="navbar-nav col-auto" id="header-menu">
             {% set menu = app_load_menu_top() %}
             {% for item in menu.children %}
@@ -124,6 +125,7 @@
             {% endif %}
             {% endfor %}
           </ul>
+          {% endblock header_menu %}
           <div class="col"></div> {# Centers menu #}
         </nav>
       </div>

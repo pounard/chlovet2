@@ -10,6 +10,7 @@ use Goat\Query\QueryBuilder;
 use Goat\Query\Value;
 use Goat\Runner\QueryPagerResultIterator;
 use Goat\Runner\Runner;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 final class PageRepository
@@ -42,7 +43,7 @@ final class PageRepository
             ->getQueryBuilder()
             ->select('public.page', 'p')
             ->columns(['p.*'])
-            ->condition('p.id', $id)
+            ->where('p.id', $id)
             ->execute([], Page::class)
             ->fetch()
         ;
@@ -59,7 +60,7 @@ final class PageRepository
             ->select('public.page_revision', 'pr')
             ->columns(['pr.*', 'page_at' => 'p.created_at'])
             ->join('public.page', 'p.id = pr.id and pr.revision = p.current_revision', 'p')
-            ->condition('pr.id', $id)
+            ->where('pr.id', $id)
             ->execute([], PageRevision::class)
             ->fetch()
         ;
@@ -73,7 +74,10 @@ final class PageRepository
         return $this
             ->runner
             ->getQueryBuilder()
-            ->insertValues('public.page')
+            ->insert('public.page')
+            ->values([
+                'id' => Uuid::uuid4(),
+            ])
             ->returning()
             ->execute([], Page::class)
             ->fetch()
@@ -107,7 +111,7 @@ final class PageRepository
                 $nextRevisionId = ((int)$builder
                     ->select('public.page_revision')
                     ->columnExpression('max(revision)')
-                    ->condition('id', $id)
+                    ->where('id', $id)
                     ->execute()
                     ->fetchField()
                 ) + 1;
@@ -129,7 +133,7 @@ final class PageRepository
                 $builder
                     ->update('page')
                     ->set('current_revision', $nextRevisionId)
-                    ->condition('id', $id)
+                    ->where('id', $id)
                     ->execute()
                 ;
 
@@ -155,13 +159,13 @@ final class PageRepository
 
         $queryBuilder
             ->delete('public.page_revision')
-            ->condition('id', $id)
+            ->where('id', $id)
             ->execute()
         ;
 
         return $queryBuilder
             ->delete('public.page')
-            ->condition('id', $id)
+            ->where('id', $id)
             ->execute()
             ->countRows()
         ;
@@ -176,8 +180,8 @@ final class PageRepository
             ->runner
             ->getQueryBuilder()
             ->delete('public.page_revision')
-            ->condition('id', $id)
-            ->condition('revision', $revision)
+            ->where('id', $id)
+            ->where('revision', $revision)
             ->returning()
             ->execute([], PageRevision::class)
             ->fetch()

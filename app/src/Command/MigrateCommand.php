@@ -60,14 +60,15 @@ final class MigrateCommand extends Command
 
     private function createConnection(InputInterface $input): Runner
     {
-        return DriverFactory::fromDoctrineConnection(
-            \Doctrine\DBAL\DriverManager::getConnection(
-                ['url' => $input->getArgument('database')],
-                new \Doctrine\DBAL\Configuration()
-            ),
-            // @todo It assumes we are working with the same DBMS server
-            $this->converter
-        );
+        return DriverFactory
+            ::fromDoctrineConnection(
+                \Doctrine\DBAL\DriverManager::getConnection(
+                    ['url' => $input->getArgument('database')],
+                    new \Doctrine\DBAL\Configuration()
+                )
+            )
+            ->getRunner()
+        ;
     }
 
     private function reduceDrupalFieldItem(string $name, array $data): array
@@ -123,11 +124,11 @@ final class MigrateCommand extends Command
                     ->getQueryBuilder()
                     ->select('field_data_'.$name, 'f')
                     ->columnExpression('f.*')
-                    ->condition('entity_type', $entityType)
-                    ->condition('entity_id', $entityId)
-                    ->condition('revision_id', $revisionId)
-                    ->condition('language', $lang)
-                    ->condition('deleted', 0)
+                    ->where('entity_type', $entityType)
+                    ->where('entity_id', $entityId)
+                    ->where('revision_id', $revisionId)
+                    ->where('language', $lang)
+                    ->where('deleted', 0)
                     ->orderBy('delta', Query::ORDER_ASC)
                     ->execute()
             )
@@ -151,8 +152,8 @@ final class MigrateCommand extends Command
             ->getQueryBuilder()
             ->select('drupal_map')
             ->column('local_id')
-            ->condition('source_type', $type)
-            ->condition('source_id', $distId)
+            ->where('source_type', $type)
+            ->where('source_id', $distId)
             ->execute()
             ->fetchField() ?? $this->pageRepository->create()->getId()
         ;
@@ -302,7 +303,7 @@ final class MigrateCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $distRunner = $this->createConnection($input);
         $distBuilder = $distRunner->getQueryBuilder();
@@ -313,7 +314,7 @@ final class MigrateCommand extends Command
             ->select('node', 'n')
             ->column('*')
             ->leftJoin('node_revision', 'r.vid = n.vid', 'r')
-            ->condition('n.type', ['page', 'news'])
+            ->where('n.type', ['page', 'news'])
             ->orderBy('n.nid', Query::ORDER_ASC)
             ->execute()
         ;
@@ -335,7 +336,7 @@ final class MigrateCommand extends Command
         $menuId = $distBuilder
             ->select('umenu')
             ->column('id')
-            ->condition('is_main', 1)
+            ->where('is_main', 1)
             ->execute()
             ->fetchField()
         ;
@@ -347,7 +348,7 @@ final class MigrateCommand extends Command
                 ->column('m.*')
                 ->columnExpression('coalesce(m.title, node.title)', 'title')
                 ->leftJoin('node', 'node.nid = m.node_id')
-                ->condition('m.menu_id', $menuId)
+                ->where('m.menu_id', $menuId)
                 ->orderBy('m.parent_id', Query::ORDER_ASC, Query::NULL_FIRST)
                 ->orderBy('m.weight', Query::ORDER_ASC)
                 ->orderBy('m.id', Query::ORDER_ASC, Query::NULL_FIRST)
@@ -363,6 +364,8 @@ final class MigrateCommand extends Command
         } else {
             $output->writeln("Skipping menu migration, no main menu found.");
         }
+
+        return 0;
     }
 }
 
