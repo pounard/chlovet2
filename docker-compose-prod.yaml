@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     postgres:
-        container_name: postgres
+        container_name: chlovet-postgres
         build:
             context: .
             dockerfile: ./docker/postgres/Dockerfile
@@ -16,7 +16,7 @@ services:
         environment:
             PGDATA: "/data"
     phpfpm:
-        container_name: phpfpm
+        container_name: chlovet-phpfpm
         build:
             context: .
             dockerfile: ./docker/php-fpm/Dockerfile
@@ -25,13 +25,10 @@ services:
         networks: [postgres, php]
         ports: ["8181:9000"]
         working_dir: /var/www/html
-        # environment:
-        #     DATABASE_URL: "from environment"
-        #     APP_ENV: "from environment"
         volumes:
             - "${APP_DIR}/app:/var/www/html"
     nginx:
-        container_name: nginx
+        container_name: chlovet-nginx
         build:
             context: .
             dockerfile: ./docker/nginx/Dockerfile
