@@ -16,7 +16,7 @@ services:
         environment:
             PGDATA: "/data"
     phpfpm:
-        container_name: chlovet-phpfpm
+        container_name: chlovet-php-fpm
         build:
             context: .
             dockerfile: ./docker/php-fpm-dev/Dockerfile
