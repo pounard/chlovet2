@@ -1,2 +1,2 @@
 #!/bin/bash
-APP_DIR="$PWD" docker-compose -p chlovet up
+APP_DIR="$PWD" docker-compose -p chlovet up -d
