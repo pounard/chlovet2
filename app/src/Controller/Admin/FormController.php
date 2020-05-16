@@ -128,7 +128,7 @@ final class FormController extends AbstractAppController
     /**
      * Ajouter un token client.
      */
-    public function tokenAdd(Request $request, FormClientTokenRepository $tokenRepository, LoggerInterface $logger): Response
+    public function tokenAdd(Request $request, FormClientTokenRepository $tokenRepository): Response
     {
         $form = $this
             ->createFormBuilder()

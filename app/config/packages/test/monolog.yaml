@@ -1,0 +1,3 @@
+monolog:
+    # PAS de log pendant les tests unitaires.
+    handlers: []
