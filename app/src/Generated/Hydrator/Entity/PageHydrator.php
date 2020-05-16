@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Hydrator\Entity;
+namespace App\Generated\Hydrator\Entity;
 
-class PageRevisionHydrator implements \Zend\Hydrator\HydratorInterface
+class PageHydrator implements \Zend\Hydrator\HydratorInterface
 {
     private $hydrateCallbacks = array(), $extractCallbacks = array();
     function __construct()
@@ -11,30 +11,26 @@ class PageRevisionHydrator implements \Zend\Hydrator\HydratorInterface
             if (isset($values['created_at']) || $object->created_at !== null && \array_key_exists('created_at', $values)) {
                 $object->created_at = $values['created_at'];
             }
-            if (isset($values['data']) || $object->data !== null && \array_key_exists('data', $values)) {
-                $object->data = $values['data'];
+            if (isset($values['revision_at']) || $object->revision_at !== null && \array_key_exists('revision_at', $values)) {
+                $object->revision_at = $values['revision_at'];
+            }
+            if (isset($values['current_revision']) || $object->current_revision !== null && \array_key_exists('current_revision', $values)) {
+                $object->current_revision = $values['current_revision'];
             }
             if (isset($values['id']) || $object->id !== null && \array_key_exists('id', $values)) {
                 $object->id = $values['id'];
             }
-            if (isset($values['page_at']) || $object->page_at !== null && \array_key_exists('page_at', $values)) {
-                $object->page_at = $values['page_at'];
-            }
-            if (isset($values['revision']) || $object->revision !== null && \array_key_exists('revision', $values)) {
-                $object->revision = $values['revision'];
-            }
             if (isset($values['title']) || $object->title !== null && \array_key_exists('title', $values)) {
                 $object->title = $values['title'];
             }
-        }, null, 'App\\Entity\\PageRevision');
+        }, null, 'App\\Entity\\Page');
         $this->extractCallbacks[] = \Closure::bind(static function ($object, &$values) {
             $values['created_at'] = $object->created_at;
-            $values['data'] = $object->data;
+            $values['revision_at'] = $object->revision_at;
+            $values['current_revision'] = $object->current_revision;
             $values['id'] = $object->id;
-            $values['page_at'] = $object->page_at;
-            $values['revision'] = $object->revision;
             $values['title'] = $object->title;
-        }, null, 'App\\Entity\\PageRevision');
+        }, null, 'App\\Entity\\Page');
     }
     function hydrate(array $data, $object)
     {

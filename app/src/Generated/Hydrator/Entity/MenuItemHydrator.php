@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Hydrator\Entity;
+namespace App\Generated\Hydrator\Entity;
 
 class MenuItemHydrator implements \Zend\Hydrator\HydratorInterface
 {
