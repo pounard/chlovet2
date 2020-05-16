@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Controller\AbstractAppController;
 use App\Controller\ControllerTrait;
 use App\Repository\FormDataRepository;
 use App\Security\FormClientTokenRepository;
@@ -13,16 +14,16 @@ use Goat\Runner\Runner;
 use MakinaCorpus\Calista\Bridge\Symfony\DependencyInjection\ViewFactory;
 use MakinaCorpus\Calista\Datasource\DatasourceInputDefinition;
 use MakinaCorpus\Calista\View\ViewDefinition;
+use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\Exception\InvalidUuidStringException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type as Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class FormController extends AbstractController
+final class FormController extends AbstractAppController
 {
     use ControllerTrait;
 
@@ -127,7 +128,7 @@ final class FormController extends AbstractController
     /**
      * Ajouter un token client.
      */
-    public function tokenAdd(Request $request, FormClientTokenRepository $tokenRepository): Response
+    public function tokenAdd(Request $request, FormClientTokenRepository $tokenRepository, LoggerInterface $logger): Response
     {
         $form = $this
             ->createFormBuilder()
@@ -169,11 +170,7 @@ final class FormController extends AbstractController
                 return $this->redirectToRoute('form_admin_token_add');
 
             } catch (\Throwable $e) {
-                if ($this->isDebug()) {
-                    throw $e;
-                }
-
-                $this->addFlash('error', "Une erreur est survenue");
+                $this->handleError($e);
             }
         }
 
