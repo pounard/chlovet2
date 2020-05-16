@@ -153,14 +153,9 @@ final class CommemoratifFormType extends AbstractType
         ;
 
         // Environnement.
-        $environnementAnimauxTrigger = \uniqid('trig-');
-        $environnementChangementTrigger = \uniqid('trig-');
         $builder
             ->add('environnement_animaux', Form\ChoiceType::class, [
                 'label' => "Autres animaux dans le foyer",
-                'attr' => [
-                    'data-trigger' => $environnementAnimauxTrigger,
-                ],
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
@@ -174,7 +169,6 @@ final class CommemoratifFormType extends AbstractType
                 'label' => "Si autre, précisez",
                 'attr' => [
                     'placeholder' => "Chèvre, Lama, ...",
-                    'data-show-if' => $environnementAnimauxTrigger . '=Autre',
                 ],
                 'required' => false,
                 'constraints' => [
@@ -201,9 +195,6 @@ final class CommemoratifFormType extends AbstractType
             ])
             ->add('environnement_changements', Form\ChoiceType::class, [
                 'label' => "Changements dans l’environnement ces dernières semaines",
-                'attr' => [
-                    'data-trigger' => $environnementChangementTrigger,
-                ],
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
@@ -220,7 +211,6 @@ final class CommemoratifFormType extends AbstractType
                 'label' => "Si autre, précisez",
                 'attr' => [
                     'placeholder' => "Chèvre, Lama, ...",
-                    'data-show-if' => $environnementChangementTrigger . '=Autre',
                 ],
                 'required' => false,
                 'constraints' => [
@@ -312,14 +302,14 @@ final class CommemoratifFormType extends AbstractType
 
         if (
             $groups && $form->has('environnement_animaux') &&
-            "Autre" === $form->get('environnement_animaux')->getData()
+            "Autre" === $form->get('environnement_animaux')->getData() // @todo \in_array() ?
         ) {
             $groups[] = self::GROUP_ENV_ANIMAUX_AUTRE;
         }
 
         if (
             $groups && $form->has('environnement_changements') &&
-            "Autre" === $form->get('environnement_changements')->getData()
+            "Autre" === $form->get('environnement_changements')->getData() // @todo \in_array() ?
         ) {
             $groups[] = self::GROUP_ENV_CHANGEMENTS_AUTRE;
         }

@@ -33,15 +33,10 @@ abstract class ProblemesFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $triggerId = \uniqid('trig-');
-
         $group = self::computeGroupFromClass();
         $groupNatureAutre = $group . 'NatureAutre';
 
         $builder->add(FormHelper::SECTION_KILLSWITCH, Form\CheckboxType::class, [
-            'attr' => [
-                'data-trigger' => $triggerId,
-            ],
             'required' => false,
         ]);
 
@@ -50,7 +45,6 @@ abstract class ProblemesFormType extends AbstractType
             'data' => null,
             'attr' => [
                 'placeholder' => "Saississez la date au format " . (new \DateTimeImmutable())->format('d/m/Y'),
-                'data-show-if' => $triggerId,
             ],
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy',
