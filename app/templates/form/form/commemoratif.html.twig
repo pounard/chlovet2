@@ -112,7 +112,7 @@ Demande de consultation – commémoratifs
 <div class="card mb-3">
   <div class="card-header">Alimentation</div>
   <div class="card-body">
-    FOO
+    {{ self.form_row_inline_container(form.data.alimentation) }}
   </div>
 </div>
 
@@ -140,10 +140,10 @@ Demande de consultation – commémoratifs
 </div>
 
 {{ self.form_card_open_close('Problèmes digestifs', form.data.problemes_digestifs) }}
-{# {{ self.form_card_open_close('Problèmes urinaires', form.data.respiratoires) }} #}
+{{ self.form_card_open_close('Problèmes urinaires', form.data.problemes_urinaires) }}
 {{ self.form_card_open_close('Problèmes respiratoires', form.data.problemes_respiratoires) }}
-{# {{ self.form_card_open_close('Problèmes aux yeux', form.data.respiratoires) }} #}
-{# {{ self.form_card_open_close('Problèmes locomoteurs', form.data.respiratoires) }} #}
+{{ self.form_card_open_close('Problèmes aux yeux', form.data.problemes_aux_yeux) }}
+{{ self.form_card_open_close('Problèmes locomoteurs', form.data.problemes_locomoteurs) }}
 {{ self.form_card_open_close('Problèmes cutanés', form.data.problemes_cutanes) }}
 
 <div class="row">

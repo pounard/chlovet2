@@ -5,9 +5,14 @@ declare(strict_types=1);
 namespace App\Controller\Form\Type;
 
 use App\Controller\Form\FormHelper;
+use App\Controller\Form\Type\Commemoratif\AlimentationFormType;
 use App\Controller\Form\Type\Commemoratif\ComportementFormType;
-use App\Controller\Form\Type\Commemoratif\ProblemDigestifsType;
-use App\Controller\Form\Type\Commemoratif\ProblemFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesAuxYeuxFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesCutanesFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesDigestifsFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesLocomoteursFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesRespiratoiresFormType;
+use App\Controller\Form\Type\Commemoratif\ProblemesUrinairesFormType;
 use App\Controller\Form\Type\Commemoratif\TraitementPucesFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -228,7 +233,7 @@ final class CommemoratifFormType extends AbstractType
         ;
 
         // Alimentation.
-        // @todo
+        $builder->add('alimentation', AlimentationFormType::class, $defaults); 
 
         // Vermifuge.
         $builder
@@ -258,55 +263,21 @@ final class CommemoratifFormType extends AbstractType
         $builder->add('comportement', ComportementFormType::class, $defaults);
 
         // Probèmes digestifs.
-        $builder->add('problemes_digestifs', ProblemDigestifsType::class, $defaults + [
-            'label' => 'Problèmes digestifs',
-        ]);
+        $builder->add('problemes_digestifs', ProblemesDigestifsFormType::class, $defaults);
 
         // Problèmes urinaires.
-        /*
-        $builder->add($name, CommemoratifProblemFormType::class, [
-            'label' => 'Problèmes urinaires',
-            'natures' => [
-            ],
-        ]);
-         */
+        $builder->add('problemes_urinaires', ProblemesUrinairesFormType::class, $defaults);
 
-        $builder->add('problemes_respiratoires', ProblemFormType::class, $defaults + [
-            'natures' => [
-                "Eternuements",
-                "Toux",
-                "Difficultés pour respirer, essoufflement",
-            ],
-        ]);
+        // Problèmes respiratoires.
+        $builder->add('problemes_respiratoires', ProblemesRespiratoiresFormType::class, $defaults);
 
         // Problèmes aux yeux.
-        /*
-        $builder->add($name, CommemoratifProblemFormType::class, [
-            'label' => 'Problèmes urinaires',
-            'natures' => [
-            ],
-        ]);
-         */
+        $builder->add('problemes_aux_yeux', ProblemesAuxYeuxFormType::class, $defaults);
 
         // Problèmes locomoteurs.
-        /*
-        $builder->add($name, CommemoratifProblemFormType::class, [
-            'label' => 'Problèmes urinaires',
-            'natures' => [
-            ],
-        ]);
-         */
+        $builder->add('problemes_locomoteurs', ProblemesLocomoteursFormType::class, $defaults);
 
-        $builder->add('problemes_cutanes', ProblemFormType::class, $defaults + [
-            'natures' => [
-                "Se gratte/se lèche",
-                "Croutes",
-                "Plaies à vif",
-                "Mauvaise odeur",
-                "Dépilations",
-                "Présence de puces",
-            ],
-        ]);
+        $builder->add('problemes_cutanes', ProblemesCutanesFormType::class, $defaults);
     }
 
     /**

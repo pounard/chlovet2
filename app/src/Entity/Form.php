@@ -15,6 +15,11 @@ final class Form
         ];
     }
 
+    public function getLabel(string $type): string
+    {
+        return self::getAll()[$type] ?? "Erreur";
+    }
+
     public static function isValid(string $type): bool
     {
         return self::TYPE_COMMEMORATIF === $type;

@@ -116,6 +116,6 @@ final class TraitementPucesFormType extends AbstractType
      */
     protected function resolveValidationGroups(FormInterface $form, ?array $groups): ?array
     {
-        return null;
+        return $groups;
     }
 }

@@ -108,7 +108,6 @@ final class ComportementFormType extends AbstractType
             'groups' => [Constraint::DEFAULT_GROUP],
             'html5' => false,
             'label' => false,
-            'natures' => [],
             'required' => false,
         ]);
 
@@ -120,6 +119,6 @@ final class ComportementFormType extends AbstractType
      */
     protected function resolveValidationGroups(FormInterface $form, ?array $groups): ?array
     {
-        return null;
+        return $groups;
     }
 }

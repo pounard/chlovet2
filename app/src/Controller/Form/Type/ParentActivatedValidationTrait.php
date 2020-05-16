@@ -14,6 +14,19 @@ use Symfony\Component\Validator\Constraint;
 trait ParentActivatedValidationTrait
 {
     /**
+     * Default group for this class.
+     */
+    protected static ?string $group = null;
+
+    /**
+     * Get default group for this class.
+     */
+    public static function computeGroupFromClass(): string
+    {
+        return static::$group ?? (static::$group = \str_replace('\\', '', static::class));
+    }
+
+    /**
      * Declares the new "groups" option.
      */
     public function configureOptions(OptionsResolver $resolver)

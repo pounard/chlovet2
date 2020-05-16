@@ -14,9 +14,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class ProblemFormType extends AbstractType
+abstract class ProblemesFormType extends AbstractType
 {
     use ParentActivatedValidationTrait;
+
+    /**
+     * Les natures (choix multiple) à cocher.
+     */
+    protected abstract function getNatures(): ?array;
+
+    /**
+     * Précise si "Autre" doit être ajouté parmis les natures.
+     */
+    protected abstract function avecAutreNature(): bool;
 
     /**
      * {@inheritdoc}
@@ -24,6 +34,9 @@ class ProblemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $triggerId = \uniqid('trig-');
+
+        $group = self::computeGroupFromClass();
+        $groupNatureAutre = $group . 'NatureAutre';
 
         $builder->add(FormHelper::SECTION_KILLSWITCH, Form\CheckboxType::class, [
             'attr' => [
@@ -46,28 +59,45 @@ class ProblemFormType extends AbstractType
             'constraints' => [
                 new Assert\NotBlank([
                     'message' => "Veuillez renseigner la date d'apparition des symptômes.",
-                    'groups' => [$options['groups']],
+                    'groups' => [$group],
                 ]),
             ],
         ]);
 
-        if ($options['natures']) {
+        $natures = $this->getNatures();
+        if ($natures) {
+            $avecAutreNature = $this->avecAutreNature();
+
+            if ($avecAutreNature) {
+                $natures[] = "Autre";
+            }
+
             $builder->add('nature', Form\ChoiceType::class, [
-                'label' => "Si oui, précisez la nature du problème (plus choix sont possibles)",
-                'attr' => [
-                    'data-show-if' => $triggerId,
-                ],
+                'label' => "Précisez la nature du problème (plus choix sont possibles)",
                 'expanded' => true,
                 'multiple' => true,
                 'required' => false,
-                'choices' => FormHelper::map($options['natures']),
+                'choices' => FormHelper::map($natures),
                 'constraints' => [
                     new Assert\NotBlank([
                         'message' => "Veuillez préciser la ou les natures des symptômes.",
-                        'groups' => [$options['groups']],
+                        'groups' => [$group],
                     ]),
                 ],
             ]);
+
+            if ($avecAutreNature) {
+                $builder->add('nature_autre', Form\TextType::class, [
+                    'label' => "Si autre, précisez",
+                    'required' => false,
+                    'constraints' => [
+                        new Assert\NotBlank([
+                            'message' => "Si autre, vous devez préciser.",
+                            'groups' => [$groupNatureAutre],
+                        ]),
+                    ],
+                ]);
+            }
         }
     }
 
@@ -79,10 +109,9 @@ class ProblemFormType extends AbstractType
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([
-            'groups' => [Constraint::DEFAULT_GROUP],
             'html5' => false,
             'label' => false,
-            'natures' => [],
+            'groups' => [Constraint::DEFAULT_GROUP],
             'required' => false,
         ]);
 
@@ -94,6 +123,20 @@ class ProblemFormType extends AbstractType
      */
     protected function resolveValidationGroups(FormInterface $form, ?array $groups): ?array
     {
+        if (
+            $groups && $form->has(FormHelper::SECTION_KILLSWITCH) &&
+            $form->get(FormHelper::SECTION_KILLSWITCH)->getData()
+        ) {
+            $groups[] = self::computeGroupFromClass();
+        }
+
+        if (
+            $groups && $form->has('nature') &&
+            \in_array("Autre", $form->get('nature')->getData())
+        ) {
+            $groups[] = self::computeGroupFromClass() . 'NatureAutre';
+        }
+
         return $groups;
     }
 }

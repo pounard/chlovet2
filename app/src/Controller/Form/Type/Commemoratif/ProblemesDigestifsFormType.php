@@ -7,13 +7,36 @@ namespace App\Controller\Form\Type\Commemoratif;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\Extension\Core\Type as Form;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class ProblemDigestifsType extends ProblemFormType
+final class ProblemesDigestifsFormType extends ProblemesFormType
 {
-    const GROUP_VOMISSEMENTS = 'ProblemeDigestifVomissement';
+    const GROUP_VOMISSEMENTS = 'ProblemesDigestifsVomissements';
+
+    protected static ?string $group = 'ProblemesDigestifs';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getNatures(): ?array
+    {
+        return [
+            "Selles molles",
+            "Selles liquides",
+            "Selles dures",
+            "Absences de selles",
+            "Présence de sang dans les selles",
+            "Vomissements",
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function avecAutreNature(): bool
+    {
+        return false;
+    }
 
     /**
      * {@inheritdoc}
@@ -32,31 +55,6 @@ final class ProblemDigestifsType extends ProblemFormType
                 ]),
             ],
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        parent::configureOptions($resolver);
-
-        $resolver->setDefaults([
-            'groups' => [Constraint::DEFAULT_GROUP],
-            'html5' => false,
-            'label' => false,
-            'natures' => [
-                "Selles molles",
-                "Selles liquides",
-                "Selles dures",
-                "Absences de selles",
-                "Présence de sang dans les selles",
-                "Vomissements",
-            ],
-            'required' => false,
-        ]);
-
-        $this->doConfigureValidationGroupsOptions($resolver);
     }
 
     /**
