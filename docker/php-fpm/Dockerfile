@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         # PostgreSQL
         libpq-dev \
+    # OpCache!
+    && docker-php-ext-install -j$(nproc) opcache \
     # GD
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
@@ -21,3 +23,5 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) pgsql
 RUN mkdir -p /usr/local/etc/php/conf.d/
 COPY ./docker/php-fpm/etc/php/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/php-fpm/etc/php/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/php-fpm/etc/php/conf.d/opcache.ini /usr/local/etc/php/conf.d/opcache.ini

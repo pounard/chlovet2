@@ -173,9 +173,6 @@
     "symfony/doctrine-bridge": {
         "version": "v4.2.2"
     },
-    "symfony/dotenv": {
-        "version": "v4.2.1"
-    },
     "symfony/error-handler": {
         "version": "v4.4.2"
     },

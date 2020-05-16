@@ -4,6 +4,7 @@ parameters:
     app_file_directory: "%kernel.project_dir%/public/data"
     front_enabled: "%env(bool:FRONT_ENABLED)%"
     security_auth_token: "%env(string:SECURITY_AUTH_TOKEN)%"
+    security_auth_token_danger_zone: "%env(string:SECURITY_AUTH_TOKEN_DANGER_ZONE)%"
 
 services:
     _defaults:
@@ -13,6 +14,7 @@ services:
             $debug: "%kernel.debug%"
             $isFrontEnabled: "%front_enabled%"
             $storageDirectory: "%app_file_directory%"
+            $securityAuthTokenDangerZone: "%security_auth_token_danger_zone%"
 
     App\:
         resource: '../src/*'

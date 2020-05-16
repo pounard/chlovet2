@@ -5,3 +5,7 @@ security_login:
 security_logout:
     path: /security/disconnect
     controller: App\Controller\Admin\SecurityController::logout
+
+admin_debug_phpinfo:
+    path: /admin/debug/phpinfo
+    controller: App\Controller\Admin\SecurityController::phpinfo
