@@ -86,7 +86,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
             ->runner
             ->execute(
                 <<<SQL
-                SELECT "target" FROM "client_login" WHERE "token" = ?
+                SELECT "type" FROM "client_login" WHERE "token" = ?
                 SQL,
                 [$token]
             )
@@ -121,7 +121,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
             ->insert('client_login')
             ->values([
                 'email' => $emailAddress,
-                'target' => $target ?? 'default',
+                'type' => $target ?? 'default',
                 'token' => $token,
             ])
             ->perform()
