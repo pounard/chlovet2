@@ -1,0 +1,12 @@
+[http]
+    [http.routers]
+        [http.routers.chlovetRouter]
+            entryPoints = ["web", "websecure"]
+            rule = "Host(`chlovet.local`)"
+            service = "chlovetNginx"
+#            [http.routers.chlovet.tls]
+#                certResolver = "myresolver"
+    [http.services]
+        [http.services.chlovetNginx.loadBalancer]
+            [[http.services.chlovetNginx.loadBalancer.servers]]
+                url = "http://127.0.0.1:8180"

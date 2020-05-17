@@ -1,0 +1,30 @@
+[entryPoints]
+    [entryPoints.web]
+        address = ":80"
+        [entryPoints.web.forwardedHeaders]
+            insecure = true
+#        [entryPoints.web.redirect]
+#            entryPoint = "https"
+    [entryPoints.websecure]
+        address = ":443"
+        [entryPoints.websecure.http.tls]
+            certResolver = "myresolver"
+        [entryPoints.websecure.forwardedHeaders]
+            trustedIPs = ["127.0.0.1/32", "192.168.1.7"]
+
+[providers.file]
+    directory = "/etc/traefik/dynamic/conf"
+
+[log]
+    # DEBUG, PANIC, FATAL, ERROR, WARN, INFO
+    level = "DEBUG"
+    # filePath = "/path/to/log-file.log"
+
+[certificatesResolvers.myresolver.acme]
+    email = "pierre.rineau@processus.org"
+    storage = "acme.json"
+    # Staging for now.
+    caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"  
+    [certificatesResolvers.myresolver.acme.httpChallenge]
+        # For web challenge, points to non secure http entrypoint.
+        entryPoint = "web"
