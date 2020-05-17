@@ -6,7 +6,7 @@ services:
             context: .
             dockerfile: ./docker/postgres/Dockerfile
         env_file: [.env, docker.env]
-        networks: [postgres]
+        networks: [chlovet-db]
         image: postgres:12
         restart: always
         volumes:
@@ -21,7 +21,7 @@ services:
             dockerfile: ./docker/php-fpm/Dockerfile
         depends_on: [postgres]
         env_file: [.env, docker.env]
-        networks: [postgres, php]
+        networks: [chlovet-db, chlovet]
         working_dir: /var/www/html
         volumes:
             - "${APP_DIR}/app:/var/www/html"
@@ -33,12 +33,17 @@ services:
         depends_on: [phpfpm]
         env_file: [.env, docker.env]
         image: nginx:1.17
-        networks: [php]
-        # On production, bind ports is your responsability.
-        # ports: ["8180:80"]
+        networks:
+            chlovet: ~
+            web:
+                aliases:
+                    - chlovet.internal
+        ports: ["8180:80"]
         volumes:
             - "${APP_DIR}/app/public:/usr/share/nginx/html"
             - "${APP_DIR}/data/logs/nginx:/var/log/nginx"
 networks:
-    postgres:
-    php:
+    chlovet-db:
+    chlovet:
+    web:
+        external: true
