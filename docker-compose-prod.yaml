@@ -8,7 +8,6 @@ services:
         env_file: [.env, docker.env]
         networks: [postgres]
         image: postgres:12
-        ports: ["8182:5432"]
         restart: always
         volumes:
             - "${APP_DIR}/data/pgsql_data:/data"
@@ -23,7 +22,6 @@ services:
         depends_on: [postgres]
         env_file: [.env, docker.env]
         networks: [postgres, php]
-        ports: ["8181:9000"]
         working_dir: /var/www/html
         volumes:
             - "${APP_DIR}/app:/var/www/html"
@@ -35,8 +33,9 @@ services:
         depends_on: [phpfpm]
         env_file: [.env, docker.env]
         image: nginx:1.17
-        networks: [php]
-        ports: ["8180:80", "8183:443"]
+        networks: [php, web]
+        # On production, bind ports is your responsability.
+        # ports: ["8180:80"]
         volumes:
             - "${APP_DIR}/app/public:/usr/share/nginx/html"
             - "${APP_DIR}/data/logs/nginx:/var/log/nginx"
