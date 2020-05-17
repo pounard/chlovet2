@@ -33,7 +33,7 @@ services:
         depends_on: [phpfpm]
         env_file: [.env, docker.env]
         image: nginx:1.17
-        networks: [php, web]
+        networks: [php]
         # On production, bind ports is your responsability.
         # ports: ["8180:80"]
         volumes:
