@@ -39,6 +39,7 @@ final class Version20200514175427 extends AbstractAppMigration
                 "created_at" timestamp DEFAULT current_timestamp,
                 "sent_at" timestamp DEFAULT NULL,
                 "data" jsonb NOT NULL,
+                "data_as_text" TEXT DEFAULT NULL,
                 PRIMARY KEY ("id"),
                 FOREIGN KEY ("client_id")
                     REFERENCES "client" ("id")
