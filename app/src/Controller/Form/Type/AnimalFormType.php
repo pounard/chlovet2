@@ -107,7 +107,7 @@ final class AnimalFormType extends AbstractType
                 'placeholder' => FormHelper::PLACEHOLDER_DEFAULT,
                 'choices' => FormHelper::map([
                     "Mâle",
-                    "Femmelle",
+                    "Femelle",
                 ]),
                 'constraints' => [
                     new Assert\NotBlank([
