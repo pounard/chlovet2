@@ -12,7 +12,7 @@ interface FormClientTokenRepository
     /**
      * Find email address related to token.
      */
-    public function findEmailAddressForToken(string $token): ?string;
+    public function loadUserByToken(string $token): FormClientUser;
 
     /**
      * Find target related to token.

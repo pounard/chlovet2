@@ -21,6 +21,9 @@ final class Version20200514175427 extends AbstractAppMigration
             CREATE TABLE IF NOT EXISTS "client" (
                 "id" uuid,
                 "email" varchar(512) NOT NULL,
+                "contact_nom" VARCHAR(500) DEFAULT NULL,
+                "contact_prenom" VARCHAR(500) DEFAULT NULL,
+                "created_at" timestamp NOT NULL DEFAULT current_timestamp,
                 PRIMARY KEY ("id"),
                 UNIQUE ("email")
             );

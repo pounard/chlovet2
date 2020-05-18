@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Security;
 
 use Goat\Runner\Runner;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -34,7 +35,9 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
      */
     public function refreshUser(UserInterface $user)
     {
-        return new FormClientUser($user->getUsername());
+        \assert($user instanceof FormClientUser);
+
+        return new FormClientUser($user->getUsername(), $user->getClientId());
     }
 
     /**
@@ -42,38 +45,41 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
      */
     public function loadUserByUsername(string $username)
     {
-        $exists = $this
+        return $this
             ->runner
             ->execute(
                 <<<SQL
-                SELECT 1 FROM "client_login" WHERE "email" = ?
+                SELECT id FROM client WHERE email = ?
                 SQL,
                 [$username]
             )
-            ->fetchField()
+            ->setHydrator(fn ($row) => new FormClientUser($username, $row['id'] ?? Uuid::uuid4()))
+            ->fetch() ?? $this->usernameNotFoundError()
         ;
-
-        if (!$exists) {
-            throw new UsernameNotFoundException();
-        }
-
-        return new FormClientUser($username);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function findEmailAddressForToken(string $token): ?string
+    public function loadUserByToken(string $token): FormClientUser
     {
         return $this
             ->runner
             ->execute(
                 <<<SQL
-                SELECT "email" FROM "client_login" WHERE "token" = ?
+                SELECT
+                    c.id,
+                    l.email
+                FROM client_login l
+                LEFT JOIN client c
+                    ON l.email = c.email
+                WHERE
+                    l.token = ?
                 SQL,
                 [$token]
             )
-            ->fetchField()
+            ->setHydrator(fn ($row) => new FormClientUser($row['email'], $row['id'] ?? Uuid::uuid4()))
+            ->fetch() ?? $this->usernameNotFoundError()
         ;
     }
 
@@ -86,7 +92,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
             ->runner
             ->execute(
                 <<<SQL
-                SELECT "type" FROM "client_login" WHERE "token" = ?
+                SELECT type FROM client_login WHERE token = ?
                 SQL,
                 [$token]
             )
@@ -107,7 +113,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
                 ->runner
                 ->execute(
                     <<<SQL
-                    SELECT 1 FROM "client_login" WHERE "token" = ?
+                    SELECT 1 FROM client_login WHERE token = ?
                     SQL,
                     [$token]
                 )
@@ -115,9 +121,19 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
             ;
         } while ($exists);
 
-        $this
-            ->runner
-            ->getQueryBuilder()
+        $builder = $this->runner->getQueryBuilder();
+
+        $builder
+            ->merge('client')
+            ->onConflictIgnore()
+            ->setKey(['email'])
+            ->values([
+                'email' => $emailAddress,
+                'id' => Uuid::uuid4(),
+            ])
+        ;
+
+        $builder
             ->insert('client_login')
             ->values([
                 'email' => $emailAddress,
@@ -135,21 +151,57 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
      */
     public function touch(string $token): bool
     {
-        return 0 < $this
+        $row = $this
             ->runner
-            ->perform(
+            ->execute(
                 <<<SQL
-                UPDATE "client_login"
+                UPDATE client_login
                 SET
-                    "login_count" = "login_count" + 1,
-                    "login_first" = COALESCE("login_first", current_timestamp),
-                    "login_last" = current_timestamp
+                    login_count = login_count + 1,
+                    login_first = COALESCE(login_first, current_timestamp),
+                    login_last = current_timestamp
                 WHERE
-                    "token" = ?
-                    AND "valid_until" > current_timestamp
+                    token = ?
+                    AND valid_until > current_timestamp
+                RETURNING
+                    email,
+                    (
+                        SELECT id
+                        FROM client
+                        WHERE
+                            client.email = client_login.email
+                    ) AS id
                 SQL,
                 [$token]
             )
+            ->fetch()
         ;
+
+        // Older "client_login" entries might miss the "client" row.
+        if ($row) {
+            if (!$row['id']) {
+                $this
+                    ->runner
+                    ->getQueryBuilder()
+                    ->merge('client')
+                    ->onConflictIgnore()
+                    ->setKey(['email'])
+                    ->values([
+                        'email' => $row['email'],
+                        'id' => Uuid::uuid4(),
+                    ])
+                    ->perform()
+                ;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private function usernameNotFoundError(): FormClientUser
+    {
+        throw new UsernameNotFoundException();
     }
 }
