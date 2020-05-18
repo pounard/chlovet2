@@ -46,6 +46,7 @@ final class TraitementPucesFormType extends AbstractType
             'attr' => [
                 'placeholder' => "Saississez la date au format " . (new \DateTimeImmutable())->format('d/m/Y'),
             ],
+            'invalid_message' => FormHelper::INVALID_VALUE_MESSAGE_DEFAULT,
             'widget' => 'single_text',
             'format' => 'dd/MM/yyyy',
             'required' => false,

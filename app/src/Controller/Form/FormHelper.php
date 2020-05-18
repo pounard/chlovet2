@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 final class FormHelper
 {
+    const INVALID_VALUE_MESSAGE_DEFAULT = 'Veuillez correcter formatter la valeur';
     const PLACEHOLDER_DEFAULT = 'Choississez une réponse...';
     const SECTION_KILLSWITCH = 'oui';
 
