@@ -13,7 +13,7 @@ interface FormDataRepository
     /**
      * Insert form data.
      */
-    public function insert(string $type, array $data, ?UuidInterface $clientId = null): FormData;
+    public function insert(string $type, array $data, ?string $humanReadableVersion, ?UuidInterface $clientId = null): FormData;
 
     /**
      * Find single entry.

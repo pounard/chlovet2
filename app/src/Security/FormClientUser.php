@@ -42,7 +42,7 @@ final class FormClientUser implements UserInterface
         return $this->emailAddress;
     }
 
-    public function getClientId()
+    public function getClientId(): UuidInterface
     {
         return $this->clientId;
     }

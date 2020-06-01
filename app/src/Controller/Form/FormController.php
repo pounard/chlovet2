@@ -8,10 +8,12 @@ use App\Controller\ControllerTrait;
 use App\Controller\Form\Type\CommemoratifFormType;
 use App\Entity\Form;
 use App\Repository\FormDataRepository;
+use App\Security\FormClientUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Security;
 
 final class FormController extends AbstractController
 {
@@ -24,7 +26,7 @@ final class FormController extends AbstractController
         return $this->render('form/form/home.html.twig');
     }
 
-    public function commemoratif(Request $request, FormDataRepository $repository): Response
+    public function commemoratif(Request $request, FormDataRepository $repository, Security $security): Response
     {
         $form = $this
             ->createFormBuilder()
@@ -49,12 +51,17 @@ final class FormController extends AbstractController
                     TXT
                 );
 
+                $user = $security->getUser();
+                \assert($user instanceof FormClientUser);
+
+                $data = FormHelper::cleanupPostData($form->getData());
+                $humanReadableVersion = FormHelper::humanReadableFormData($form, $data);
+
                 $repository->insert(
                     Form::TYPE_COMMEMORATIF,
-                    FormHelper::humanReadableFormData(
-                        $form,
-                        $form->getData()
-                    )
+                    $data,
+                    $humanReadableVersion,
+                    $user->getClientId()
                 );
 
                 return $this->redirectToRoute('form_home');

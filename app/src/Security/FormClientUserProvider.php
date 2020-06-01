@@ -149,7 +149,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
     /**
      * {@inheritdoc}
      */
-    public function touch(string $token): bool
+    public function touch(string $token, FormClientUser $user): bool
     {
         $row = $this
             ->runner
@@ -188,7 +188,7 @@ final class FormClientUserProvider implements UserProviderInterface, FormClientT
                     ->setKey(['email'])
                     ->values([
                         'email' => $row['email'],
-                        'id' => Uuid::uuid4(),
+                        'id' => $user->getClientId(),
                     ])
                     ->perform()
                 ;

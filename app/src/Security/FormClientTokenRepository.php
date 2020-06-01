@@ -22,7 +22,7 @@ interface FormClientTokenRepository
     /**
      * User has logged in.
      */
-    public function touch(string $token): bool;
+    public function touch(string $token, FormClientUser $user): bool;
 
     /**
      * Create one time login for client.

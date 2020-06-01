@@ -73,7 +73,7 @@ final class FormHelper
                 $ret[$label] = $value ?? '<Non renseigé>';
             }
 
-            return $ret;
+            return \implode("\n\n", $ret);
         }
 
         return self::humanReadableValue($values);

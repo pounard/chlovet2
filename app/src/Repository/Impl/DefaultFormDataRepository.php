@@ -23,7 +23,7 @@ class DefaultFormDataRepository extends AbstractRepository implements FormDataRe
     /**
      * {@inheritdoc}
      */
-    public function insert(string $type, array $data, ?UuidInterface $clientId = null): FormData
+    public function insert(string $type, array $data, ?string $humanReadableVersion, ?UuidInterface $clientId = null): FormData
     {
         if (!Form::isValid($type)) {
             throw new \InvalidArgumentException(\sprintf("Le type de formulaire '%s' n'existe pas.", $type));
@@ -38,6 +38,7 @@ class DefaultFormDataRepository extends AbstractRepository implements FormDataRe
             ->values([
                 'client_id' => $clientId,
                 'data' => \json_encode($data),
+                'data_as_text' => $humanReadableVersion,
                 'id' => Uuid::uuid4(),
                 'type' => $type,
             ])
