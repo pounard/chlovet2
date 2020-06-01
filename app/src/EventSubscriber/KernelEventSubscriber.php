@@ -61,11 +61,8 @@ final class KernelEventSubscriber implements EventSubscriberInterface
     {
         $ret = [];
 
-        if (!$this->preferences->get('sicap_downgrade_validate_signature')) {
+        if (!$this->preferences->get('foo_downgrade_validate_signature')) {
             $ret[] = "La connexion adhérent n'est pas sécurisée.";
-        }
-        if (!$this->preferences->get('sicap_downgrade_connect')) {
-            $ret[] = "Le portail est déconnecté de SICAP.";
         }
 
         return $ret;
@@ -92,26 +89,17 @@ final class KernelEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * We need to sync client profile
+     * We need to sync client profile.
      */
     public function onInteractiveLogin(InteractiveLoginEvent $event)
     {
+        /*
         $token = $event->getAuthenticationToken();
         $user = $token->getUser();
 
-        /*
         if ($user instanceof AdherentUser) {
             if (($adherent = $user->getAdherent()) instanceof AdherentParticulier) {
-
-                // Permet le refresh des informations en provenance de ProBTP.
                 $this->dispatcher->process(new ClientLogin($adherent));
-
-                // Voir la documentation de la classe ClientHandler pour plus
-                // d'informations sur la procédure de login. Ce code est très
-                // important.
-                if ($typeAdherent = $this->clientRepository->getTypeAdherent($adherent->getMuna(), false)) {
-                    $adherent->setTypeAdherent($typeAdherent);
-                }
             }
         }
          */

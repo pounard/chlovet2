@@ -32,8 +32,6 @@ final class PageListDatasource extends AbstractDatasource
         return [
             (new Filter('exercice', "Année d'exercice"))
                 ->setArbitraryInput(true),
-            (new Filter('munaidv', "MUNAIDV"))
-                ->setArbitraryInput(true),
         ];
          */
     }
@@ -70,9 +68,6 @@ final class PageListDatasource extends AbstractDatasource
         ;
 
         /*
-        if ($query->has('munaidv')) {
-            $criteria['demande.munaidv'] = $query->get('munaidv');
-        }
         if ($query->has('gestion')) {
             $criteria['demande.gestionnaire_id'] = $query->get('gestion');
         }
